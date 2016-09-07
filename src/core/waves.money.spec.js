@@ -1,8 +1,5 @@
 describe('waves.money', function() {
 
-    var rawAddress = '2n2MhfqjsXnjffZi8DcyziZikt7KRFufuMj';
-    var displayAddress = '1W2n2MhfqjsXnjffZi8DcyziZikt7KRFufuMj';
-
     it('precisely converts tokens to coins', function () {
         expect(new Money(7e-6, Currency.WAV).toCoins()).toEqual(700);
         expect(Money.fromCoins(1000, Currency.WAV).toTokens()).toEqual(0.00001000);

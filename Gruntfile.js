@@ -35,12 +35,15 @@ module.exports = function (grunt) {
                         'src/core/core.module.js',
                         'src/core/core.constants.js',
                         'src/core/core.services.module.js',
+                        'src/core/core.services.wordlist.constant.js',
+                        'src/core/passphrase.service.js',
                         'src/core/account.service.js',
                         'src/core/address.service.js',
                         'src/core/crypto.service.js',
                         'src/core/api.service.js',
                         'src/core/localstorage.chrome.service.js',
-                        'src/core/localstorage.html5.service.js'
+                        'src/core/localstorage.html5.service.js',
+                        'src/core/storage.provider.js'
                     ]
                 }
             },

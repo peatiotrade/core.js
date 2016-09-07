@@ -9,18 +9,18 @@ module.exports = function(config) {
     frameworks: ['jasmine'],
 
     files: [
-      'src/js/**.js'
+      'src/**.js'
     ],
 
     // list of files to exclude
     exclude: [
-      
+
     ],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-    
+
     },
 
     // test results reporter to use
