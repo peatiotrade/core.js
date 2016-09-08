@@ -11,8 +11,8 @@
     "restangular": "1.5.2",
     "cryptojslib": "^3.1.2",
     "decimal.js": "https://github.com/MikeMcl/decimal.js/archive/v5.0.8.zip",
-    "Base58": "git@github.com:45678/Base58.git",
-    "curve25519-js": "git@github.com:wavesplatform/curve25519-js.git",
+    "Base58": "https://github.com/45678/Base58.git",
+    "curve25519-js": "https://github.com/wavesplatform/curve25519-js.git",
     "js-sha3": "^0.5.2"
   },
   "main": "distr/wavesplatform-core-js-0.1.0.js",
