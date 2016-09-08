@@ -15,5 +15,6 @@
     "curve25519-js": "git@github.com:wavesplatform/curve25519-js.git",
     "js-sha3": "^0.5.2"
   },
+  "main": "distr/wavesplatform-core-js-0.1.0.js",
   "analytics": false
 }
