@@ -898,7 +898,9 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 (function() {
     'use strict';
 
-    angular.module('waves.core', []);
+    angular.module('waves.core', [
+        'waves.core.services'
+    ]);
 })();
 
 (function() {
@@ -1203,6 +1205,10 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 
             this.getAccounts = function (onAccountsLoadedCallback) {
                 storageService.loadState(function (state) {
+                    state = state || {};
+                    if (!state.accounts)
+                        state.accounts = [];
+
                     onAccountsLoadedCallback(state.accounts);
                 });
             };
