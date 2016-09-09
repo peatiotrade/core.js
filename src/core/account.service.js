@@ -25,6 +25,10 @@
 
             this.getAccounts = function (onAccountsLoadedCallback) {
                 storageService.loadState(function (state) {
+                    state = state || {};
+                    if (!state.accounts)
+                        state.accounts = [];
+
                     onAccountsLoadedCallback(state.accounts);
                 });
             };
