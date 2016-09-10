@@ -3,25 +3,22 @@
 
     angular
         .module('waves.core.services')
-        .service('html5StorageService', ['constants.core', '$window', function(constants, window) {
+        .service('html5StorageService', ['constants.core', '$window', '$q', function(constants, window, $q) {
             if (angular.isUndefined(constants.NETWORK_NAME))
                 throw new Error('Network name hasn\'t been configured');
 
             var $key = 'Waves' + constants.NETWORK_NAME;
 
-            this.saveState = function(state, onSuccessCallback) {
+            this.saveState = function(state) {
                 var serialized = angular.toJson(state);
 
                 window.localStorage.setItem($key, serialized);
-                if (onSuccessCallback) {
-                    onSuccessCallback();
-                }
+
+                return $q.when();
+
             };
 
-            this.loadState = function(onDataReadCallback) {
-                if (!onDataReadCallback)
-                    return;
-
+            this.loadState = function() {
                 var data;
                 var serialized = window.localStorage.getItem($key);
 
@@ -29,12 +26,13 @@
                     data = angular.fromJson(serialized);
                 }
 
-                onDataReadCallback(data);
+                return $q.when(data);
             };
 
-            this.clear = function(onClearedCallback) {
+            this.clear = function() {
                 window.localStorage.removeItem($key);
-                onClearedCallback();
+
+                return $q.when();
             };
         }]);
 })();

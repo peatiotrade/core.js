@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('waves.core')
+        .module('waves.core.constants', [])
         .constant('constants.core', {
             CLIENT_VERSION: '0.4.1a',
             NODE_ADDRESS: 'http://52.30.47.67:6869',
@@ -13,7 +13,7 @@
         });
 
     angular
-        .module('waves.core')
+        .module('waves.core.constants')
         .constant('constants.address', {
             RAW_ADDRESS_LENGTH : 35,
             ADDRESS_PREFIX: '1W',
@@ -21,7 +21,7 @@
         });
 
     angular
-        .module('waves.core')
+        .module('waves.core.constants')
         .constant('constants.ui', {
             MINIMUM_PAYMENT_AMOUNT : 1e-8,
             MINIMUM_TRANSACTION_FEE : 0.001,
