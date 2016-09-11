@@ -3,20 +3,29 @@
 
     angular
         .module('waves.core.services')
-        .service('chromeStorageService', [function() {
+        .service('chromeStorageService', ['$q', function($q) {
             var $key = 'WavesAccounts';
 
-            this.saveState = function(state, onSuccessCallback) {
+            this.saveState = function(state) {
+                var deferred = $q.defer();
                 var json = {};
                 json[$key] = state;
 
-                chrome.storage.sync.set(json, onSuccessCallback);
+                chrome.storage.sync.set(json, function() {
+                    deferred.resolve();
+                });
+
+                return deferred.promise;
             };
 
-            this.loadState = function(onDataReadCallback) {
+            this.loadState = function() {
+                var deferred = $q.defer();
+
                 chrome.storage.sync.get($key, function(data) {
-                    onDataReadCallback(data[$key]);
+                    deferred.resolve(data[$key]);
                 });
+
+                return deferred.promise;
             };
         }]);
 })();

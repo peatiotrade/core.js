@@ -1,12 +1,12 @@
-describe('AccountService', function() {
-    var mockStorage, accountService;
+describe('AccountService', function () {
+    var mockStorage, accountService, $rootScope;
 
     var clone = function (object) {
         return JSON.parse(JSON.stringify(object));
     };
 
     // Initialization of a mock storage before each test case
-    beforeEach(function() {
+    beforeEach(function () {
         mockStorage = {
             accounts: [
                 {
@@ -23,58 +23,57 @@ describe('AccountService', function() {
     // Initialization of the module before each test case
     beforeEach(module('waves.core.services'));
 
-    beforeEach(angular.mock.module(function($provide) {
-        $provide.service('storageService', function() {
-            this.saveState = function(state, onSuccessCallback) {
+    beforeEach(angular.mock.module(function ($provide) {
+        $provide.service('storageService', function ($q) {
+            this.saveState = function (state) {
                 mockStorage = clone(state);
-                onSuccessCallback(mockStorage);
+                return $q.when(mockStorage);
             };
 
-            this.loadState = function (onDataReadCallback) {
-                onDataReadCallback(clone(mockStorage));
+            this.loadState = function () {
+                return $q.when(clone(mockStorage));
             };
         });
     }));
 
     // Injection of dependencies
-    beforeEach(inject(function($injector) {
+    beforeEach(inject(function ($injector) {
         accountService = $injector.get('accountService');
+        $rootScope = $injector.get('$rootScope');
     }));
 
-    it('should add new accounts properly', function (done) {
+    it('should add new accounts properly', function () {
         var newAccount = {
             name: 'NewAccount',
             address: 'WWW'
         };
 
-        accountService.addAccount(newAccount, function () {
-            expect(mockStorage.accounts.length).toEqual(3);
-            expect(mockStorage.accounts[2]).toEqual(newAccount);
-            done();
-        });
+        accountService.addAccount(newAccount);
+        $rootScope.$digest();
+
+        expect(mockStorage.accounts.length).toEqual(3);
+        expect(mockStorage.accounts[2]).toEqual(newAccount);
     });
 
-    it('should remove accounts properly', function (done) {
-        expect(function() { accountService.removeAccount(-1); }).toThrow();
-        expect(function() { accountService.removeAccount(2); }).toThrow();
+    it('should remove accounts properly', function () {
+        accountService.removeAccount(1);
+        $rootScope.$digest();
+        expect(mockStorage.accounts.length).toEqual(1);
 
-        accountService.removeAccount(1, function () {
-            expect(mockStorage.accounts.length).toEqual(1);
-        });
-
-        accountService.removeAccount(0, function () {
-            expect(mockStorage.accounts.length).toEqual(0);
-            expect(function() { accountService.removeAccount(0); }).toThrow();
-            done();
-        });
+        accountService.removeAccount(0);
+        $rootScope.$digest();
+        expect(mockStorage.accounts.length).toEqual(0);
     });
 
-    it('should load all available accounts', function (done) {
-        accountService.getAccounts(function (accounts) {
-            expect(accounts.length).toEqual(2);
-            expect(accounts).toEqual(mockStorage.accounts);
+    it('should load all available accounts', function () {
+        var accounts;
+        accountService.getAccounts()
+            .then(function (data) {
+                accounts = data;
+            });
+        $rootScope.$digest();
 
-            done();
-        });
+        expect(accounts.length).toEqual(2);
+        expect(accounts).toEqual(mockStorage.accounts);
     });
 });

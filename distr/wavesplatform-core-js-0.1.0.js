@@ -899,7 +899,8 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
     'use strict';
 
     angular.module('waves.core', [
-        'waves.core.services'
+        'waves.core.services',
+        'waves.core.constants'
     ]);
 })();
 
@@ -907,7 +908,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
     'use strict';
 
     angular
-        .module('waves.core')
+        .module('waves.core.constants', [])
         .constant('constants.core', {
             CLIENT_VERSION: '0.4.1a',
             NODE_ADDRESS: 'http://52.30.47.67:6869',
@@ -918,7 +919,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
         });
 
     angular
-        .module('waves.core')
+        .module('waves.core.constants')
         .constant('constants.address', {
             RAW_ADDRESS_LENGTH : 35,
             ADDRESS_PREFIX: '1W',
@@ -926,7 +927,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
         });
 
     angular
-        .module('waves.core')
+        .module('waves.core.constants')
         .constant('constants.ui', {
             MINIMUM_PAYMENT_AMOUNT : 1e-8,
             MINIMUM_TRANSACTION_FEE : 0.001,
@@ -1178,39 +1179,42 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
         }]);
 })();
 
-(function() {
+(function () {
     'use strict';
 
     angular
         .module('waves.core.services')
-        .service('accountService', ['storageService', function(storageService) {
-            this.addAccount = function (accountInfo, onDataUpdatedCallback) {
-                storageService.loadState(function (state) {
-                    state = state || {};
-                    if (!state.accounts)
-                        state.accounts = [];
+        .service('accountService', ['storageService', function (storageService) {
+            this.addAccount = function (accountInfo) {
+                return storageService.loadState()
+                    .then(function (state) {
+                        state = state || {};
+                        if (!state.accounts)
+                            state.accounts = [];
 
-                    state.accounts.push(accountInfo);
-                    storageService.saveState(state, onDataUpdatedCallback);
-                });
+                        state.accounts.push(accountInfo);
+                        return storageService.saveState(state);
+                    });
             };
 
-            this.removeAccount = function (accountIndex, onAccountRemovedCallback) {
-                storageService.loadState(function (state) {
-                    state.accounts.splice(accountIndex, 1);
+            this.removeAccount = function (accountIndex) {
+                return storageService.loadState()
+                    .then(function (state) {
+                        state.accounts.splice(accountIndex, 1);
 
-                    storageService.saveState(state, onAccountRemovedCallback);
-                });
+                        return storageService.saveState(state);
+                    });
             };
 
-            this.getAccounts = function (onAccountsLoadedCallback) {
-                storageService.loadState(function (state) {
-                    state = state || {};
-                    if (!state.accounts)
-                        state.accounts = [];
+            this.getAccounts = function () {
+                return storageService.loadState()
+                    .then(function (state) {
+                        state = state || {};
+                        if (!state.accounts)
+                            state.accounts = [];
 
-                    onAccountsLoadedCallback(state.accounts);
-                });
+                        return state.accounts;
+                    });
             };
         }]);
 })();
@@ -1498,20 +1502,29 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 
     angular
         .module('waves.core.services')
-        .service('chromeStorageService', [function() {
+        .service('chromeStorageService', ['$q', function($q) {
             var $key = 'WavesAccounts';
 
-            this.saveState = function(state, onSuccessCallback) {
+            this.saveState = function(state) {
+                var deferred = $q.defer();
                 var json = {};
                 json[$key] = state;
 
-                chrome.storage.sync.set(json, onSuccessCallback);
+                chrome.storage.sync.set(json, function() {
+                    deferred.resolve();
+                });
+
+                return deferred.promise;
             };
 
-            this.loadState = function(onDataReadCallback) {
+            this.loadState = function() {
+                var deferred = $q.defer();
+
                 chrome.storage.sync.get($key, function(data) {
-                    onDataReadCallback(data[$key]);
+                    deferred.resolve(data[$key]);
                 });
+
+                return deferred.promise;
             };
         }]);
 })();
@@ -1521,25 +1534,22 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 
     angular
         .module('waves.core.services')
-        .service('html5StorageService', ['constants.core', '$window', function(constants, window) {
+        .service('html5StorageService', ['constants.core', '$window', '$q', function(constants, window, $q) {
             if (angular.isUndefined(constants.NETWORK_NAME))
                 throw new Error('Network name hasn\'t been configured');
 
             var $key = 'Waves' + constants.NETWORK_NAME;
 
-            this.saveState = function(state, onSuccessCallback) {
+            this.saveState = function(state) {
                 var serialized = angular.toJson(state);
 
                 window.localStorage.setItem($key, serialized);
-                if (onSuccessCallback) {
-                    onSuccessCallback();
-                }
+
+                return $q.when();
+
             };
 
-            this.loadState = function(onDataReadCallback) {
-                if (!onDataReadCallback)
-                    return;
-
+            this.loadState = function() {
                 var data;
                 var serialized = window.localStorage.getItem($key);
 
@@ -1547,12 +1557,13 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
                     data = angular.fromJson(serialized);
                 }
 
-                onDataReadCallback(data);
+                return $q.when(data);
             };
 
-            this.clear = function(onClearedCallback) {
+            this.clear = function() {
                 window.localStorage.removeItem($key);
-                onClearedCallback();
+
+                return $q.when();
             };
         }]);
 })();
