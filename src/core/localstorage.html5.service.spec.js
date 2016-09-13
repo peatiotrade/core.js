@@ -1,5 +1,12 @@
 describe('LocalStorage.Html5.Service', function() {
-    var mockState, storageService;
+    var mockState, storageService, getItemSpy, setItemSpy, removeItemSpy;
+    var mockWindow = {
+        localStorage: {
+            getItem: function() {},
+            setItem: function() {},
+            removeItem: function() {}
+        }
+    };
 
     // Initialization of a mock storage before each test case
     beforeEach(function() {
@@ -16,10 +23,15 @@ describe('LocalStorage.Html5.Service', function() {
         };
     });
 
-    beforeEach(function () {
-        spyOn(window.localStorage, 'setItem');
-        spyOn(window.localStorage, 'removeItem');
+    beforeAll(function () {
+        getItemSpy = spyOn(mockWindow.localStorage, 'getItem');
+        setItemSpy = spyOn(mockWindow.localStorage, 'setItem');
+        removeItemSpy = spyOn(mockWindow.localStorage, 'removeItem');
     });
+
+    beforeEach(module(function ($provide) {
+        $provide.value('$window', mockWindow);
+    }));
 
     // Initialization of the module before each test case
     beforeEach(module('waves.core.services'));
@@ -38,12 +50,12 @@ describe('LocalStorage.Html5.Service', function() {
         //when
         storageService.saveState({key: 'value', $$test: 'value'});
         //then
-        expect(window.localStorage.setItem).toHaveBeenCalledWith('Wavesdevel', JSON.stringify({key: 'value'}));
+        expect(mockWindow.localStorage.setItem).toHaveBeenCalledWith('Wavesdevel', JSON.stringify({key: 'value'}));
     });
 
     it('should load from localStore', inject(function ($rootScope) {
         //init
-        spyOn(window.localStorage, 'getItem').and.returnValue(JSON.stringify(mockState));
+        getItemSpy.and.returnValue(JSON.stringify(mockState));
         //when
         var response;
         storageService.loadState()
@@ -53,12 +65,12 @@ describe('LocalStorage.Html5.Service', function() {
         $rootScope.$digest();
         //then
         expect(response).toEqual(mockState);
-        expect(window.localStorage.getItem).toHaveBeenCalledWith('Wavesdevel');
+        expect(mockWindow.localStorage.getItem).toHaveBeenCalledWith('Wavesdevel');
     }));
 
     it('should load empty from localStore', inject(function ($rootScope) {
         //init
-        spyOn(window.localStorage, 'getItem').and.returnValue(undefined);
+        getItemSpy.and.returnValue(undefined);
         //when
         var response;
         storageService.loadState()
@@ -74,7 +86,6 @@ describe('LocalStorage.Html5.Service', function() {
         //when
         storageService.clear();
         //then
-        expect(window.localStorage.removeItem).toHaveBeenCalledWith('Wavesdevel');
+        expect(mockWindow.localStorage.removeItem).toHaveBeenCalledWith('Wavesdevel');
     });
-
 });

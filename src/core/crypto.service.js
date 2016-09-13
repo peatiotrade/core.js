@@ -114,6 +114,12 @@
                 return this.base58.encode(appendUint8Arrays(unhashedAddress, addressHash));
             };
 
+            this.buildRawAddressFromSeed = function (secretPhrase) {
+                var publicKey = this.getPublicKey(secretPhrase);
+
+                return this.buildRawAddress(publicKey);
+            };
+
             //Returns publicKey built from string
             this.getPublicKey = function(secretPhrase) {
                 return this.buildPublicKey(converters.stringToByteArray(secretPhrase));

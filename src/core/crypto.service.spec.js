@@ -164,4 +164,11 @@ describe('Crypto.Service', function() {
         expect(cryptoService.buildRawAddress('9Emin4uvu2cew67hkpkX2ZKV6NJEjyP7Uvzbf8ARMCc6'))
             .toEqual('3P9oRcFxwjW58bqu1oXyk1JrRTy8ADSKvdN');
     });
+
+    it('should generate network address from seed', function () {
+        // testing testnet address generation
+        constants.NETWORK_CODE = 'T';
+        var seed = 'wing obey ride sorry entry road anger news basket mom kitchen stomach mean gun jar';
+        expect(cryptoService.buildRawAddressFromSeed(seed)).toEqual('3N8W8rEawGf9xo7mafHE2uwKAhq2XzVh1im');
+    });
 });

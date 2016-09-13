@@ -1390,6 +1390,12 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
                 return this.base58.encode(appendUint8Arrays(unhashedAddress, addressHash));
             };
 
+            this.buildRawAddressFromSeed = function (secretPhrase) {
+                var publicKey = this.getPublicKey(secretPhrase);
+
+                return this.buildRawAddress(publicKey);
+            };
+
             //Returns publicKey built from string
             this.getPublicKey = function(secretPhrase) {
                 return this.buildPublicKey(converters.stringToByteArray(secretPhrase));
@@ -1546,7 +1552,6 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
                 window.localStorage.setItem($key, serialized);
 
                 return $q.when();
-
             };
 
             this.loadState = function() {

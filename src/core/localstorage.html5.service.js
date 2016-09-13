@@ -15,7 +15,6 @@
                 window.localStorage.setItem($key, serialized);
 
                 return $q.when();
-
             };
 
             this.loadState = function() {
