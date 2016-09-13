@@ -16,6 +16,10 @@
                 return bytes;
             };
 
+            this.endsWithWhitespace = function (value) {
+                return /\s+$/g.test(value);
+            };
+
             this.getTime = function() {
                 return Date.now();
             };
