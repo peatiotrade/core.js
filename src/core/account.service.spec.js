@@ -56,11 +56,11 @@ describe('AccountService', function () {
     });
 
     it('should remove accounts properly', function () {
-        accountService.removeAccount(1);
+        accountService.removeAccount(mockStorage.accounts[1]);
         $rootScope.$digest();
         expect(mockStorage.accounts.length).toEqual(1);
 
-        accountService.removeAccount(0);
+        accountService.removeAccount(mockStorage.accounts[0]);
         $rootScope.$digest();
         expect(mockStorage.accounts.length).toEqual(0);
     });
