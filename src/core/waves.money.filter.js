@@ -29,5 +29,10 @@
             return function (amount, currencyKey) {
                 return Money.fromCoins(amount, getCurrency(currencyKey)).formatAmount();
             };
+        })
+        .filter('wavesDisplayName', function () {
+            return function (currencyKey) {
+                return Money.fromCoins(0, getCurrency(currencyKey)).currency.displayName;
+            };
         });
 })();

@@ -45,5 +45,19 @@
                 expect(wavesFilter(20000000111, 'BTC')).toEqual('200.00000111');
             });
         });
+
+        describe('Format output to currency type', function () {
+            var wavesDisplayNameFilter;
+
+            beforeEach(module('waves.core.filter'));
+            beforeEach(inject(function (_wavesDisplayNameFilter_) {
+                wavesDisplayNameFilter = _wavesDisplayNameFilter_;
+            }));
+
+            it('should return currency', function () {
+                expect(wavesDisplayNameFilter('WAV')).toEqual('Wave');
+                expect(wavesDisplayNameFilter('BTC')).toEqual('Bitcoin');
+            });
+        });
     });
 })();
