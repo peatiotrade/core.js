@@ -3,7 +3,7 @@
 
     angular
         .module('waves.core.services')
-        .service('formattingService', ['$window', function (window) {
+        .service('formattingService', ['$window', '$filter', function (window, $filter) {
 
             var LOCALE_DATE_FORMATS = {
                 'ar-SA': 'dd/MM/yy',
@@ -234,52 +234,17 @@
                     date = new Date(timestamp);
                 }
 
-                if (!isNaN(date) && typeof(date.getFullYear) == 'function') {
-                    var d = date.getDate();
-                    var dd = d < 10 ? '0' + d : d;
-                    var M = date.getMonth() + 1;
-                    var MM = M < 10 ? '0' + M : M;
-                    var yyyy = date.getFullYear();
-                    var yy = String(yyyy).substring(2);
+                var format = LOCALE_DATE_FORMAT;
+                if (!dateOnly) {
+                    var timeFormat = 'H:mm:ss';
 
-                    var res = LOCALE_DATE_FORMAT
-                        .replace(/dd/g, dd)
-                        .replace(/d/g, d)
-                        .replace(/MM/g, MM)
-                        .replace(/M/g, M)
-                        .replace(/yyyy/g, yyyy)
-                        .replace(/yy/g, yy);
+                    if (settings['24_hour_format'] === '0')
+                        timeFormat = 'h:mm:ss a';
 
-                    if (!dateOnly) {
-                        var hours = date.getHours();
-                        var originalHours = hours;
-                        var minutes = date.getMinutes();
-                        var seconds = date.getSeconds();
-
-                        if (!settings || settings['24_hour_format'] === '0') {
-                            if (originalHours === 0) {
-                                hours += 12;
-                            } else if (originalHours >= 13 && originalHours <= 23) {
-                                hours -= 12;
-                            }
-                        }
-                        if (minutes < 10) {
-                            minutes = '0' + minutes;
-                        }
-                        if (seconds < 10) {
-                            seconds = '0' + seconds;
-                        }
-                        res += ' ' + hours + ':' + minutes + ':' + seconds;
-
-                        if (!settings || settings['24_hour_format'] === '0') {
-                            res += ' ' + (originalHours >= 12 ? 'PM' : 'AM');
-                        }
-                    }
-
-                    return res;
-                } else {
-                    return date.toLocaleString();
+                    format += ' ' + timeFormat;
                 }
+
+                return $filter('date')(date, format);
             };
         }]);
 })();
