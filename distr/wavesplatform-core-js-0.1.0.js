@@ -1387,18 +1387,22 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
                 return sha256(Array.prototype.slice.call(seedHash));
             };
 
-            this.buildPublicKey = function (seedBytes) {
+            this.buildKeyPair = function(seedBytes) {
                 var accountSeedHash = this.buildAccountSeedHash(seedBytes);
                 var p = axlsign.generateKeyPair(accountSeedHash);
 
-                return this.base58.encode(p.public);
+                return {
+                    public: this.base58.encode(p.public),
+                    private: this.base58.encode(p.private)
+                };
+            };
+
+            this.buildPublicKey = function (seedBytes) {
+                return this.buildKeyPair(seedBytes).public;
             };
 
             this.buildPrivateKey = function (seedBytes) {
-                var accountSeedHash = this.buildAccountSeedHash(seedBytes);
-                var p = axlsign.generateKeyPair(accountSeedHash);
-
-                return this.base58.encode(p.private);
+                return this.buildKeyPair(seedBytes).private;
             };
 
             this.buildRawAddress = function (encodedPublicKey) {
@@ -1429,6 +1433,11 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
             //Returns privateKey built from string
             this.getPrivateKey = function(secretPhrase) {
                 return this.buildPrivateKey(converters.stringToByteArray(secretPhrase));
+            };
+
+            //Returns key pair built from string
+            this.getKeyPair = function (secretPhrase) {
+                return this.buildKeyPair(converters.stringToByteArray(secretPhrase));
             };
 
             // function accepts buffer with private key and an array with dataToSign

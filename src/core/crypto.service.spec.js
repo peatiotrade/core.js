@@ -8,9 +8,12 @@ describe('Crypto.Service', function() {
         var seedBytes = cryptoService.base58.decode(encodedSeed);
         var privateKey = cryptoService.buildPrivateKey(seedBytes);
         var publicKey = cryptoService.buildPublicKey(seedBytes);
+        var pair = cryptoService.buildKeyPair(seedBytes);
 
         expect(privateKey).toEqual(encodedExpectedPrivateKey);
         expect(publicKey).toEqual(encodedExpectedPublicKey);
+        expect(pair.public).toEqual(encodedExpectedPublicKey);
+        expect(pair.private).toEqual(encodedExpectedPrivateKey);
     }
 
     function hashingTestCase(encodedNoncedSeed, encodedExpectedHash) {
