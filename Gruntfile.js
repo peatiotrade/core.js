@@ -48,7 +48,8 @@ module.exports = function (grunt) {
                         'src/core/storage.provider.js',
                         'src/core/formatting.service.js',
                         'src/core/formatting.filter.js',
-                        'src/core/address.filter.js'
+                        'src/core/address.filter.js',
+                        'src/core/waves.money.filter.js'
                     ]
                 }
             },
