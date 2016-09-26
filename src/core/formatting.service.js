@@ -223,6 +223,11 @@
             var settings = {
                 '24_hour_format': '1'
             };
+            var timezone;
+
+            this.setTimezone = function (newTimezone) {
+                timezone = newTimezone;
+            };
 
             this.formatTimestamp = function (timestamp, dateOnly, isAbsoluteTime) {
                 var date;
@@ -244,7 +249,8 @@
                     format += ' ' + timeFormat;
                 }
 
-                return $filter('date')(date, format);
+                console.log(timezone);
+                return $filter('date')(date, format, timezone);
             };
         }]);
 })();
