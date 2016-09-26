@@ -15,6 +15,7 @@
 
         beforeEach(inject(function (_formattingService_, _$window_) {
             formattingService = _formattingService_;
+            formattingService.setTimezone('+0200');
             $window = _$window_;
         }));
 
@@ -45,7 +46,7 @@
         it('should return date with filled 0', function () {
             var time = new Date(1262307750000 + offsetWinter);
             var formatedDate = formattingService.formatTimestamp(time, false);
-            expect(formatedDate).toEqual('01.01.2010 1:02:30');
+            expect(formatedDate).toEqual('01.01.2010 2:02:30');
         });
 
         describe('should return date by th-TH', function () {
@@ -58,7 +59,7 @@
             it('should return date with filled 0 by th-TH', function () {
                 var time = new Date(1262307750000 + offsetWinter);
                 var formatedDate = formattingService.formatTimestamp(time, false);
-                expect(formatedDate).toEqual('1/1/2010 1:02:30');
+                expect(formatedDate).toEqual('1/1/2010 2:02:30');
             });
         });
 
