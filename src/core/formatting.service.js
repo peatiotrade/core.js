@@ -249,7 +249,6 @@
                     format += ' ' + timeFormat;
                 }
 
-                console.log(timezone);
                 return $filter('date')(date, format, timezone);
             };
         }]);
