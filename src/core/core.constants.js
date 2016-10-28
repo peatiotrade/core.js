@@ -25,6 +25,7 @@
         .constant('constants.ui', {
             MINIMUM_PAYMENT_AMOUNT : 1e-8,
             MINIMUM_TRANSACTION_FEE : 0.001,
-            AMOUNT_DECIMAL_PLACES : 8
+            AMOUNT_DECIMAL_PLACES : 8,
+            JAVA_MAX_LONG: 9223372036854775807
         });
 })();
