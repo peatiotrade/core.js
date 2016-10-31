@@ -62,7 +62,7 @@
 
                 var amount = payment.amount.toCoins();
                 var fee = payment.fee.toCoins();
-                var recipient = payment.recipient.getRawAddress();
+                var recipient = payment.recipient;
 
                 var signatureData = buildSignatureData(sender.publicKey, recipient, amount, fee, payment.time);
 
@@ -75,7 +75,7 @@
                     signature: signature,
                     amount: amount,
                     senderPublicKey: sender.publicKey,
-                    sender: sender.address.getRawAddress(),
+                    sender: sender.address,
                     fee: fee
                 };
             };

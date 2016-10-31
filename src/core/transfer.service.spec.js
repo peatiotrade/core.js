@@ -29,11 +29,11 @@ describe('Transfer.Service', function() {
         var sender = {
             publicKey: 'FJuErRxhV9JaFUwcYLabFK5ENvDRfyJbRz8FeVfYpBLn',
             privateKey: '9dXhQYWZ5468TRhksJqpGT6nUySENxXi9nsCZH9AefD1',
-            address: addressService.fromDisplayAddress('1W3MtMoVbAHSitzohEvd6dJGR3kmJZHSePUkS')
+            address: addressService.cleanupOptionalPrefix('1W3MtMoVbAHSitzohEvd6dJGR3kmJZHSePUkS')
         };
 
         var payment = {
-            recipient: addressService.fromDisplayAddress('1W3N9UuGeWuDt9NfWbC5oEACHyRoeEMApXAeq'),
+            recipient: addressService.cleanupOptionalPrefix('1W3N9UuGeWuDt9NfWbC5oEACHyRoeEMApXAeq'),
             amount: new Money(1, Currency.WAV),
             fee: new Money(0.001, Currency.WAV),
             time: 1474976994320

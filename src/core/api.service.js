@@ -21,7 +21,7 @@
             var addressApi = rest.all('addresses');
             this.address = {
                 balance: function (address) {
-                    return addressApi.one('balance', address.getRawAddress()).get();
+                    return addressApi.one('balance', address).get();
                 }
             };
 
@@ -32,7 +32,7 @@
                 },
                 list: function (address, max) {
                     max = max || 50;
-                    return transactionApi.one('address', address.getRawAddress()).one('limit', max).getList();
+                    return transactionApi.one('address', address).one('limit', max).getList();
                 }
             };
 
