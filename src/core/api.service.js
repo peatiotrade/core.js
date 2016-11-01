@@ -40,5 +40,19 @@
             this.broadcastPayment = function (signedPaymentTransaction) {
                 return wavesApi.all('broadcast-signed-payment').post(signedPaymentTransaction);
             };
+
+            var assetApi = rest.all('assets');
+            var assetBroadcastApi = assetApi.all('broadcast');
+            this.assets = {
+                balance: function (address, assetId) {
+                    return assetApi.one('balance', address).all(assetId).get();
+                },
+                issue: function (signedAssetIssueTransaction) {
+                    return assetBroadcastApi.all('issue').post(signedAssetIssueTransaction);
+                },
+                transfer: function (signedAssetTransferTransaction) {
+                    return assetBroadcastApi.all('transfer').post(signedAssetTransferTransaction);
+                }
+            }
         }]);
 })();
