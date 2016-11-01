@@ -28,4 +28,13 @@
             AMOUNT_DECIMAL_PLACES : 8,
             JAVA_MAX_LONG: 9223372036854775807
         });
+
+    angular
+        .module('waves.core.constants')
+        .constant('constants.transactions', {
+            PAYMENT_TRANSACTION_TYPE : 2,
+            ASSET_ISSUE_TRANSACTION_TYPE: 3,
+            ASSET_TRANSFER_TRANSACTION_TYPE: 4,
+            ASSET_REISSUE_TRANSACTION_TYPE: 5
+        });
 })();

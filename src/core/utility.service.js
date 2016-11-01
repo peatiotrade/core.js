@@ -3,10 +3,8 @@
 
     angular
         .module('waves.core.services')
-        .service('utilityService', [function () {
-
+        .service('utilityService', ['cryptoService', function (cryptoService) {
             this.longToByteArray = function (value) {
-
                 var bytes = new Array(7);
                 for (var k = 7; k >= 0; k--) {
                     bytes[k] = value & (255);
@@ -14,6 +12,16 @@
                 }
 
                 return bytes;
+            };
+
+            this.base58StringToByteArray = function (base58String) {
+                var decoded = cryptoService.base58.decode(base58String);
+                var result = [];
+                for (var i = 0; i < decoded.length; ++i) {
+                    result.push(decoded[i] & 0xff);
+                }
+
+                return result;
             };
 
             this.endsWithWhitespace = function (value) {
