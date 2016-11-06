@@ -901,7 +901,8 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
     angular.module('waves.core', [
         'waves.core.services',
         'waves.core.constants',
-        'waves.core.filter'
+        'waves.core.filter',
+        'waves.core.directives'
     ]);
 })();
 
@@ -944,6 +945,11 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
             ASSET_TRANSFER_TRANSACTION_TYPE: 4,
             ASSET_REISSUE_TRANSACTION_TYPE: 5
         });
+})();
+
+(function () {
+    'use strict';
+    angular.module('waves.core.directives', []);
 })();
 
 (function() {
@@ -1525,6 +1531,20 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
             this.broadcastPayment = function (signedPaymentTransaction) {
                 return wavesApi.all('broadcast-signed-payment').post(signedPaymentTransaction);
             };
+
+            var assetApi = rest.all('assets');
+            var assetBroadcastApi = assetApi.all('broadcast');
+            this.assets = {
+                balance: function (address, assetId) {
+                    return assetApi.one('balance', address).all(assetId).get();
+                },
+                issue: function (signedAssetIssueTransaction) {
+                    return assetBroadcastApi.all('issue').post(signedAssetIssueTransaction);
+                },
+                transfer: function (signedAssetTransferTransaction) {
+                    return assetBroadcastApi.all('transfer').post(signedAssetTransferTransaction);
+                }
+            };
         }]);
 })();
 
@@ -2049,4 +2069,20 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
                 return Money.fromCoins(0, getCurrency(currencyKey)).currency.displayName;
             };
         });
+})();
+
+(function () {
+    'use strict';
+
+    angular
+        .module('waves.core.services')
+        .service('base58Service', function () {
+            var BASE58_REGEX = new RegExp('^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{0,}$');
+
+            this.isValid = function (input) {
+                return BASE58_REGEX.test(input);
+            };
+
+        });
+
 })();
