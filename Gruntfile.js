@@ -34,6 +34,7 @@ module.exports = function (grunt) {
                         'src/core/waves.money.js',
                         'src/core/core.module.js',
                         'src/core/core.constants.js',
+                        'src/core/core.directives.module.js',
                         'src/core/core.services.module.js',
                         'src/core/core.filter.module.js',
                         'src/core/core.services.wordlist.constant.js',
@@ -49,7 +50,9 @@ module.exports = function (grunt) {
                         'src/core/formatting.service.js',
                         'src/core/transfer.service.js',
                         'src/core/formatting.filter.js',
-                        'src/core/waves.money.filter.js'
+                        'src/core/waves.money.filter.js',
+                        'src/core/base58.service.js',
+                        'src/core/base58.directive.js'
                     ]
                 }
             },

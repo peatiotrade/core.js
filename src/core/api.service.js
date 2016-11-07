@@ -53,6 +53,6 @@
                 transfer: function (signedAssetTransferTransaction) {
                     return assetBroadcastApi.all('transfer').post(signedAssetTransferTransaction);
                 }
-            }
+            };
         }]);
 })();
