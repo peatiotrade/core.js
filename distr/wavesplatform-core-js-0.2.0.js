@@ -604,7 +604,10 @@ var converters = function() {
 		int32ToBytes: function(x, opt_bigEndian) {
 			return converters.intToBytes_(x, 4, 4294967295, opt_bigEndian);
 		},
-        /**
+		int16ToBytes: function(x, opt_bigEndian) {
+			return converters.intToBytes_(x, 2, 65535, opt_bigEndian);
+		},
+		/**
          * Based on https://groups.google.com/d/msg/crypto-js/TOb92tcJlU0/Eq7VZ5tpi-QJ
          * Converts a word array to a Uint8Array.
          * @param {WordArray} wordArray The word array.
@@ -1554,6 +1557,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
     angular
         .module('waves.core.services')
         .service('utilityService', ['cryptoService', function (cryptoService) {
+            // long to big-endian bytes
             this.longToByteArray = function (value) {
                 var bytes = new Array(7);
                 for (var k = 7; k >= 0; k--) {
@@ -1562,6 +1566,11 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
                 }
 
                 return bytes;
+            };
+
+            // short to big-endian bytes
+            this.shortToByteArray = function (value) {
+                return converters.int16ToBytes(value, true);
             };
 
             this.base58StringToByteArray = function (base58String) {

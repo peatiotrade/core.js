@@ -4,6 +4,7 @@
     angular
         .module('waves.core.services')
         .service('utilityService', ['cryptoService', function (cryptoService) {
+            // long to big-endian bytes
             this.longToByteArray = function (value) {
                 var bytes = new Array(7);
                 for (var k = 7; k >= 0; k--) {
@@ -12,6 +13,11 @@
                 }
 
                 return bytes;
+            };
+
+            // short to big-endian bytes
+            this.shortToByteArray = function (value) {
+                return converters.int16ToBytes(value, true);
             };
 
             this.base58StringToByteArray = function (base58String) {

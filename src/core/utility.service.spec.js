@@ -15,4 +15,8 @@ describe('Utility.Service', function() {
         expect(utilityService.endsWithWhitespace('fasdfds sdfasdf a ')).toBe(true);
         expect(utilityService.endsWithWhitespace(' fbsdfb sdfg fsd a\t')).toBe(true);
     });
+
+    it('should correctly convert short values to byte array', function () {
+        expect(utilityService.shortToByteArray(14851)).toEqual([58, 3]);
+    });
 });
