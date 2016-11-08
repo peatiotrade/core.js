@@ -748,9 +748,12 @@ String.prototype['autoLink'] = function () {
 var Currency = function(data) {
     data = data || {};
 
+    // base58 encoded asset id of the currency
+    this.id = data.id || '';
     this.roundingMode = Decimal.ROUND_HALF_UP;
     this.displayName = data.displayName;
-    this.symbol = data.symbol;
+    this.symbol = data.symbol || '';
+    // number of decimal places after a decimal point
     this.precision = data.precision;
     if (data.roundingMode !== undefined)
         this.roundingMode = data.roundingMode;
@@ -759,6 +762,7 @@ var Currency = function(data) {
 };
 
 Currency.WAV = new Currency({
+    id: '1',
     displayName: 'Wave',
     symbol: '',
     precision: 8
