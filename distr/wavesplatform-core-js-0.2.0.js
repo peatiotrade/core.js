@@ -1593,7 +1593,6 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
             asset.description = asset.description || '';
             var assetCurrency = new Currency({
                 displayName: asset.name,
-                symbol: '',
                 precision: asset.decimalPlaces
             });
 
@@ -1733,6 +1732,9 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
                 list: function (address, max) {
                     max = max || 50;
                     return transactionApi.one('address', address).one('limit', max).getList();
+                },
+                info: function (transactionId) {
+                    return transactionApi.one('info', transactionId).get();
                 }
             };
 
@@ -1745,10 +1747,17 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
             var assetBroadcastApi = assetApi.all('broadcast');
             this.assets = {
                 balance: function (address, assetId) {
-                    return assetApi.one('balance', address).all(assetId).get();
+                    var rest = assetApi.one('balance', address);
+                    if (angular.isDefined(assetId))
+                        rest = rest.all(assetId);
+
+                    return rest.get();
                 },
                 issue: function (signedAssetIssueTransaction) {
                     return assetBroadcastApi.all('issue').post(signedAssetIssueTransaction);
+                },
+                reissue: function (signedAssetReissueTransaction) {
+                    return assetBroadcastApi.all('reissue').post(signedAssetReissueTransaction);
                 },
                 transfer: function (signedAssetTransferTransaction) {
                     return assetBroadcastApi.all('transfer').post(signedAssetTransferTransaction);

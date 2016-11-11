@@ -33,6 +33,9 @@
                 list: function (address, max) {
                     max = max || 50;
                     return transactionApi.one('address', address).one('limit', max).getList();
+                },
+                info: function (transactionId) {
+                    return transactionApi.one('info', transactionId).get();
                 }
             };
 
@@ -45,10 +48,17 @@
             var assetBroadcastApi = assetApi.all('broadcast');
             this.assets = {
                 balance: function (address, assetId) {
-                    return assetApi.one('balance', address).all(assetId).get();
+                    var rest = assetApi.one('balance', address);
+                    if (angular.isDefined(assetId))
+                        rest = rest.all(assetId);
+
+                    return rest.get();
                 },
                 issue: function (signedAssetIssueTransaction) {
                     return assetBroadcastApi.all('issue').post(signedAssetIssueTransaction);
+                },
+                reissue: function (signedAssetReissueTransaction) {
+                    return assetBroadcastApi.all('reissue').post(signedAssetReissueTransaction);
                 },
                 transfer: function (signedAssetTransferTransaction) {
                     return assetBroadcastApi.all('transfer').post(signedAssetTransferTransaction);
