@@ -35,9 +35,8 @@ var Currency = function(data) {
 };
 
 Currency.WAV = new Currency({
-    id: '1',
     displayName: 'Wave',
-    symbol: '',
+    symbol: 'W',
     precision: 8
 });
 
