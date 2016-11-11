@@ -22,7 +22,7 @@ var Currency = function(data) {
     data = data || {};
 
     // base58 encoded asset id of the currency
-    this.id = data.id || '';
+    this.id = data.id;
     this.roundingMode = Decimal.ROUND_HALF_UP;
     this.displayName = data.displayName;
     this.symbol = data.symbol || '';
