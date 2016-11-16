@@ -1604,7 +1604,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
                 name: asset.name,
                 description: asset.description,
                 quantity: tokens.toCoins(),
-                decimals: asset.decimalPlaces,
+                decimals: Number(asset.decimalPlaces),
                 reissuable: asset.reissuable,
                 timestamp: asset.time,
                 fee: asset.fee.toCoins(),
@@ -1673,6 +1673,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
             validateReissue(reissue);
             validateSender(sender);
 
+            reissue.reissuable = angular.isDefined(reissue.reissuable) ? reissue.reissuable : false;
             reissue.time = reissue.time || utilityService.getTime();
 
             var signatureData = buildCreateAssetReissueSignatureData(reissue, sender.publicKey);
