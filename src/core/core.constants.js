@@ -3,9 +3,7 @@
 
     angular
         .module('waves.core.constants', [])
-        .constant('constants.core', {
-            CLIENT_VERSION: '0.4.1a',
-            NODE_ADDRESS: 'http://52.30.47.67:6869',
+        .constant('constants.network', {
             NETWORK_NAME: 'devel',
             ADDRESS_VERSION: 1,
             NETWORK_CODE: 'T',

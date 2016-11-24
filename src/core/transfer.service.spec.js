@@ -9,7 +9,7 @@ describe('Transfer.Service', function() {
 
     // overriding app.core module constants
     beforeEach(angular.mock.module('waves.core', function ($provide) {
-        $provide.constant('constants.core', constants);
+        $provide.constant('constants.network', constants);
     }));
 
     // Injection of dependencies

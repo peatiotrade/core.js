@@ -7,7 +7,7 @@
 
     angular
         .module('waves.core.services')
-        .service('cryptoService', ['constants.core', '$window', function(constants, window) {
+        .service('cryptoService', ['constants.network', '$window', function(constants, window) {
 
             var getNetworkIdByte = function() {
                 return constants.NETWORK_CODE.charCodeAt(0) & 0xFF;

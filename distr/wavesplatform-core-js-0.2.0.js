@@ -917,9 +917,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 
     angular
         .module('waves.core.constants', [])
-        .constant('constants.core', {
-            CLIENT_VERSION: '0.4.1a',
-            NODE_ADDRESS: 'http://52.30.47.67:6869',
+        .constant('constants.network', {
             NETWORK_NAME: 'devel',
             ADDRESS_VERSION: 1,
             NETWORK_CODE: 'T',
@@ -961,6 +959,8 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 (function() {
     'use strict';
 
+    var DEFAULT_TESTNET_NODE_ADDRESS = 'http://52.30.47.67:6869';
+
     angular.module('waves.core.services', ['waves.core', 'restangular'])
         .config(function () {
             if (!String.prototype.startsWith) {
@@ -975,8 +975,8 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
                 });
             }
         })
-        .run(['Restangular', 'constants.core', function(rest, constants) {
-            rest.setBaseUrl(constants.NODE_ADDRESS);
+        .run(['Restangular', function(rest) {
+            rest.setBaseUrl(DEFAULT_TESTNET_NODE_ADDRESS);
         }]);
 })();
 
@@ -1311,7 +1311,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 
     angular
         .module('waves.core.services')
-        .service('cryptoService', ['constants.core', '$window', function(constants, window) {
+        .service('cryptoService', ['constants.network', '$window', function(constants, window) {
 
             var getNetworkIdByte = function() {
                 return constants.NETWORK_CODE.charCodeAt(0) & 0xFF;
@@ -1590,6 +1590,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
             validateSender(sender);
 
             asset.time = asset.time || utilityService.getTime();
+            asset.reissuable = angular.isDefined(asset.reissuable) ? asset.reissuable : false;
             asset.description = asset.description || '';
             var assetCurrency = new Currency({
                 displayName: asset.name,
@@ -1850,7 +1851,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 
     angular
         .module('waves.core.services')
-        .service('html5StorageService', ['constants.core', '$window', '$q', function(constants, window, $q) {
+        .service('html5StorageService', ['constants.network', '$window', '$q', function(constants, window, $q) {
             if (angular.isUndefined(constants.NETWORK_NAME))
                 throw new Error('Network name hasn\'t been configured');
 

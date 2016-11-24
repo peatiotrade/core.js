@@ -3,7 +3,7 @@
 
     angular
         .module('waves.core.services')
-        .service('html5StorageService', ['constants.core', '$window', '$q', function(constants, window, $q) {
+        .service('html5StorageService', ['constants.network', '$window', '$q', function(constants, window, $q) {
             if (angular.isUndefined(constants.NETWORK_NAME))
                 throw new Error('Network name hasn\'t been configured');
 
