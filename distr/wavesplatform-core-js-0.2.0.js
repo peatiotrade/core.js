@@ -873,10 +873,22 @@ var Money = function(amount, currency) {
         return this.amount.greaterThan(other.amount);
     };
 
+    this.greaterThanOrEqualTo = function (other) {
+        validateCurrency(this.currency, other.currency);
+
+        return this.amount.greaterThanOrEqualTo(other.amount);
+    };
+
     this.lessThan = function (other) {
         validateCurrency(this.currency, other.currency);
 
         return this.amount.lessThan(other.amount);
+    };
+
+    this.lessThanOrEqualTo = function (other) {
+        validateCurrency(this.currency, other.currency);
+
+        return this.amount.lessThanOrEqualTo(other.amount);
     };
 
     return this;

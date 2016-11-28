@@ -20,4 +20,24 @@ describe('waves.money', function() {
         expect(m.formatIntegerPart()).toEqual('88');
         expect(m.formatFractionPart()).toEqual('.98410000');
     });
+
+    it('compares money values correctly', function () {
+        var v1 = new Money(46.873, Currency.WAV);
+        var v2 = new Money(59.214, Currency.WAV);
+
+        expect(v1.lessThan(v2)).toBe(true);
+        expect(v1.lessThanOrEqualTo(v2)).toBe(true);
+        expect(v2.lessThan(v1)).toBe(false);
+        expect(v2.lessThanOrEqualTo(v1)).toBe(false);
+
+        expect(v2.lessThanOrEqualTo(v2)).toBe(true);
+        expect(v1.lessThanOrEqualTo(v1)).toBe(true);
+        expect(v2.greaterThanOrEqualTo(v2)).toBe(true);
+        expect(v1.greaterThanOrEqualTo(v1)).toBe(true);
+
+        expect(v2.greaterThan(v1)).toBe(true);
+        expect(v2.greaterThanOrEqualTo(v1)).toBe(true);
+        expect(v1.greaterThan(v2)).toBe(false);
+        expect(v1.greaterThanOrEqualTo(v2)).toBe(false);
+    });
 });
