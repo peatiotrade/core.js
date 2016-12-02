@@ -55,7 +55,7 @@
             }));
 
             it('should return currency', function () {
-                expect(wavesDisplayNameFilter('WAV')).toEqual('Wave');
+                expect(wavesDisplayNameFilter('WAV')).toEqual('Waves');
                 expect(wavesDisplayNameFilter('BTC')).toEqual('Bitcoin');
             });
         });
