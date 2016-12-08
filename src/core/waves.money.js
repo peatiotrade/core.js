@@ -106,7 +106,7 @@ var Money = function(amount, currency) {
 
     this.formatAmount = function (stripZeroes) {
         if (stripZeroes)
-            return this.toTokens().toString();
+            return this.toTokens().toFixed(this.amount.decimalPlaces());
 
         return format(this.amount);
     };

@@ -1,14 +1,18 @@
 describe('waves.money', function() {
 
+    function wavesTokensToMoney(tokens) {
+        return Money.fromTokens(tokens, Currency.WAV);
+    }
+
     it('precisely converts tokens to coins', function () {
         expect(new Money(7e-6, Currency.WAV).toCoins()).toEqual(700);
         expect(Money.fromCoins(1000, Currency.WAV).toTokens()).toEqual(0.00001000);
 
         var v = 0.00001234;
-        expect(Money.fromCoins(Money.fromTokens(v, Currency.WAV).toCoins(), Currency.WAV).toTokens()).toEqual(v);
+        expect(Money.fromCoins(wavesTokensToMoney(v).toCoins(), Currency.WAV).toTokens()).toEqual(v);
 
         var stringValue = '0.001222222';
-        var m = Money.fromTokens(stringValue, Currency.WAV);
+        var m = wavesTokensToMoney(stringValue);
         expect(m.toCoins()).toEqual(122222);
         expect(m.toTokens()).toEqual(0.00122222);
     });
@@ -21,9 +25,18 @@ describe('waves.money', function() {
         expect(m.formatFractionPart()).toEqual('.98410000');
     });
 
+    it('strips excess zeros after formatting', function () {
+        expect(wavesTokensToMoney(0.001).formatAmount(true)).toEqual('0.001');
+        expect(wavesTokensToMoney(0.0001).formatAmount(true)).toEqual('0.0001');
+        expect(wavesTokensToMoney(0.00001).formatAmount(true)).toEqual('0.00001');
+        expect(wavesTokensToMoney(0.000001).formatAmount(true)).toEqual('0.000001');
+        expect(wavesTokensToMoney(0.0000001).formatAmount(true)).toEqual('0.0000001');
+        expect(wavesTokensToMoney(0.00000001).formatAmount(true)).toEqual('0.00000001');
+    });
+
     it('compares money values correctly', function () {
-        var v1 = new Money(46.873, Currency.WAV);
-        var v2 = new Money(59.214, Currency.WAV);
+        var v1 = wavesTokensToMoney(46.873);
+        var v2 = wavesTokensToMoney(59.214);
 
         expect(v1.lessThan(v2)).toBe(true);
         expect(v1.lessThanOrEqualTo(v2)).toBe(true);
