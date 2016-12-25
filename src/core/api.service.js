@@ -62,6 +62,9 @@
                 },
                 transfer: function (signedAssetTransferTransaction) {
                     return assetBroadcastApi.all('transfer').post(signedAssetTransferTransaction);
+                },
+                massPay: function (signedTransactions) {
+                    return assetBroadcastApi.all('masspay').post(signedTransactions);
                 }
             };
         }]);
