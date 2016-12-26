@@ -133,4 +133,29 @@ describe('Asset.Service', function() {
         expect(actual.signature)
             .toEqual('4G81NzgHDwXdjqANGE2qxZrC5VpDA7ek3Db8v3iqunpkrXgAy7KBJgdHWUw1TEDBNewtjMJTvB9Po55PZ5d6ztCk');
     });
+
+    it('should correctly calculate transaction id', function () {
+        var transaction = {
+            name: 'TESTCOIN-1',
+            description: '01',
+            time: 1480427109954,
+            totalTokens: 1000000,
+            decimalPlaces: 2,
+            fee: new Money(1, Currency.WAV)
+        };
+
+        var actual = assetService.createAssetIssueTransaction(transaction, sender);
+
+        expect(actual.id).toEqual('BFE6QH9GQRqxWBFLvLFpT29cRdzSaqhGNoC3LTT1ER8w');
+        expect(actual.timestamp).toEqual(transaction.time);
+        expect(actual.name).toEqual(transaction.name);
+        expect(actual.description).toEqual(transaction.description);
+        expect(actual.quantity).toEqual(transaction.totalTokens * 100);
+        expect(actual.decimals).toEqual(transaction.decimalPlaces);
+        expect(actual.fee).toEqual(transaction.fee.toCoins());
+        expect(actual.reissuable).toBe(false);
+        expect(actual.senderPublicKey).toEqual(sender.publicKey);
+        expect(actual.signature)
+            .toEqual('5vLx5r2teXL9hnZZiCnjwBcqtbjKtwaGKrGfnqQSr8ZEyMr7KRyEoLoNer4C2iqyBZkhzvStZS4EU1RQWWpKxbNm');
+    });
 });

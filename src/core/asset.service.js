@@ -103,8 +103,10 @@
             var tokens = new Money(asset.totalTokens, assetCurrency);
             var signatureData = buildCreateAssetSignatureData(asset, tokens.toCoins(), sender.publicKey);
             var signature = buildSignature(signatureData, sender);
+            var id = buildId(signatureData);
 
             return {
+                id: id,
                 name: asset.name,
                 description: asset.description,
                 quantity: tokens.toCoins(),
@@ -141,8 +143,10 @@
 
             var signatureData = buildCreateAssetTransferSignatureData(transfer, sender.publicKey);
             var signature = buildSignature(signatureData, sender);
+            var id = buildId(signatureData);
 
             return {
+                id: id,
                 recipient: transfer.recipient,
                 timestamp: transfer.time,
                 assetId: transfer.amount.currency.id,
@@ -158,6 +162,12 @@
             var privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
 
             return cryptoService.nonDeterministicSign(privateKeyBytes, bytes);
+        }
+
+        function buildId(transactionBytes) {
+            var hash = cryptoService.blake2b(new Uint8Array(transactionBytes));
+
+            return cryptoService.base58.encode(hash);
         }
 
         function buildCreateAssetReissueSignatureData(reissue, senderPublicKey) {
@@ -182,8 +192,10 @@
 
             var signatureData = buildCreateAssetReissueSignatureData(reissue, sender.publicKey);
             var signature = buildSignature(signatureData, sender);
+            var id = buildId(signatureData);
 
             return {
+                id: id,
                 assetId: reissue.totalTokens.currency.id,
                 quantity: reissue.totalTokens.toCoins(),
                 reissuable: reissue.reissuable,
