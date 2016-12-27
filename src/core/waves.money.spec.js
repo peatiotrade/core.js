@@ -23,6 +23,10 @@ describe('waves.money', function() {
         expect(m.formatAmount(true)).toEqual('88.9841');
         expect(m.formatIntegerPart()).toEqual('88');
         expect(m.formatFractionPart()).toEqual('.98410000');
+
+        m = Money.fromTokens(12345.456987, Currency.WAV);
+        expect(m.formatAmount()).toEqual('12,345.45698700');
+        expect(m.formatAmount(true)).toEqual('12,345.456987');
     });
 
     it('strips excess zeros after formatting', function () {

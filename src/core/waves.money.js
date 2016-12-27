@@ -69,6 +69,9 @@ Currency.CNY = new Currency({
 });
 
 var Money = function(amount, currency) {
+    var DECIMAL_SEPARATOR = '.';
+    var THOUSANDS_SEPARATOR = ',';
+
     if (amount === undefined)
         throw Error('Amount is required');
 
@@ -104,11 +107,21 @@ var Money = function(amount, currency) {
         return valueInCoins.trunc().div(Math.pow(10, currencyPrecision));
     };
 
-    this.formatAmount = function (stripZeroes) {
-        if (stripZeroes)
-            return this.toTokens().toFixed(this.amount.decimalPlaces());
+    // in 2016 Safari doesn't support toLocaleString()
+    // that's why we need this method
+    var formatWithThousandsSeparator = function (formattedAmount) {
+        var parts = formattedAmount.split(DECIMAL_SEPARATOR);
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, THOUSANDS_SEPARATOR);
 
-        return format(this.amount);
+        return parts.join(DECIMAL_SEPARATOR);
+    };
+
+    this.formatAmount = function (stripZeroes) {
+        var result = stripZeroes ?
+            this.toTokens().toFixed(this.amount.decimalPlaces()) :
+            format(this.amount);
+
+        return formatWithThousandsSeparator(result);
     };
 
     this.formatIntegerPart = function () {
