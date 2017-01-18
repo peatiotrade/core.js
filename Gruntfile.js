@@ -183,10 +183,6 @@ module.exports = function (grunt) {
                     draft: true,
                     prerelease: true
                 }
-            },
-            files: {
-                expand: true,
-                src: ['<%= compress.testnet.options.archive %>', '<%= compress.mainnet.options.archive %>']
             }
         }
     });
@@ -202,7 +198,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-jscs');
     grunt.loadNpmTasks('grunt-bump');
-    //grunt.loadNpmTasks('grunt-github-releaser');
+    grunt.loadNpmTasks('waves-grunt-github-releaser');
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-conventional-changelog');
