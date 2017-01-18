@@ -14,7 +14,6 @@ module.exports = function (grunt) {
                         'bower_components/js-sha3/src/sha3.js',
 
                         'bower_components/angular/angular.js',
-                        'bower_components/angular-route/angular-route.js',
                         'bower_components/angular-sanitize/angular-sanitize.js',
                         'bower_components/angular-mocks/angular-mocks.js',
                         'bower_components/restangular/dist/restangular.js',
@@ -57,7 +56,8 @@ module.exports = function (grunt) {
                     ]
                 }
             },
-            editor: "nano",
+            editor: 'nano',
+            target: 'wavesplatform-core'
         },
         // Task configuration.
         jshint: {
@@ -96,7 +96,7 @@ module.exports = function (grunt) {
                 options: {
                     files: [
                         '<%= meta.sources.ordered.libraries %>',
-                        'distr/<%= pkg.name %>-<%= pkg.version %>.js',
+                        'distr/<%= meta.target %>.js',
                         'src/**/*.spec.js'
                     ]
                 }
@@ -105,7 +105,7 @@ module.exports = function (grunt) {
                 options: {
                     files: [
                         '<%= meta.sources.ordered.libraries %>',
-                        'distr/<%= pkg.name %>-<%= pkg.version %>.min.js',
+                        'distr/<%= meta.target %>.min.js',
                         'src/**/*.spec.js'
                     ]
                 }
@@ -114,7 +114,7 @@ module.exports = function (grunt) {
         concat: {
             distr: {
                 src: ['<%= meta.sources.ordered.local %>'],
-                dest: 'distr/<%= pkg.name %>-<%= pkg.version %>.js'
+                dest: 'distr/<%= meta.target %>.js'
             }
         },
         uglify: {
@@ -123,7 +123,7 @@ module.exports = function (grunt) {
             },
             distr: {
                 files: {
-                    'distr/<%= pkg.name %>-<%= pkg.version %>.min.js': ['distr/<%= pkg.name %>-<%= pkg.version %>.js']
+                    'distr/<%= meta.target %>.min.js': ['distr/<%= meta.target %>.js']
                 }
             }
         },
@@ -171,7 +171,7 @@ module.exports = function (grunt) {
         },
         "github-release": {
             options: {
-                repository : "beregovoy68/wavesplatform.core.js",
+                repository : "wavesplatform/wavesplatform.core.js",
                 auth: {
                     user: process.env["GITHUB_ACCESS_TOKEN"],
                     password: ''
