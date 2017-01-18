@@ -56,7 +56,7 @@ module.exports = function (grunt) {
                     ]
                 }
             },
-            editor: 'nano',
+            editor: 'gedit --new-window -s ',
             target: 'wavesplatform-core'
         },
         // Task configuration.
@@ -183,7 +183,8 @@ module.exports = function (grunt) {
                     draft: true,
                     prerelease: true
                 }
-            }
+            },
+            files: []
         }
     });
 
@@ -208,7 +209,7 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('distr', ['clean', 'build', 'emptyChangelog']);
-    grunt.registerTask('publish', ['bump', 'distr', 'conventionalChangelog', 'shell', 'github-release']);
+    grunt.registerTask('publish', ['distr', 'conventionalChangelog', 'shell', 'github-release']);
     grunt.registerTask('test', ['jshint', 'jscs', 'karma:development']);
     grunt.registerTask('build', [
         'jscs',
