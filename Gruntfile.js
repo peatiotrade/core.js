@@ -52,7 +52,9 @@ module.exports = function (grunt) {
                         'src/core/formatting.filter.js',
                         'src/core/waves.money.filter.js',
                         'src/core/base58.service.js',
-                        'src/core/base58.directive.js'
+                        'src/core/base58.directive.js',
+                        'src/core/coinomat.currency.mapping.service.js',
+                        'src/core/coinomat.service.js'
                     ]
                 }
             },
