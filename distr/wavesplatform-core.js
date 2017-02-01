@@ -2443,39 +2443,37 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
         var createTunnel = apiRoot.all('create_tunnel.php');
         var getTunnel = apiRoot.all('get_tunnel.php');
 
+        /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
         function loadPaymentDetails(currencyCodeFrom, currencyCodeTo, recipientAddress) {
             return createTunnel.getList({
-                'currency_from': currencyCodeFrom,
-                'currency_to': currencyCodeTo,
-                'wallet_to': recipientAddress
+                currency_from: currencyCodeFrom,
+                currency_to: currencyCodeTo,
+                wallet_to: recipientAddress
             }).then(function (response) {
                 ensureTunnelCreated(response);
 
-                /* jshint ignore:start */
                 return {
-                    id: response['tunnel_id'],
+                    id: response.tunnel_id,
                     k1: response.k1,
                     k2: response.k2
                 };
-                /* jshint ignore:end */
             }).then(function (tunnel) {
                 return getTunnel.getList({
-                    'xt_id': tunnel.id,
-                    'k1': tunnel.k1,
-                    'k2': tunnel.k2,
-                    'history': 0,
-                    'lang': LANGUAGE
+                    xt_id: tunnel.id,
+                    k1: tunnel.k1,
+                    k2: tunnel.k2,
+                    history: 0,
+                    lang: LANGUAGE
                 });
             }).then(function (response) {
                 ensureTunnelObtained(response);
 
-                /* jshint ignore:start */
                 // here only BTC wallet is returned
                 // probably for other currencies more requisites are required
-                return response.tunnel['wallet_from'];
-                /* jshint ignore:end */
+                return response.tunnel.wallet_from;
             });
         }
+        /* jscs:enable requireCamelCaseOrUpperCaseIdentifiers */
 
         this.getDepositDetails = function (currency, wavesRecipientAddress) {
             var gatewayCurrencyCode = mappingService.gatewayCurrencyCode(currency);
@@ -2508,4 +2506,48 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
     angular
         .module('waves.core.services')
         .service('coinomatService', WavesCoinomatService);
+})();
+
+(function () {
+    'use strict';
+
+    function Pair (id, name) {
+        return {
+            id: id,
+            name: name
+        };
+    }
+
+    function normalizeId(id) {
+        return id ? id : 'wav';
+    }
+
+    function WavesMatcherService (rest) {
+        var apiRoot = rest.all('matcher');
+
+        this.loadAllMarkets = function () {
+            return apiRoot.all('markets').getList()
+                .then(function (response) {
+                    var pairs = [];
+                    _.forEach(response.result, function (market) {
+                        var id = normalizeId(market.firstAssetId) + '/' + normalizeId(market.secondAssetId);
+                        var pair = {
+                            id: id,
+                            first: new Pair(market.firstAssetId, market.firstAssetName),
+                            second: new Pair(market.secondAssetId, market.secondAssetName),
+                            created: market.created
+                        };
+                        pairs.push(pair);
+                    });
+
+                    return pairs;
+                });
+        };
+    }
+
+    WavesMatcherService.$inject = ['MatcherRestangular'];
+
+    angular
+        .module('waves.core.services')
+        .service('matcherService', WavesMatcherService);
 })();
