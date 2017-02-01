@@ -54,7 +54,8 @@ module.exports = function (grunt) {
                         'src/core/base58.service.js',
                         'src/core/base58.directive.js',
                         'src/core/coinomat.currency.mapping.service.js',
-                        'src/core/coinomat.service.js'
+                        'src/core/coinomat.service.js',
+                        'src/core/matcher.service.js'
                     ]
                 }
             },
