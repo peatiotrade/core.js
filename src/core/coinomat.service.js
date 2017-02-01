@@ -22,39 +22,37 @@
         var createTunnel = apiRoot.all('create_tunnel.php');
         var getTunnel = apiRoot.all('get_tunnel.php');
 
+        /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
         function loadPaymentDetails(currencyCodeFrom, currencyCodeTo, recipientAddress) {
             return createTunnel.getList({
-                'currency_from': currencyCodeFrom,
-                'currency_to': currencyCodeTo,
-                'wallet_to': recipientAddress
+                currency_from: currencyCodeFrom,
+                currency_to: currencyCodeTo,
+                wallet_to: recipientAddress
             }).then(function (response) {
                 ensureTunnelCreated(response);
 
-                /* jshint ignore:start */
                 return {
-                    id: response['tunnel_id'],
+                    id: response.tunnel_id,
                     k1: response.k1,
                     k2: response.k2
                 };
-                /* jshint ignore:end */
             }).then(function (tunnel) {
                 return getTunnel.getList({
-                    'xt_id': tunnel.id,
-                    'k1': tunnel.k1,
-                    'k2': tunnel.k2,
-                    'history': 0,
-                    'lang': LANGUAGE
+                    xt_id: tunnel.id,
+                    k1: tunnel.k1,
+                    k2: tunnel.k2,
+                    history: 0,
+                    lang: LANGUAGE
                 });
             }).then(function (response) {
                 ensureTunnelObtained(response);
 
-                /* jshint ignore:start */
                 // here only BTC wallet is returned
                 // probably for other currencies more requisites are required
-                return response.tunnel['wallet_from'];
-                /* jshint ignore:end */
+                return response.tunnel.wallet_from;
             });
         }
+        /* jscs:enable requireCamelCaseOrUpperCaseIdentifiers */
 
         this.getDepositDetails = function (currency, wavesRecipientAddress) {
             var gatewayCurrencyCode = mappingService.gatewayCurrencyCode(currency);
