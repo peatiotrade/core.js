@@ -2440,12 +2440,10 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 
     function WavesCoinomatService (rest, mappingService) {
         var apiRoot = rest.all('api').all('v1');
-        var createTunnel = apiRoot.all('create_tunnel.php');
-        var getTunnel = apiRoot.all('get_tunnel.php');
 
         /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
         function loadPaymentDetails(currencyCodeFrom, currencyCodeTo, recipientAddress) {
-            return createTunnel.getList({
+            return apiRoot.get('create_tunnel.php', {
                 currency_from: currencyCodeFrom,
                 currency_to: currencyCodeTo,
                 wallet_to: recipientAddress
@@ -2458,7 +2456,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
                     k2: response.k2
                 };
             }).then(function (tunnel) {
-                return getTunnel.getList({
+                return apiRoot.get('get_tunnel.php', {
                     xt_id: tunnel.id,
                     k1: tunnel.k1,
                     k2: tunnel.k2,
@@ -2525,23 +2523,32 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
     function WavesMatcherService (rest) {
         var apiRoot = rest.all('matcher');
 
-        this.loadAllMarkets = function () {
-            return apiRoot.all('markets').getList()
-                .then(function (response) {
-                    var pairs = [];
-                    _.forEach(response.result, function (market) {
-                        var id = normalizeId(market.firstAssetId) + '/' + normalizeId(market.secondAssetId);
-                        var pair = {
-                            id: id,
-                            first: new Pair(market.firstAssetId, market.firstAssetName),
-                            second: new Pair(market.secondAssetId, market.secondAssetName),
-                            created: market.created
-                        };
-                        pairs.push(pair);
-                    });
+        this.loadOrderBook = function (firstAssetId, secondAssetId) {
+            firstAssetId = firstAssetId | '';
+            secondAssetId = secondAssetId | '';
 
-                    return pairs;
+            return apiRoot.get('orderBook', {
+                asset1: firstAssetId,
+                asset2: secondAssetId
+            });
+        };
+
+        this.loadAllMarkets = function () {
+            return apiRoot.get('markets').then(function (response) {
+                var pairs = [];
+                _.forEach(response.result, function (market) {
+                    var id = normalizeId(market.firstAssetId) + '/' + normalizeId(market.secondAssetId);
+                    var pair = {
+                        id: id,
+                        first: new Pair(market.firstAssetId, market.firstAssetName),
+                        second: new Pair(market.secondAssetId, market.secondAssetName),
+                        created: market.created
+                    };
+                    pairs.push(pair);
                 });
+
+                return pairs;
+            });
         };
     }
 

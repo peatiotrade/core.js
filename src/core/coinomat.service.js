@@ -19,12 +19,10 @@
 
     function WavesCoinomatService (rest, mappingService) {
         var apiRoot = rest.all('api').all('v1');
-        var createTunnel = apiRoot.all('create_tunnel.php');
-        var getTunnel = apiRoot.all('get_tunnel.php');
 
         /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
         function loadPaymentDetails(currencyCodeFrom, currencyCodeTo, recipientAddress) {
-            return createTunnel.getList({
+            return apiRoot.get('create_tunnel.php', {
                 currency_from: currencyCodeFrom,
                 currency_to: currencyCodeTo,
                 wallet_to: recipientAddress
@@ -37,7 +35,7 @@
                     k2: response.k2
                 };
             }).then(function (tunnel) {
-                return getTunnel.getList({
+                return apiRoot.get('get_tunnel.php', {
                     xt_id: tunnel.id,
                     k1: tunnel.k1,
                     k2: tunnel.k2,
