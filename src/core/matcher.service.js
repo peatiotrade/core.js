@@ -9,7 +9,7 @@
     }
 
     function normalizeId(id) {
-        return id ? id : 'wav';
+        return id ? id : Currency.WAV.displayName.toLowerCase();
     }
 
     function WavesMatcherService (rest) {

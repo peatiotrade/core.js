@@ -967,7 +967,8 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
             MINIMUM_PAYMENT_AMOUNT : 1e-8,
             MINIMUM_TRANSACTION_FEE : 0.001,
             AMOUNT_DECIMAL_PLACES : 8,
-            JAVA_MAX_LONG: 9223372036854775807
+            JAVA_MAX_LONG: 9223372036854775807,
+            MAXIMUM_ATTACHMENT_BYTE_SIZE: 140
         });
 
     angular
@@ -2517,7 +2518,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
     }
 
     function normalizeId(id) {
-        return id ? id : 'wav';
+        return id ? id : Currency.WAV.displayName.toLowerCase();
     }
 
     function WavesMatcherService (rest) {
