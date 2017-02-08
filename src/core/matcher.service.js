@@ -1,6 +1,8 @@
 (function () {
     'use strict';
 
+    var WAVES_ASSET_ID = 'WAVES';
+
     function Pair (id, name) {
         return {
             id: id,
@@ -9,24 +11,22 @@
     }
 
     function normalizeId(id) {
-        return id ? id : Currency.WAV.displayName.toLowerCase();
+        return id ? id : WAVES_ASSET_ID;
     }
 
     function WavesMatcherService (rest) {
         var apiRoot = rest.all('matcher');
+        var orderBookRoot = rest.all('orderBook');
 
         this.loadOrderBook = function (firstAssetId, secondAssetId) {
             firstAssetId = firstAssetId | '';
             secondAssetId = secondAssetId | '';
 
-            return apiRoot.get('orderBook', {
-                asset1: firstAssetId,
-                asset2: secondAssetId
-            });
+            return orderBookRoot.get(normalizeId(firstAssetId), normalizeId(secondAssetId));
         };
 
         this.loadAllMarkets = function () {
-            return apiRoot.get('markets').then(function (response) {
+            return apiRoot.get('orderbook').then(function (response) {
                 var pairs = [];
                 _.forEach(response.result, function (market) {
                     var id = normalizeId(market.firstAssetId) + '/' + normalizeId(market.secondAssetId);
