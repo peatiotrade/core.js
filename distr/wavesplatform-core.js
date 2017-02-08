@@ -2537,7 +2537,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
         this.loadAllMarkets = function () {
             return apiRoot.get('orderbook').then(function (response) {
                 var pairs = [];
-                _.forEach(response.result, function (market) {
+                _.forEach(response.markets, function (market) {
                     var id = normalizeId(market.firstAssetId) + '/' + normalizeId(market.secondAssetId);
                     var pair = {
                         id: id,
