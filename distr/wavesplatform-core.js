@@ -2538,11 +2538,11 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
             return apiRoot.get('orderbook').then(function (response) {
                 var pairs = [];
                 _.forEach(response.markets, function (market) {
-                    var id = normalizeId(market.firstAssetId) + '/' + normalizeId(market.secondAssetId);
+                    var id = normalizeId(market.asset1Id) + '/' + normalizeId(market.asset2Id);
                     var pair = {
                         id: id,
-                        first: new Pair(market.firstAssetId, market.firstAssetName),
-                        second: new Pair(market.secondAssetId, market.secondAssetName),
+                        first: new Pair(market.asset1Id, market.asset1Name),
+                        second: new Pair(market.asset2Id, market.asset2Name),
                         created: market.created
                     };
                     pairs.push(pair);
