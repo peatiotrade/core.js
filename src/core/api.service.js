@@ -64,7 +64,7 @@
                     return assetBroadcastApi.all('transfer').post(signedAssetTransferTransaction);
                 },
                 massPay: function (signedTransactions) {
-                    return assetBroadcastApi.all('batch_transfer').post(signedTransactions);
+                    return assetBroadcastApi.all('batch-transfer').post(signedTransactions);
                 }
             };
         }]);
