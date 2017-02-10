@@ -4,6 +4,9 @@
     var WAVES_ASSET_ID = 'WAVES';
 
     function Pair (id, name) {
+        if (id === WAVES_ASSET_ID)
+            id = '';
+
         return {
             id: id,
             name: name
@@ -16,13 +19,14 @@
 
     function WavesMatcherService (rest) {
         var apiRoot = rest.all('matcher');
-        var orderBookRoot = rest.all('orderBook');
+        var orderBookRoot = apiRoot.all('orderbook');
+
+        this.loadMatcherKey = function () {
+            return rest.get('matcher');
+        };
 
         this.loadOrderBook = function (firstAssetId, secondAssetId) {
-            firstAssetId = firstAssetId | '';
-            secondAssetId = secondAssetId | '';
-
-            return orderBookRoot.get(normalizeId(firstAssetId), normalizeId(secondAssetId));
+            return orderBookRoot.all(normalizeId(firstAssetId)).get(normalizeId(secondAssetId));
         };
 
         this.loadAllMarkets = function () {
