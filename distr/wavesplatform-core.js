@@ -1809,11 +1809,11 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
             var assetBroadcastApi = assetApi.all('broadcast');
             this.assets = {
                 balance: function (address, assetId) {
-                    var rest = assetApi.one('balance', address);
-                    if (angular.isDefined(assetId))
-                        rest = rest.all(assetId);
-
-                    return rest.get();
+                    var rest = assetApi.all('balance');
+                    if (assetId)
+                        return rest.all(address).get(assetId);
+                    else
+                        return rest.get(address);
                 },
                 issue: function (signedAssetIssueTransaction) {
                     return assetBroadcastApi.all('issue').post(signedAssetIssueTransaction);
