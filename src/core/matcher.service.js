@@ -22,7 +22,7 @@
         var orderBookRoot = apiRoot.all('orderbook');
 
         this.loadMatcherKey = function () {
-            return rest.get('matcher');
+            return apiRoot.get('');
         };
 
         this.loadOrderBook = function (firstAssetId, secondAssetId) {
@@ -30,7 +30,7 @@
         };
 
         this.loadAllMarkets = function () {
-            return apiRoot.get('orderbook').then(function (response) {
+            return orderBookRoot.get('').then(function (response) {
                 var pairs = [];
                 _.forEach(response.markets, function (market) {
                     var id = normalizeId(market.asset1Id) + '/' + normalizeId(market.asset2Id);

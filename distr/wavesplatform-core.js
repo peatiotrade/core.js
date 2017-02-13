@@ -1267,6 +1267,12 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
         .service('accountService', ['storageService', '$q', function (storageService, $q) {
             var stateCache;
 
+            function removeByIndex(state, index) {
+                state.accounts.splice(index, 1);
+
+                return state;
+            }
+
             function getState() {
                 if (angular.isUndefined(stateCache)) {
                     return storageService.loadState().then(function (state) {
@@ -1293,15 +1299,21 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
                     .then(storageService.saveState);
             };
 
+            this.removeAccountByIndex = function (index) {
+                return getState()
+                    .then(function (state) {
+                        return removeByIndex(state, index);
+                    })
+                    .then(storageService.saveState);
+            };
+
             this.removeAccount = function (account) {
                 return getState()
                     .then(function (state) {
                         var index = _.findIndex(state.accounts, {
                             address: account.address
                         });
-                        state.accounts.splice(index, 1);
-
-                        return state;
+                        return removeByIndex(state, index);
                     })
                     .then(storageService.saveState);
             };
@@ -2531,7 +2543,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
         var orderBookRoot = apiRoot.all('orderbook');
 
         this.loadMatcherKey = function () {
-            return rest.get('matcher');
+            return apiRoot.get('');
         };
 
         this.loadOrderBook = function (firstAssetId, secondAssetId) {
@@ -2539,7 +2551,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
         };
 
         this.loadAllMarkets = function () {
-            return apiRoot.get('orderbook').then(function (response) {
+            return orderBookRoot.get('').then(function (response) {
                 var pairs = [];
                 _.forEach(response.markets, function (market) {
                     var id = normalizeId(market.asset1Id) + '/' + normalizeId(market.asset2Id);

@@ -76,4 +76,24 @@ describe('AccountService', function () {
         expect(accounts.length).toEqual(2);
         expect(accounts).toEqual(mockStorage.accounts);
     });
+
+    it('should correctly remove account by index', function () {
+        mockStorage.accounts.push({
+            name: 'TestAccount3',
+            address: mockStorage.accounts[0].address
+        });
+        expect(mockStorage.accounts.length).toEqual(3);
+        accountService.removeAccountByIndex(2);
+        $rootScope.$digest();
+        expect(_.findIndex(mockStorage.accounts, {
+            name: 'TestAccount3'
+        })).toEqual(-1);
+        expect(mockStorage.accounts.length).toEqual(2);
+        accountService.removeAccountByIndex(0);
+        $rootScope.$digest();
+        expect(mockStorage.accounts.length).toEqual(1);
+        expect(_.findIndex(mockStorage.accounts, {
+            name: 'TestAccount1'
+        })).toEqual(-1);
+    });
 });
