@@ -2525,13 +2525,14 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
     var WAVES_ASSET_ID = 'WAVES';
 
     function Pair (id, name) {
-        if (id === WAVES_ASSET_ID)
-            id = '';
-
         return {
-            id: id,
+            id: denormalizeId(id),
             name: name
         };
+    }
+
+    function denormalizeId(id) {
+        return id === WAVES_ASSET_ID ? '' : id;
     }
 
     function normalizeId(id) {
@@ -2547,7 +2548,13 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
         };
 
         this.loadOrderBook = function (firstAssetId, secondAssetId) {
-            return orderBookRoot.all(normalizeId(firstAssetId)).get(normalizeId(secondAssetId));
+            return orderBookRoot.all(normalizeId(firstAssetId)).get(normalizeId(secondAssetId))
+                .then(function (response) {
+                    response.pair.asset1 = denormalizeId(response.pair.asset1);
+                    response.pair.asset2 = denormalizeId(response.pair.asset2);
+
+                    return response;
+                });
         };
 
         this.loadAllMarkets = function () {
