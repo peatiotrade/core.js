@@ -18,7 +18,7 @@
         return id ? id : WAVES_ASSET_ID;
     }
 
-    function WavesMatcherService (rest) {
+    function WavesMatcherApiService (rest) {
         var apiRoot = rest.all('matcher');
         var orderBookRoot = apiRoot.all('orderbook');
 
@@ -55,9 +55,9 @@
         };
     }
 
-    WavesMatcherService.$inject = ['MatcherRestangular'];
+    WavesMatcherApiService.$inject = ['MatcherRestangular'];
 
     angular
         .module('waves.core.services')
-        .service('matcherService', WavesMatcherService);
+        .service('matcherApiService', WavesMatcherApiService);
 })();
