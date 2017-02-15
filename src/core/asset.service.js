@@ -53,7 +53,7 @@
             var assetDescriptionBytes = stringToByteArrayWithSize(asset.description);
             var quantityBytes = utilityService.longToByteArray(tokensQuantity);
             var decimalPlacesBytes = [asset.decimalPlaces];
-            var reissuableBytes = booleanToBytes(asset.reissuable);
+            var reissuableBytes = utilityService.booleanToBytes(asset.reissuable);
             var feeBytes = utilityService.longToByteArray(asset.fee.toCoins());
             var timestampBytes = utilityService.longToByteArray(asset.time);
 
@@ -71,21 +71,6 @@
             var result = utilityService.shortToByteArray(byteArray.length);
 
             return result.concat(byteArray);
-        }
-
-        function currencyToBytes (currencyId, mandatory) {
-            if (mandatory) {
-                if (angular.isUndefined(currencyId))
-                    throw new Error('CurrencyId is mandatory');
-
-                return utilityService.base58StringToByteArray(currencyId);
-            }
-            return angular.isDefined(currencyId) ?
-                [1].concat(utilityService.base58StringToByteArray(currencyId)) : [0];
-        }
-
-        function booleanToBytes (flag) {
-            return flag ? [1] : [0];
         }
 
         this.createAssetIssueTransaction = function (asset, sender) {
@@ -122,11 +107,11 @@
         function buildCreateAssetTransferSignatureData(transfer, senderPublicKey) {
             var typeByte = [constants.ASSET_TRANSFER_TRANSACTION_TYPE];
             var publicKeyBytes = utilityService.base58StringToByteArray(senderPublicKey);
-            var assetIdBytes = currencyToBytes(transfer.amount.currency.id);
+            var assetIdBytes = utilityService.currencyToBytes(transfer.amount.currency.id);
             var recipientBytes = utilityService.base58StringToByteArray(transfer.recipient);
             var amountBytes = utilityService.longToByteArray(transfer.amount.toCoins());
             var feeBytes = utilityService.longToByteArray(transfer.fee.toCoins());
-            var feeAssetBytes = currencyToBytes(transfer.fee.currency.id);
+            var feeAssetBytes = utilityService.currencyToBytes(transfer.fee.currency.id);
             var timestampBytes = utilityService.longToByteArray(transfer.time);
             var attachmentBytes = byteArrayWithSize(transfer.attachment);
 
@@ -173,9 +158,9 @@
         function buildCreateAssetReissueSignatureData(reissue, senderPublicKey) {
             var typeByte = [constants.ASSET_REISSUE_TRANSACTION_TYPE];
             var publicKeyBytes = utilityService.base58StringToByteArray(senderPublicKey);
-            var assetIdBytes = currencyToBytes(reissue.totalTokens.currency.id, true);
+            var assetIdBytes = utilityService.currencyToBytes(reissue.totalTokens.currency.id, true);
             var quantityBytes = utilityService.longToByteArray(reissue.totalTokens.toCoins());
-            var reissuableBytes = booleanToBytes(reissue.reissuable);
+            var reissuableBytes = utilityService.booleanToBytes(reissue.reissuable);
             var feeBytes = utilityService.longToByteArray(reissue.fee.toCoins());
             var timestampBytes = utilityService.longToByteArray(reissue.time);
 

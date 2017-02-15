@@ -22,6 +22,18 @@
         var apiRoot = rest.all('matcher');
         var orderBookRoot = apiRoot.all('orderbook');
 
+        this.createOrder = function (signedOrderRequest) {
+            return orderBookRoot.post(signedOrderRequest);
+        };
+
+        this.cancelOrder = function (firstAssetId, secondAssetId, signedCancelRequest) {
+            return orderBookRoot
+                .all(normalizeId(firstAssetId))
+                .all(normalizeId(secondAssetId))
+                .all('cancel')
+                .post(signedCancelRequest);
+        };
+
         this.loadMatcherKey = function () {
             return apiRoot.get('');
         };

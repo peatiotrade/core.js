@@ -4,6 +4,8 @@
     angular
         .module('waves.core.services')
         .service('utilityService', ['cryptoService', function (cryptoService) {
+            var me = this;
+
             // long to big-endian bytes
             this.longToByteArray = function (value) {
                 var bytes = new Array(7);
@@ -28,6 +30,21 @@
                 }
 
                 return result;
+            };
+
+            this.currencyToBytes = function (currencyId, mandatory) {
+                if (mandatory) {
+                    if (!currencyId)
+                        throw new Error('CurrencyId is mandatory');
+
+                    return me.base58StringToByteArray(currencyId);
+                }
+                return currencyId ?
+                    [1].concat(me.base58StringToByteArray(currencyId)) : [0];
+            };
+
+            this.booleanToBytes = function (flag) {
+                return flag ? [1] : [0];
             };
 
             this.endsWithWhitespace = function (value) {
