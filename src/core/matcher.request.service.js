@@ -3,10 +3,13 @@
 
     function WavesMatcherRequestService (utilityService, cryptoService) {
         function validateSender(sender) {
-            if (angular.isUndefined(sender.publicKey))
+            if (!sender)
+                throw new Error('Sender hasn\'t been set');
+
+            if (!sender.publicKey)
                 throw new Error('Sender account public key hasn\'t been set');
 
-            if (angular.isUndefined(sender.privateKey))
+            if (!sender.privateKey)
                 throw new Error('Sender account private key hasn\'t been set');
         }
 
