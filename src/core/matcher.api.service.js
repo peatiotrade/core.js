@@ -34,6 +34,13 @@
                 .post(signedCancelRequest);
         };
 
+        this.orderStatus = function (firstAssetId, secondAssetId, orderId) {
+            return orderBookRoot
+                .all(normalizeId(firstAssetId))
+                .all(normalizeId(secondAssetId))
+                .get(orderId);
+        };
+
         this.loadMatcherKey = function () {
             return apiRoot.get('');
         };

@@ -2557,6 +2557,13 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
                 .post(signedCancelRequest);
         };
 
+        this.orderStatus = function (firstAssetId, secondAssetId, orderId) {
+            return orderBookRoot
+                .all(normalizeId(firstAssetId))
+                .all(normalizeId(secondAssetId))
+                .get(orderId);
+        };
+
         this.loadMatcherKey = function () {
             return apiRoot.get('');
         };
@@ -2602,10 +2609,13 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 
     function WavesMatcherRequestService (utilityService, cryptoService) {
         function validateSender(sender) {
-            if (angular.isUndefined(sender.publicKey))
+            if (!sender)
+                throw new Error('Sender hasn\'t been set');
+
+            if (!sender.publicKey)
                 throw new Error('Sender account public key hasn\'t been set');
 
-            if (angular.isUndefined(sender.privateKey))
+            if (!sender.privateKey)
                 throw new Error('Sender account private key hasn\'t been set');
         }
 
