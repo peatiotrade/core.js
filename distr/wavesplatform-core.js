@@ -767,6 +767,13 @@ Currency.WAV = new Currency({
     precision: 8
 });
 
+Currency.UPC = new Currency({
+    id: '4764Pr9DpKQAHAjAVA2uqnrYidLMnM7vpDDLCDWujFTt',
+    displayName: 'Upcoin',
+    symbol: 'U',
+    precision: 2
+});
+
 Currency.BTC = new Currency({
     id: '8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS',
     displayName: 'Bitcoin',
@@ -1682,6 +1689,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
                 assetId: transfer.amount.currency.id,
                 amount: transfer.amount.toCoins(),
                 fee: transfer.fee.toCoins(),
+                feeAssetId: transfer.fee.currency.id,
                 senderPublicKey: sender.publicKey,
                 signature: signature,
                 attachment: cryptoService.base58.encode(transfer.attachment)
