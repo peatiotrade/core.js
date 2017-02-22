@@ -137,6 +137,7 @@
                 assetId: transfer.amount.currency.id,
                 amount: transfer.amount.toCoins(),
                 fee: transfer.fee.toCoins(),
+                feeAssetId: transfer.fee.currency.id,
                 senderPublicKey: sender.publicKey,
                 signature: signature,
                 attachment: cryptoService.base58.encode(transfer.attachment)

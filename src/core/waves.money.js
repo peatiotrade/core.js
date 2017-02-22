@@ -40,6 +40,13 @@ Currency.WAV = new Currency({
     precision: 8
 });
 
+Currency.UPC = new Currency({
+    id: '4764Pr9DpKQAHAjAVA2uqnrYidLMnM7vpDDLCDWujFTt',
+    displayName: 'Upcoin',
+    symbol: 'U',
+    precision: 2
+});
+
 Currency.BTC = new Currency({
     id: '8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS',
     displayName: 'Bitcoin',
