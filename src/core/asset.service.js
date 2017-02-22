@@ -19,6 +19,9 @@
 
             if (angular.isUndefined(asset.decimalPlaces))
                 throw new Error('Token decimal places amount hasn\'t been set');
+
+            if (asset.fee.currency !== Currency.WAV)
+                throw new Error('Transaction fee must be nominated in Waves');
         }
 
         function validateTransfer(transfer) {
@@ -27,9 +30,6 @@
 
             if (angular.isUndefined(transfer.fee))
                 throw new Error('Transaction fee hasn\'t been set');
-
-            if (transfer.fee.currency !== Currency.WAV)
-                throw new Error('Transaction fee must be nominated in Waves');
 
             if (angular.isUndefined(transfer.amount))
                 throw new Error('Transaction amount hasn\'t been set');
