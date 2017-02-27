@@ -11,7 +11,7 @@
     }
 
     function ensureTunnelObtained (response) {
-        if (!response.ok) {
+        if (!response.tunnel) {
             console.log(response);
             throw new Error('Failed to get tunnel: ' + response.error);
         }
@@ -47,7 +47,10 @@
 
                 // here only BTC wallet is returned
                 // probably for other currencies more requisites are required
-                return response.tunnel.wallet_from;
+                return {
+                    address: response.tunnel.wallet_from,
+                    attachment: response.tunnel.attachment
+                };
             });
         }
         /* jscs:enable requireCamelCaseOrUpperCaseIdentifiers */
@@ -59,7 +62,7 @@
             return loadPaymentDetails(gatewayCurrencyCode, platformCurrencyCode, wavesRecipientAddress);
         };
 
-        this.getWithdrawAddress = function (currency, recipientAddress) {
+        this.getWithdrawDetails = function (currency, recipientAddress) {
             var gatewayCurrencyCode = mappingService.gatewayCurrencyCode(currency);
             var platformCurrencyCode = mappingService.platformCurrencyCode(currency);
 

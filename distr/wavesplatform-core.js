@@ -2423,8 +2423,8 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
             }
 
             this.platformCurrencyCode = function (currency) {
-                switch (currency) {
-                    case Currency.BTC:
+                switch (currency.id) {
+                    case Currency.BTC.id:
                         return 'WBTC';
                 }
 
@@ -2432,8 +2432,8 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
             };
 
             this.gatewayCurrencyCode = function (currency) {
-                switch (currency) {
-                    case Currency.BTC:
+                switch (currency.id) {
+                    case Currency.BTC.id:
                         return 'BTC';
                 }
 
@@ -2455,7 +2455,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
     }
 
     function ensureTunnelObtained (response) {
-        if (!response.ok) {
+        if (!response.tunnel) {
             console.log(response);
             throw new Error('Failed to get tunnel: ' + response.error);
         }
@@ -2491,7 +2491,10 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 
                 // here only BTC wallet is returned
                 // probably for other currencies more requisites are required
-                return response.tunnel.wallet_from;
+                return {
+                    address: response.tunnel.wallet_from,
+                    attachment: response.tunnel.attachment
+                };
             });
         }
         /* jscs:enable requireCamelCaseOrUpperCaseIdentifiers */
@@ -2503,7 +2506,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
             return loadPaymentDetails(gatewayCurrencyCode, platformCurrencyCode, wavesRecipientAddress);
         };
 
-        this.getWithdrawAddress = function (currency, recipientAddress) {
+        this.getWithdrawDetails = function (currency, recipientAddress) {
             var gatewayCurrencyCode = mappingService.gatewayCurrencyCode(currency);
             var platformCurrencyCode = mappingService.platformCurrencyCode(currency);
 

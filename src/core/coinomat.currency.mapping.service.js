@@ -9,8 +9,8 @@
             }
 
             this.platformCurrencyCode = function (currency) {
-                switch (currency) {
-                    case Currency.BTC:
+                switch (currency.id) {
+                    case Currency.BTC.id:
                         return 'WBTC';
                 }
 
@@ -18,8 +18,8 @@
             };
 
             this.gatewayCurrencyCode = function (currency) {
-                switch (currency) {
-                    case Currency.BTC:
+                switch (currency.id) {
+                    case Currency.BTC.id:
                         return 'BTC';
                 }
 
