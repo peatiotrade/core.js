@@ -57,4 +57,16 @@ describe('waves.money', function() {
         expect(v1.greaterThan(v2)).toBe(false);
         expect(v1.greaterThanOrEqualTo(v2)).toBe(false);
     });
+
+    it('must throw an error when currencies are not the same', function () {
+        var waves = wavesTokensToMoney(100);
+        var other = Money.fromTokens(10, Currency.BTC);
+
+        expect(function () {waves.greaterThan(other);}).toThrowError();
+        expect(function () {waves.greaterThanOrEqualTo(other);}).toThrowError();
+        expect(function () {other.lessThan(waves);}).toThrowError();
+        expect(function () {other.lessThanOrEqualTo(waves);}).toThrowError();
+        expect(function () {other.plus(waves);}).toThrowError();
+        expect(function () {waves.minus(other);}).toThrowError();
+    });
 });

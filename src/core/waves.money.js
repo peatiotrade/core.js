@@ -101,9 +101,9 @@ var Money = function(amount, currency) {
     };
 
     var validateCurrency = function (expected, actual) {
-        if (expected.currency !== actual.currency)
+        if (expected.id !== actual.id)
             throw Error('Currencies must be the same for operands. Expected: ' +
-                expected.currency.displayName + '; Actual: ' + actual.currency.displayName);
+                expected.displayName + '; Actual: ' + actual.displayName);
     };
 
     var fromTokensToCoins = function (valueInTokens, currencyPrecision) {
