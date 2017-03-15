@@ -5,11 +5,11 @@ describe('Matcher.Request.Service', function() {
         privateKey: '9dXhQYWZ5468TRhksJqpGT6nUySENxXi9nsCZH9AefD1'
     };
     var asset = new Currency({
-        id: '8Nu3gdirpraz8ghmDHscTnoAbmCTLPxLhMeVzG4UxSQY',
-        displayName: 'DEXt',
-        precision: 2
+        id: 'AaFXAN1WTM39XjECHW7DsVFixhq9yMGWHdM2ghr83Gmf',
+        displayName: 'WBTC',
+        precision: 8
     });
-    var matcherKey = '4oP8SPd7LiUo8xsokSTiyZjwg4rojdyXqWEq7NTwWsSU';
+    var matcherKey = 'Ei5BT6ZvKmB5VQLSZGo8mNkSXsTwGG4zUWjN7yu7iZo5';
 
     // Initialization of the module before each test case
     beforeEach(module('waves.core.services'));
@@ -27,29 +27,28 @@ describe('Matcher.Request.Service', function() {
     }));
 
     it('should successfully sign create order request', function () {
-        var price = Money.fromTokens(1, Currency.WAV);
-        var amount = Money.fromTokens(10, asset);
+        var amount = Money.fromTokens(2, Currency.WAV);
+        var price = Money.fromTokens(0.5, asset);
         var fee = Money.fromTokens(0.01, Currency.WAV);
         var order = {
-            spendAssetId: asset.id,
-            receiveAssetId: Currency.WAV.id,
+            orderType: 'sell',
             price: price,
             amount: amount,
-            time: 1487172369858,
-            expiration: 1489764369858,
+            time: 1489592282029,
+            expiration: 1492184282029,
             fee: fee,
             matcherKey: matcherKey
         };
 
         var request = requestService.buildCreateOrderRequest(order, sender);
 
-        expect(request.price).toEqual(100000000);
-        expect(request.amount).toEqual(1000);
+        expect(request.price).toEqual(50000000);
+        expect(request.amount).toEqual(200000000);
         expect(request.matcherFee).toEqual(1000000);
         expect(request.senderPublicKey).toEqual(sender.publicKey);
         expect(request.matcherPublicKey).toEqual(matcherKey);
         expect(request.signature)
-            .toEqual('62SxgoTfPYR3gRRpDmrV4k3EPyy2rRe48ub4iHRng1jkZe2pxuhLnhD4vabgM738yq1Wo4KogVhZfYd7Zfmz1yEn');
+            .toEqual('5pzEHRrtfzH6mY64u8d1LX8rHufEvgnZ5YxGHFW33QUoi4Fv3ScWq7AnrEQMPaZjdR4uzoN9QHWoPTmZDVgpWUbw');
     });
 
     it('should successfully sign cancel order request', function () {

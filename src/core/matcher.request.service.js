@@ -1,6 +1,9 @@
 (function () {
     'use strict';
 
+    var SELL_ORDER_TYPE = 'sell';
+    var BUY_ORDER_TYPE = 'buy';
+
     function WavesMatcherRequestService (utilityService, cryptoService) {
         function validateSender(sender) {
             if (!sender)
@@ -20,17 +23,22 @@
         }
 
         function buildCreateOrderSignatureData (order, senderPublicKey) {
+            var amountAssetIdBytes = utilityService.currencyToBytes(order.amount.currency.id);
+            var priceAssetIdBytes = utilityService.currencyToBytes(order.price.currency.id);
+            var assetPairBytes = [].concat(amountAssetIdBytes, priceAssetIdBytes);
+
+            var isSell = order.orderType === SELL_ORDER_TYPE;
+            var orderTypeBytes = utilityService.booleanToBytes(isSell);
+
             var publicKeyBytes = utilityService.base58StringToByteArray(senderPublicKey);
             var matcherKeyBytes = utilityService.base58StringToByteArray(order.matcherKey);
-            var spendAssetIdBytes = utilityService.currencyToBytes(order.spendAssetId);
-            var receiveAssetIdBytes = utilityService.currencyToBytes(order.receiveAssetId);
             var priceBytes = utilityService.longToByteArray(order.price.toCoins());
             var amountBytes = utilityService.longToByteArray(order.amount.toCoins());
             var timestampBytes = utilityService.longToByteArray(order.time);
             var expirationBytes = utilityService.longToByteArray(order.expiration);
             var feeBytes = utilityService.longToByteArray(order.fee.toCoins());
 
-            return [].concat(publicKeyBytes, matcherKeyBytes, spendAssetIdBytes, receiveAssetIdBytes,
+            return [].concat(publicKeyBytes, matcherKeyBytes, assetPairBytes, orderTypeBytes,
                 priceBytes, amountBytes, timestampBytes, expirationBytes, feeBytes);
         }
 
@@ -47,8 +55,11 @@
             var signature = buildSignature(signatureData, sender);
 
             return {
-                spendAssetId: order.spendAssetId,
-                receiveAssetId: order.receiveAssetId,
+                orderType: order.orderType,
+                assetPair: {
+                    amountAsset: order.amount.currency.id,
+                    priceAsset: order.price.currency.id
+                },
                 price: order.price.toCoins(),
                 amount: order.amount.toCoins(),
                 timestamp: order.time,
