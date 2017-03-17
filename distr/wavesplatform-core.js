@@ -752,6 +752,7 @@ var Currency = function(data) {
     this.id = data.id;
     this.roundingMode = Decimal.ROUND_HALF_UP;
     this.displayName = data.displayName;
+    this.shortName = data.shortName || '';
     this.symbol = data.symbol || '';
     // number of decimal places after a decimal point
     this.precision = data.precision;
@@ -763,6 +764,7 @@ var Currency = function(data) {
 
 Currency.WAV = new Currency({
     displayName: 'Waves',
+    shortName: 'WAV',
     symbol: 'W',
     precision: 8
 });
@@ -770,6 +772,7 @@ Currency.WAV = new Currency({
 Currency.UPC = new Currency({
     id: '4764Pr9DpKQAHAjAVA2uqnrYidLMnM7vpDDLCDWujFTt',
     displayName: 'Upcoin',
+    shortName: 'UPC',
     symbol: 'U',
     precision: 2
 });
@@ -777,6 +780,7 @@ Currency.UPC = new Currency({
 Currency.BTC = new Currency({
     id: '8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS',
     displayName: 'Bitcoin',
+    shortName: 'BTC',
     symbol: 'B',
     precision: 8
 });
@@ -784,6 +788,7 @@ Currency.BTC = new Currency({
 Currency.USD = new Currency({
     id: 'Ft8X1v1LTa1ABafufpaCWyVj8KkaxUWE6xBhW6sNFJck',
     displayName: 'US Dollar',
+    shortName: 'USD',
     symbol: '$',
     precision: 2
 });
@@ -791,6 +796,7 @@ Currency.USD = new Currency({
 Currency.EUR = new Currency({
     id: 'Gtb1WRznfchDnTh37ezoDTJ4wcoKaRsKqKjJjy7nm2zU',
     displayName: 'Euro',
+    shortName: 'EUR',
     symbol: '€',
     precision: 2
 });
@@ -798,6 +804,7 @@ Currency.EUR = new Currency({
 Currency.CNY = new Currency({
     id: 'DEJbZipbKQjwEiRjx2AqQFucrj5CZ3rAc4ZvFM8nAsoA',
     displayName: 'Chinese Yuan',
+    shortName: 'CNY',
     symbol: '¥',
     precision: 2
 });
