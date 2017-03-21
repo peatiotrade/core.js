@@ -2563,12 +2563,11 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
         };
 
         this.getMerchantUrl = function (address, fiatAmount, fiatCurrency) {
-            return apiRoot.get('buy.php', {
-                address: address,
-                fiat: fiatCurrency,
-                amount: fiatAmount,
-                crypto: CRYPTO_CURRENCY
-            }).getRequestedUrl();
+            return apiRoot.all('buy.php').getRequestedUrl() +
+                '?address=' + address +
+                '&fiat=' + fiatCurrency +
+                '&amount=' + fiatAmount +
+                '&crypto=' + CRYPTO_CURRENCY;
         };
     }
 
