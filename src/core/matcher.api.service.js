@@ -45,11 +45,11 @@
             return apiRoot.get('');
         };
 
-        this.loadOrderBook = function (firstAssetId, secondAssetId) {
+        this.loadOrderbook = function (firstAssetId, secondAssetId) {
             return orderBookRoot.all(normalizeId(firstAssetId)).get(normalizeId(secondAssetId))
                 .then(function (response) {
-                    response.pair.asset1 = denormalizeId(response.pair.asset1);
-                    response.pair.asset2 = denormalizeId(response.pair.asset2);
+                    response.pair.amountAsset = denormalizeId(response.pair.amountAsset);
+                    response.pair.priceAsset = denormalizeId(response.pair.priceAsset);
 
                     return response;
                 });
