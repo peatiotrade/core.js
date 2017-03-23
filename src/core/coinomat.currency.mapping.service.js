@@ -21,6 +21,9 @@
                 switch (currency.id) {
                     case Currency.BTC.id:
                         return 'BTC';
+
+                    case Currency.WAV.id:
+                        return 'WAVES';
                 }
 
                 unsupportedCurrency(currency);

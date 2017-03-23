@@ -1,8 +1,7 @@
 (function () {
     'use strict';
 
-    function WavesCoinomatFiatService (rest) {
-        var CRYPTO_CURRENCY = 'BTC';
+    function WavesCoinomatFiatService (rest, currencyMappingService) {
         var apiRoot = rest.all('api').all('v2').all('indacoin');
 
         this.getLimits = function (address, fiat) {
@@ -12,25 +11,25 @@
             });
         };
 
-        this.getRate = function (address, fiatAmount, fiatCurrency) {
+        this.getRate = function (address, fiatAmount, fiatCurrency, cryptoCurrency) {
             return apiRoot.get('rate.php', {
                 address: address,
                 fiat: fiatCurrency,
                 amount: fiatAmount,
-                crypto: CRYPTO_CURRENCY
+                crypto: currencyMappingService.gatewayCurrencyCode(cryptoCurrency)
             });
         };
 
-        this.getMerchantUrl = function (address, fiatAmount, fiatCurrency) {
+        this.getMerchantUrl = function (address, fiatAmount, fiatCurrency, cryptoCurrency) {
             return apiRoot.all('buy.php').getRequestedUrl() +
                 '?address=' + address +
                 '&fiat=' + fiatCurrency +
                 '&amount=' + fiatAmount +
-                '&crypto=' + CRYPTO_CURRENCY;
+                '&crypto=' + currencyMappingService.gatewayCurrencyCode(cryptoCurrency);
         };
     }
 
-    WavesCoinomatFiatService.$inject = ['CoinomatRestangular'];
+    WavesCoinomatFiatService.$inject = ['CoinomatRestangular', 'coinomatCurrencyMappingService'];
 
     angular
         .module('waves.core.services')
