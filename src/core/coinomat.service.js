@@ -55,9 +55,9 @@
         }
         /* jscs:enable requireCamelCaseOrUpperCaseIdentifiers */
 
-        this.getDepositDetails = function (currency, wavesRecipientAddress) {
-            var gatewayCurrencyCode = mappingService.gatewayCurrencyCode(currency);
-            var platformCurrencyCode = mappingService.platformCurrencyCode(currency);
+        this.getDepositDetails = function (sourceCurrency, targetCurrency, wavesRecipientAddress) {
+            var gatewayCurrencyCode = mappingService.gatewayCurrencyCode(sourceCurrency);
+            var platformCurrencyCode = mappingService.platformCurrencyCode(targetCurrency);
 
             return loadPaymentDetails(gatewayCurrencyCode, platformCurrencyCode, wavesRecipientAddress);
         };

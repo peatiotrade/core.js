@@ -2429,15 +2429,28 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
                 throw new Error('Unsupported currency: ' + currency.displayName);
             }
 
+            /**
+             * Currency codes for Waves Platform
+             * @param {Currency} currency
+             * @returns {string} currency code
+             */
             this.platformCurrencyCode = function (currency) {
                 switch (currency.id) {
                     case Currency.BTC.id:
                         return 'WBTC';
+
+                    case Currency.WAV.id:
+                        return 'WAVES';
                 }
 
                 unsupportedCurrency(currency);
             };
 
+            /**
+             * Currency codes for Coinomat gateway
+             * @param {Currency} currency
+             * @returns {string} currency code
+             */
             this.gatewayCurrencyCode = function (currency) {
                 switch (currency.id) {
                     case Currency.BTC.id:
@@ -2509,9 +2522,9 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
         }
         /* jscs:enable requireCamelCaseOrUpperCaseIdentifiers */
 
-        this.getDepositDetails = function (currency, wavesRecipientAddress) {
-            var gatewayCurrencyCode = mappingService.gatewayCurrencyCode(currency);
-            var platformCurrencyCode = mappingService.platformCurrencyCode(currency);
+        this.getDepositDetails = function (sourceCurrency, targetCurrency, wavesRecipientAddress) {
+            var gatewayCurrencyCode = mappingService.gatewayCurrencyCode(sourceCurrency);
+            var platformCurrencyCode = mappingService.platformCurrencyCode(targetCurrency);
 
             return loadPaymentDetails(gatewayCurrencyCode, platformCurrencyCode, wavesRecipientAddress);
         };
