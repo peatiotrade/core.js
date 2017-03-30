@@ -18,69 +18,108 @@
  * @requires {decimal.js}
  */
 
-var Currency = function(data) {
-    data = data || {};
+var Currency = (function () {
+    var currencyCache = {};
 
-    // base58 encoded asset id of the currency
-    this.id = data.id;
-    this.roundingMode = Decimal.ROUND_HALF_UP;
-    this.displayName = data.displayName;
-    this.shortName = data.shortName || '';
-    this.symbol = data.symbol || '';
-    // number of decimal places after a decimal point
-    this.precision = data.precision;
-    if (data.roundingMode !== undefined)
-        this.roundingMode = data.roundingMode;
+    function Currency(data) {
+        data = data || {};
 
-    return this;
-};
+        // base58 encoded asset id of the currency
+        this.id = data.id;
+        this.roundingMode = Decimal.ROUND_HALF_UP;
+        this.displayName = data.displayName;
+        this.shortName = data.shortName || '';
+        this.symbol = data.symbol || '';
+        // number of decimal places after a decimal point
+        this.precision = data.precision;
+        if (data.roundingMode !== undefined)
+            this.roundingMode = data.roundingMode;
 
-Currency.WAV = new Currency({
-    displayName: 'Waves',
-    shortName: 'WAV',
-    symbol: 'W',
-    precision: 8
-});
+        return this;
+    }
 
-Currency.UPC = new Currency({
-    id: '4764Pr9DpKQAHAjAVA2uqnrYidLMnM7vpDDLCDWujFTt',
-    displayName: 'Upcoin',
-    shortName: 'UPC',
-    symbol: 'U',
-    precision: 2
-});
+    var WAV = new Currency({
+        id: '',
+        displayName: 'Waves',
+        shortName: 'WAV',
+        symbol: 'W',
+        precision: 8
+    });
 
-Currency.BTC = new Currency({
-    id: '8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS',
-    displayName: 'Bitcoin',
-    shortName: 'BTC',
-    symbol: 'B',
-    precision: 8
-});
+    var UPC = new Currency({
+        id: '4764Pr9DpKQAHAjAVA2uqnrYidLMnM7vpDDLCDWujFTt',
+        displayName: 'Upcoin',
+        shortName: 'UPC',
+        symbol: 'U',
+        precision: 2
+    });
 
-Currency.USD = new Currency({
-    id: 'Ft8X1v1LTa1ABafufpaCWyVj8KkaxUWE6xBhW6sNFJck',
-    displayName: 'US Dollar',
-    shortName: 'USD',
-    symbol: '$',
-    precision: 2
-});
+    var BTC = new Currency({
+        id: '8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS',
+        displayName: 'Bitcoin',
+        shortName: 'BTC',
+        symbol: 'B',
+        precision: 8
+    });
 
-Currency.EUR = new Currency({
-    id: 'Gtb1WRznfchDnTh37ezoDTJ4wcoKaRsKqKjJjy7nm2zU',
-    displayName: 'Euro',
-    shortName: 'EUR',
-    symbol: '€',
-    precision: 2
-});
+    var USD = new Currency({
+        id: 'Ft8X1v1LTa1ABafufpaCWyVj8KkaxUWE6xBhW6sNFJck',
+        displayName: 'US Dollar',
+        shortName: 'USD',
+        symbol: '$',
+        precision: 2
+    });
 
-Currency.CNY = new Currency({
-    id: 'DEJbZipbKQjwEiRjx2AqQFucrj5CZ3rAc4ZvFM8nAsoA',
-    displayName: 'Chinese Yuan',
-    shortName: 'CNY',
-    symbol: '¥',
-    precision: 2
-});
+    var EUR = new Currency({
+        id: 'Gtb1WRznfchDnTh37ezoDTJ4wcoKaRsKqKjJjy7nm2zU',
+        displayName: 'Euro',
+        shortName: 'EUR',
+        symbol: '€',
+        precision: 2
+    });
+
+    var CNY = new Currency({
+        id: 'DEJbZipbKQjwEiRjx2AqQFucrj5CZ3rAc4ZvFM8nAsoA',
+        displayName: 'Chinese Yuan',
+        shortName: 'CNY',
+        symbol: '¥',
+        precision: 2
+    });
+
+    function invalidateCache() {
+        currencyCache = {};
+
+        currencyCache[WAV.id] = WAV;
+        currencyCache[UPC.id] = UPC;
+        currencyCache[BTC.id] = BTC;
+        currencyCache[USD.id] = USD;
+        currencyCache[EUR.id] = EUR;
+        currencyCache[CNY.id] = CNY;
+    }
+
+    invalidateCache();
+
+    return {
+        create: function (data) {
+            // if currency data.id is not set - it's a temporary instance
+            if (!_.has(data, 'id'))
+                return new Currency(data);
+
+            if (!currencyCache[data.id]) {
+                currencyCache[data.id] = new Currency(data);
+            }
+
+            return currencyCache[data.id];
+        },
+        invalidateCache: invalidateCache,
+        WAV: WAV,
+        UPC: UPC,
+        BTC: BTC,
+        USD: USD,
+        EUR: EUR,
+        CNY: CNY
+    };
+})();
 
 var Money = function(amount, currency) {
     var DECIMAL_SEPARATOR = '.';

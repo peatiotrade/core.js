@@ -80,7 +80,7 @@
             asset.time = asset.time || utilityService.getTime();
             asset.reissuable = angular.isDefined(asset.reissuable) ? asset.reissuable : false;
             asset.description = asset.description || '';
-            var assetCurrency = new Currency({
+            var assetCurrency = Currency.create({
                 displayName: asset.name,
                 precision: asset.decimalPlaces
             });

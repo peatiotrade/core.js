@@ -4,7 +4,7 @@ describe('Asset.Service', function() {
         publicKey: 'FJuErRxhV9JaFUwcYLabFK5ENvDRfyJbRz8FeVfYpBLn',
         privateKey: '9dXhQYWZ5468TRhksJqpGT6nUySENxXi9nsCZH9AefD1'
     };
-    var asset = new Currency({
+    var asset = Currency.create({
         id: '246d8u9gBJqUXK1VhQBxPMLL4iiFLdc4iopFyAkqU5HN',
         displayName: 'Asset',
         precision: 2

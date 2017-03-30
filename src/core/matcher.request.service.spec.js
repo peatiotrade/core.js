@@ -4,7 +4,7 @@ describe('Matcher.Request.Service', function() {
         publicKey: 'FJuErRxhV9JaFUwcYLabFK5ENvDRfyJbRz8FeVfYpBLn',
         privateKey: '9dXhQYWZ5468TRhksJqpGT6nUySENxXi9nsCZH9AefD1'
     };
-    var asset = new Currency({
+    var asset = Currency.create({
         id: 'AaFXAN1WTM39XjECHW7DsVFixhq9yMGWHdM2ghr83Gmf',
         displayName: 'WBTC',
         precision: 8
