@@ -11,7 +11,6 @@ describe('Coinomat.Currency.Mapping.Service', function() {
 
     it('should throw an error if a currency is not supported', function () {
         expect(function () { mappingService.platformCurrencyCode(Currency.CNY); }).toThrowError();
-        expect(function () { mappingService.platformCurrencyCode(Currency.WAV); }).toThrowError();
         expect(function () { mappingService.gatewayCurrencyCode(Currency.EUR); }).toThrowError();
     });
 
@@ -22,5 +21,6 @@ describe('Coinomat.Currency.Mapping.Service', function() {
 
     it('should return correct codes for waves', function() {
         expect(mappingService.gatewayCurrencyCode(Currency.WAV)).toEqual('WAVES');
+        expect(mappingService.platformCurrencyCode(Currency.WAV)).toEqual('WAVES');
     });
 });

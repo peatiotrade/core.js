@@ -4,10 +4,11 @@
     function WavesCoinomatFiatService (rest, currencyMappingService) {
         var apiRoot = rest.all('api').all('v2').all('indacoin');
 
-        this.getLimits = function (address, fiat) {
+        this.getLimits = function (address, fiatCurrency, cryptoCurrency) {
             return apiRoot.get('limits.php', {
                 address: address,
-                fiat: fiat
+                fiat: fiatCurrency,
+                crypto: currencyMappingService.gatewayCurrencyCode(cryptoCurrency)
             });
         };
 

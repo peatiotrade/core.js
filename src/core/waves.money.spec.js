@@ -4,6 +4,36 @@ describe('waves.money', function() {
         return Money.fromTokens(tokens, Currency.WAV);
     }
 
+    it('returns the same currency instances for predefined currencies', function () {
+        expect(Currency.WAV).toBeDefined();
+
+        var c = Currency.create({
+            id: Currency.WAV.id,
+            displayName: Currency.WAV.displayName,
+            precision: Currency.WAV.precision
+        });
+        expect(c).toBe(Currency.WAV);
+        expect(Currency.create({id: Currency.BTC.id})).toBe(Currency.BTC);
+        expect(Currency.create({id: Currency.UPC.id})).toBe(Currency.UPC);
+        expect(Currency.create({id: Currency.USD.id})).toBe(Currency.USD);
+        expect(Currency.create({id: Currency.EUR.id})).toBe(Currency.EUR);
+        expect(Currency.create({id: Currency.CNY.id})).toBe(Currency.CNY);
+    });
+
+    it('returns new instance of currency if a client doesn\'t set currency id', function () {
+        var c1 = Currency.create({
+            displayName: 'one',
+            precision: 4
+        });
+
+        var c2 = Currency.create({
+            displayName: 'one',
+            precision: 4
+        });
+
+        expect(c1).not.toBe(c2);
+    });
+
     it('precisely converts tokens to coins', function () {
         expect(new Money(7e-6, Currency.WAV).toCoins()).toEqual(700);
         expect(Money.fromCoins(1000, Currency.WAV).toTokens()).toEqual(0.00001000);
