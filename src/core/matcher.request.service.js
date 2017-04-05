@@ -3,6 +3,7 @@
 
     var SELL_ORDER_TYPE = 'sell';
     var BUY_ORDER_TYPE = 'buy';
+    var PRICE_SCALE_FACTOR = 1e8;
 
     function WavesMatcherRequestService (utilityService, cryptoService) {
         function validateSender(sender) {
@@ -50,6 +51,9 @@
 
             var date = new Date(currentTimeMillis);
             order.expiration = order.expiration || date.setDate(date.getDate() + 30);
+
+            order = _.clone(order);
+            order.price = order.price.multiply(PRICE_SCALE_FACTOR);
 
             var signatureData = buildCreateOrderSignatureData(order, sender.publicKey);
             var signature = buildSignature(signatureData, sender);

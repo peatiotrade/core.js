@@ -148,7 +148,7 @@ var Money = function(amount, currency) {
 
     var validateCurrency = function (expected, actual) {
         if (expected.id !== actual.id)
-            throw Error('Currencies must be the same for operands. Expected: ' +
+            throw new Error('Currencies must be the same for operands. Expected: ' +
                 expected.displayName + '; Actual: ' + actual.displayName);
     };
 
@@ -232,6 +232,16 @@ var Money = function(amount, currency) {
         validateCurrency(this.currency, other.currency);
 
         return this.amount.lessThanOrEqualTo(other.amount);
+    };
+
+    this.multiply = function (multiplier) {
+        if (!_.isNumber(multiplier))
+            throw new Error('Number is expected');
+
+        if (isNaN(multiplier))
+            throw new Error('Multiplication by NaN is not supported');
+
+        return new Money(this.amount.mul(multiplier), this.currency);
     };
 
     return this;

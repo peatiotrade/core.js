@@ -875,7 +875,7 @@ var Money = function(amount, currency) {
 
     var validateCurrency = function (expected, actual) {
         if (expected.id !== actual.id)
-            throw Error('Currencies must be the same for operands. Expected: ' +
+            throw new Error('Currencies must be the same for operands. Expected: ' +
                 expected.displayName + '; Actual: ' + actual.displayName);
     };
 
@@ -959,6 +959,16 @@ var Money = function(amount, currency) {
         validateCurrency(this.currency, other.currency);
 
         return this.amount.lessThanOrEqualTo(other.amount);
+    };
+
+    this.multiply = function (multiplier) {
+        if (!_.isNumber(multiplier))
+            throw new Error('Number is expected');
+
+        if (isNaN(multiplier))
+            throw new Error('Multiplication by NaN is not supported');
+
+        return new Money(this.amount.mul(multiplier), this.currency);
     };
 
     return this;
@@ -2721,6 +2731,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 
     var SELL_ORDER_TYPE = 'sell';
     var BUY_ORDER_TYPE = 'buy';
+    var PRICE_SCALE_FACTOR = 1e8;
 
     function WavesMatcherRequestService (utilityService, cryptoService) {
         function validateSender(sender) {
@@ -2768,6 +2779,9 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 
             var date = new Date(currentTimeMillis);
             order.expiration = order.expiration || date.setDate(date.getDate() + 30);
+
+            order = _.clone(order);
+            order.price = order.price.multiply(PRICE_SCALE_FACTOR);
 
             var signatureData = buildCreateOrderSignatureData(order, sender.publicKey);
             var signature = buildSignature(signatureData, sender);

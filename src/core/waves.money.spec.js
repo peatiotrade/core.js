@@ -99,4 +99,13 @@ describe('waves.money', function() {
         expect(function () {other.plus(waves);}).toThrowError();
         expect(function () {waves.minus(other);}).toThrowError();
     });
+
+    it('multiplies money values by a number correctly', function () {
+        var value = Money.fromTokens(17, Currency.WAV);
+        expect(value.multiply(2).toTokens()).toEqual(34);
+        expect(value.multiply(0.5).toTokens()).toEqual(8.5);
+
+        expect(function () {value.multiply('12');}).toThrowError();
+        expect(function () {value.multiply(NaN);}).toThrowError();
+    });
 });
