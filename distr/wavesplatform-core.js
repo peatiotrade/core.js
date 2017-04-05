@@ -755,7 +755,7 @@ var Currency = (function () {
         this.id = data.id;
         this.roundingMode = Decimal.ROUND_HALF_UP;
         this.displayName = data.displayName;
-        this.shortName = data.shortName || '';
+        this.shortName = data.shortName || data.displayName;
         this.symbol = data.symbol || '';
         // number of decimal places after a decimal point
         this.precision = data.precision;
@@ -2704,11 +2704,11 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
             return orderBookRoot.get('').then(function (response) {
                 var pairs = [];
                 _.forEach(response.markets, function (market) {
-                    var id = normalizeId(market.asset1Id) + '/' + normalizeId(market.asset2Id);
+                    var id = normalizeId(market.amountAsset) + '/' + normalizeId(market.priceAsset);
                     var pair = {
                         id: id,
-                        first: new Pair(market.asset1Id, market.asset1Name),
-                        second: new Pair(market.asset2Id, market.asset2Name),
+                        first: new Pair(market.amountAsset, market.amountAssetName),
+                        second: new Pair(market.priceAsset, market.priceAssetName),
                         created: market.created
                     };
                     pairs.push(pair);

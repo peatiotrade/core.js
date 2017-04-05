@@ -28,7 +28,7 @@ var Currency = (function () {
         this.id = data.id;
         this.roundingMode = Decimal.ROUND_HALF_UP;
         this.displayName = data.displayName;
-        this.shortName = data.shortName || '';
+        this.shortName = data.shortName || data.displayName;
         this.symbol = data.symbol || '';
         // number of decimal places after a decimal point
         this.precision = data.precision;

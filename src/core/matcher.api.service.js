@@ -59,11 +59,11 @@
             return orderBookRoot.get('').then(function (response) {
                 var pairs = [];
                 _.forEach(response.markets, function (market) {
-                    var id = normalizeId(market.asset1Id) + '/' + normalizeId(market.asset2Id);
+                    var id = normalizeId(market.amountAsset) + '/' + normalizeId(market.priceAsset);
                     var pair = {
                         id: id,
-                        first: new Pair(market.asset1Id, market.asset1Name),
-                        second: new Pair(market.asset2Id, market.asset2Name),
+                        first: new Pair(market.amountAsset, market.amountAssetName),
+                        second: new Pair(market.priceAsset, market.priceAssetName),
                         created: market.created
                     };
                     pairs.push(pair);
