@@ -1829,9 +1829,16 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
             };
 
             var addressApi = rest.all('addresses');
+            var consensusApi = rest.all('consensus');
             this.address = {
                 balance: function (address) {
                     return addressApi.one('balance', address).get();
+                },
+                effectiveBalance: function (address) {
+                    return addressApi.one('effectiveBalance', address).get();
+                },
+                generatingBalance: function (address) {
+                    return consensusApi.one('generatingbalance', address).get();
                 }
             };
 
