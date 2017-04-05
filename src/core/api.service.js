@@ -46,9 +46,14 @@
                 }
             };
 
-            var wavesApi = rest.all('waves');
-            this.broadcastPayment = function (signedPaymentTransaction) {
-                return wavesApi.all('broadcast-signed-payment').post(signedPaymentTransaction);
+            var leasingApi = rest.all('leasing').all('broadcast');
+            this.leasing = {
+                lease: function (signedStartLeasingTransaction) {
+                    return leasingApi.all('lease').post(signedStartLeasingTransaction);
+                },
+                cancel: function (signedCancelLeasingTransaction) {
+                    return leasingApi.all('cancel').post(signedCancelLeasingTransaction);
+                }
             };
 
             var assetApi = rest.all('assets');
