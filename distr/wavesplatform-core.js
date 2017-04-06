@@ -2800,10 +2800,13 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
             var date = new Date(currentTimeMillis);
             order.expiration = order.expiration || date.setDate(date.getDate() + 30);
 
-            var clone = _.clone(order);
-            clone.price = Money.fromTokens(order.price.toTokens(), Currency.MATCHER_CURRENCY);
+            var matcherCurrency = _.clone(Currency.MATCHER_CURRENCY);
+            matcherCurrency.id = order.price.currency.id;
 
-            var signatureData = buildCreateOrderSignatureData(clone, sender.publicKey);
+            var clonedOrder = _.clone(order);
+            clonedOrder.price = Money.fromTokens(order.price.toTokens(), matcherCurrency);
+
+            var signatureData = buildCreateOrderSignatureData(clonedOrder, sender.publicKey);
             var signature = buildSignature(signatureData, sender);
 
             return {
@@ -2812,7 +2815,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
                     amountAsset: order.amount.currency.id,
                     priceAsset: order.price.currency.id
                 },
-                price: clone.price.toCoins(),
+                price: clonedOrder.price.toCoins(),
                 amount: order.amount.toCoins(),
                 timestamp: order.time,
                 expiration: order.expiration,

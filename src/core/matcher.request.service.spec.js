@@ -49,7 +49,7 @@ describe('Matcher.Request.Service', function() {
         expect(request.matcherPublicKey).toEqual(matcherKey);
         expect(order.price).toEqual(price);
         expect(request.signature)
-            .toEqual('2r937weuZJMHRTYzcTUV8aW2mhDrXT9PZjYuazC9GxY61cL56spWn2ev2244q4Yoa4YHmZt3d4J1dPchKn6BwqL3');
+            .toEqual('5pzEHRrtfzH6mY64u8d1LX8rHufEvgnZ5YxGHFW33QUoi4Fv3ScWq7AnrEQMPaZjdR4uzoN9QHWoPTmZDVgpWUbw');
     });
 
     it('should successfully sign cancel order request', function () {
