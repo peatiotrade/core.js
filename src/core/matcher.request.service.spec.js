@@ -42,13 +42,14 @@ describe('Matcher.Request.Service', function() {
 
         var request = requestService.buildCreateOrderRequest(order, sender);
 
-        expect(request.price).toEqual(5000000000000000);
+        expect(request.price).toEqual(50000000);
         expect(request.amount).toEqual(200000000);
         expect(request.matcherFee).toEqual(1000000);
         expect(request.senderPublicKey).toEqual(sender.publicKey);
         expect(request.matcherPublicKey).toEqual(matcherKey);
+        expect(order.price).toEqual(price);
         expect(request.signature)
-            .toEqual('4bjt4voEV7h2iRULSBDUKtcyuNMfbG7QJKfNSbNnNkPaS8STChDatHxH4FF9cFBf6Hf1jn5C8vMuwrC167FS3jXp');
+            .toEqual('2r937weuZJMHRTYzcTUV8aW2mhDrXT9PZjYuazC9GxY61cL56spWn2ev2244q4Yoa4YHmZt3d4J1dPchKn6BwqL3');
     });
 
     it('should successfully sign cancel order request', function () {

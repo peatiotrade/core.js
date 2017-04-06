@@ -813,6 +813,13 @@ var Currency = (function () {
         precision: 2
     });
 
+    var MATCHER_CURRENCY = new Currency({
+        id: null,
+        displayName: 'MATCHER_CURRENCY',
+        shortName: 'MC',
+        precision: 8
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -844,7 +851,8 @@ var Currency = (function () {
         BTC: BTC,
         USD: USD,
         EUR: EUR,
-        CNY: CNY
+        CNY: CNY,
+        MATCHER_CURRENCY: MATCHER_CURRENCY
     };
 })();
 
@@ -2792,10 +2800,10 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
             var date = new Date(currentTimeMillis);
             order.expiration = order.expiration || date.setDate(date.getDate() + 30);
 
-            order = _.clone(order);
-            order.price = order.price.multiply(PRICE_SCALE_FACTOR);
+            var clone = _.clone(order);
+            clone.price = Money.fromTokens(order.price.toTokens(), Currency.MATCHER_CURRENCY);
 
-            var signatureData = buildCreateOrderSignatureData(order, sender.publicKey);
+            var signatureData = buildCreateOrderSignatureData(clone, sender.publicKey);
             var signature = buildSignature(signatureData, sender);
 
             return {
@@ -2804,7 +2812,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
                     amountAsset: order.amount.currency.id,
                     priceAsset: order.price.currency.id
                 },
-                price: order.price.toCoins(),
+                price: clone.price.toCoins(),
                 amount: order.amount.toCoins(),
                 timestamp: order.time,
                 expiration: order.expiration,
