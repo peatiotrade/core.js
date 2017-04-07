@@ -56,6 +56,13 @@
                 }
             };
 
+            var aliasApi = rest.all('alias').all('broadcast');
+            this.alias = {
+                create: function (signedCreateAliasTransaction) {
+                    return aliasApi.all('create').post(signedCreateAliasTransaction);
+                }
+            };
+
             var assetApi = rest.all('assets');
             var assetBroadcastApi = assetApi.all('broadcast');
             this.assets = {

@@ -3,8 +3,12 @@
 
     angular
         .module('waves.core.services')
-        .service('utilityService', ['cryptoService', function (cryptoService) {
+        .service('utilityService', ['constants.network', 'cryptoService', function (constants, cryptoService) {
             var me = this;
+
+            this.getNetworkIdByte = function () {
+                return constants.NETWORK_CODE.charCodeAt(0) & 0xFF;
+            };
 
             // long to big-endian bytes
             this.longToByteArray = function (value) {
@@ -30,6 +34,18 @@
                 }
 
                 return result;
+            };
+
+            this.stringToByteArrayWithSize = function (string) {
+                var bytes = converters.stringToByteArray(string);
+
+                return me.byteArrayWithSize(bytes);
+            };
+
+            this.byteArrayWithSize = function (byteArray) {
+                var result = me.shortToByteArray(byteArray.length);
+
+                return result.concat(byteArray);
             };
 
             this.currencyToBytes = function (currencyId, mandatory) {

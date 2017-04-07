@@ -1,4 +1,4 @@
-describe('Matcher.Request.Service', function() {
+describe('Leasing.Request.Service', function() {
     var requestService, cryptoService;
     var sender = {
         publicKey: 'FJuErRxhV9JaFUwcYLabFK5ENvDRfyJbRz8FeVfYpBLn',
