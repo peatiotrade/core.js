@@ -2964,7 +2964,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
             order.time = order.time || currentTimeMillis;
 
             var date = new Date(currentTimeMillis);
-            order.expiration = order.expiration || date.setDate(date.getDate() + 30);
+            order.expiration = order.expiration || date.setDate(date.getDate() + 20);
 
             var matcherCurrency = _.clone(Currency.MATCHER_CURRENCY);
             matcherCurrency.id = order.price.currency.id;
