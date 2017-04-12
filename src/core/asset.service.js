@@ -49,8 +49,8 @@
         function buildCreateAssetSignatureData (asset, tokensQuantity, senderPublicKey) {
             var typeByte = [constants.ASSET_ISSUE_TRANSACTION_TYPE];
             var publicKeyBytes = utilityService.base58StringToByteArray(senderPublicKey);
-            var assetNameBytes = stringToByteArrayWithSize(asset.name);
-            var assetDescriptionBytes = stringToByteArrayWithSize(asset.description);
+            var assetNameBytes = utilityService.stringToByteArrayWithSize(asset.name);
+            var assetDescriptionBytes = utilityService.stringToByteArrayWithSize(asset.description);
             var quantityBytes = utilityService.longToByteArray(tokensQuantity);
             var decimalPlacesBytes = [asset.decimalPlaces];
             var reissuableBytes = utilityService.booleanToBytes(asset.reissuable);
@@ -59,18 +59,6 @@
 
             return [].concat(typeByte, publicKeyBytes, assetNameBytes, assetDescriptionBytes,
                 quantityBytes, decimalPlacesBytes, reissuableBytes, feeBytes, timestampBytes);
-        }
-
-        function stringToByteArrayWithSize (string) {
-            var bytes = converters.stringToByteArray(string);
-
-            return byteArrayWithSize(bytes);
-        }
-
-        function byteArrayWithSize (byteArray) {
-            var result = utilityService.shortToByteArray(byteArray.length);
-
-            return result.concat(byteArray);
         }
 
         this.createAssetIssueTransaction = function (asset, sender) {
@@ -113,7 +101,7 @@
             var feeBytes = utilityService.longToByteArray(transfer.fee.toCoins());
             var feeAssetBytes = utilityService.currencyToBytes(transfer.fee.currency.id);
             var timestampBytes = utilityService.longToByteArray(transfer.time);
-            var attachmentBytes = byteArrayWithSize(transfer.attachment);
+            var attachmentBytes = utilityService.byteArrayWithSize(transfer.attachment);
 
             return [].concat(typeByte, publicKeyBytes, assetIdBytes, feeAssetBytes, timestampBytes,
                 amountBytes, feeBytes, recipientBytes, attachmentBytes);

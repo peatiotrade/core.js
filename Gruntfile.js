@@ -42,6 +42,8 @@ module.exports = function (grunt) {
                         'src/core/address.service.js',
                         'src/core/crypto.service.js',
                         'src/core/asset.service.js',
+                        'src/core/alias.request.service.js',
+                        'src/core/leasing.request.service.js',
                         'src/core/api.service.js',
                         'src/core/utility.service.js',
                         'src/core/localstorage.chrome.service.js',

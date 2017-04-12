@@ -1064,7 +1064,10 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
             PAYMENT_TRANSACTION_TYPE : 2,
             ASSET_ISSUE_TRANSACTION_TYPE: 3,
             ASSET_TRANSFER_TRANSACTION_TYPE: 4,
-            ASSET_REISSUE_TRANSACTION_TYPE: 5
+            ASSET_REISSUE_TRANSACTION_TYPE: 5,
+            START_LEASING_TRANSACTION_TYPE: 8,
+            CANCEL_LEASING_TRANSACTION_TYPE: 9,
+            CREATE_ALIAS_TRANSACTION_TYPE: 10
         });
 })();
 
@@ -1448,6 +1451,8 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
         .module('waves.core.services')
         .service('cryptoService', ['constants.network', '$window', function(constants, window) {
 
+            // private version of getNetworkId byte in order to avoid circular dependency
+            // between cryptoService and utilityService
             var getNetworkIdByte = function() {
                 return constants.NETWORK_CODE.charCodeAt(0) & 0xFF;
             };
@@ -1681,8 +1686,8 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
         function buildCreateAssetSignatureData (asset, tokensQuantity, senderPublicKey) {
             var typeByte = [constants.ASSET_ISSUE_TRANSACTION_TYPE];
             var publicKeyBytes = utilityService.base58StringToByteArray(senderPublicKey);
-            var assetNameBytes = stringToByteArrayWithSize(asset.name);
-            var assetDescriptionBytes = stringToByteArrayWithSize(asset.description);
+            var assetNameBytes = utilityService.stringToByteArrayWithSize(asset.name);
+            var assetDescriptionBytes = utilityService.stringToByteArrayWithSize(asset.description);
             var quantityBytes = utilityService.longToByteArray(tokensQuantity);
             var decimalPlacesBytes = [asset.decimalPlaces];
             var reissuableBytes = utilityService.booleanToBytes(asset.reissuable);
@@ -1691,18 +1696,6 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 
             return [].concat(typeByte, publicKeyBytes, assetNameBytes, assetDescriptionBytes,
                 quantityBytes, decimalPlacesBytes, reissuableBytes, feeBytes, timestampBytes);
-        }
-
-        function stringToByteArrayWithSize (string) {
-            var bytes = converters.stringToByteArray(string);
-
-            return byteArrayWithSize(bytes);
-        }
-
-        function byteArrayWithSize (byteArray) {
-            var result = utilityService.shortToByteArray(byteArray.length);
-
-            return result.concat(byteArray);
         }
 
         this.createAssetIssueTransaction = function (asset, sender) {
@@ -1745,7 +1738,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
             var feeBytes = utilityService.longToByteArray(transfer.fee.toCoins());
             var feeAssetBytes = utilityService.currencyToBytes(transfer.fee.currency.id);
             var timestampBytes = utilityService.longToByteArray(transfer.time);
-            var attachmentBytes = byteArrayWithSize(transfer.attachment);
+            var attachmentBytes = utilityService.byteArrayWithSize(transfer.attachment);
 
             return [].concat(typeByte, publicKeyBytes, assetIdBytes, feeAssetBytes, timestampBytes,
                 amountBytes, feeBytes, recipientBytes, attachmentBytes);
@@ -1835,6 +1828,155 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 (function () {
     'use strict';
 
+    var ALIAS_VERSION = 2;
+
+    function WavesAliasRequestService (constants, utilityService, cryptoService) {
+        function validateSender(sender) {
+            if (!sender)
+                throw new Error('Sender hasn\'t been set');
+
+            if (!sender.publicKey)
+                throw new Error('Sender account public key hasn\'t been set');
+
+            if (!sender.privateKey)
+                throw new Error('Sender account private key hasn\'t been set');
+        }
+
+        function buildSignature(bytes, sender) {
+            var privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
+
+            return cryptoService.nonDeterministicSign(privateKeyBytes, bytes);
+        }
+
+        function buildCreateAliasSignatureData (alias, senderPublicKey) {
+            var typeByte = [constants.CREATE_ALIAS_TRANSACTION_TYPE];
+            var publicKeyBytes = utilityService.base58StringToByteArray(senderPublicKey);
+
+            var stringPartBytes = utilityService.stringToByteArrayWithSize(alias.alias);
+            var tempBytes = [].concat([ALIAS_VERSION], [utilityService.getNetworkIdByte()], stringPartBytes);
+            var aliasBytes = utilityService.byteArrayWithSize(tempBytes);
+            var feeBytes = utilityService.longToByteArray(alias.fee.toCoins());
+            var timestampBytes = utilityService.longToByteArray(alias.time);
+
+            return [].concat(typeByte, publicKeyBytes, aliasBytes, feeBytes, timestampBytes);
+        }
+
+        this.buildCreateAliasRequest = function (alias, sender) {
+            validateSender(sender);
+
+            var currentTimeMillis = utilityService.getTime();
+            alias.time = alias.time || currentTimeMillis;
+
+            var signatureData = buildCreateAliasSignatureData(alias, sender.publicKey);
+            var signature = buildSignature(signatureData, sender);
+
+            return {
+                alias: alias.alias,
+                timestamp: alias.time,
+                fee: alias.fee.toCoins(),
+                senderPublicKey: sender.publicKey,
+                signature: signature
+            };
+        };
+    }
+
+    WavesAliasRequestService.$inject = ['constants.transactions', 'utilityService', 'cryptoService'];
+
+    angular
+        .module('waves.core.services')
+        .service('aliasRequestService', WavesAliasRequestService);
+})();
+
+(function () {
+    'use strict';
+
+    function WavesLeasingRequestService (constants, utilityService, cryptoService) {
+        function validateSender(sender) {
+            if (!sender)
+                throw new Error('Sender hasn\'t been set');
+
+            if (!sender.publicKey)
+                throw new Error('Sender account public key hasn\'t been set');
+
+            if (!sender.privateKey)
+                throw new Error('Sender account private key hasn\'t been set');
+        }
+
+        function buildSignature(bytes, sender) {
+            var privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
+
+            return cryptoService.nonDeterministicSign(privateKeyBytes, bytes);
+        }
+
+        function buildStartLeasingSignatureData (startLeasing, senderPublicKey) {
+            var typeByte = [constants.START_LEASING_TRANSACTION_TYPE];
+            var publicKeyBytes = utilityService.base58StringToByteArray(senderPublicKey);
+            var recipientBytes = utilityService.base58StringToByteArray(startLeasing.recipient);
+            var amountBytes = utilityService.longToByteArray(startLeasing.amount.toCoins());
+            var feeBytes = utilityService.longToByteArray(startLeasing.fee.toCoins());
+            var timestampBytes = utilityService.longToByteArray(startLeasing.time);
+
+            return [].concat(typeByte, publicKeyBytes, recipientBytes, amountBytes, feeBytes,  timestampBytes);
+        }
+
+        this.buildStartLeasingRequest = function (startLeasing, sender) {
+            validateSender(sender);
+
+            var currentTimeMillis = utilityService.getTime();
+            startLeasing.time = startLeasing.time || currentTimeMillis;
+
+            var signatureData = buildStartLeasingSignatureData(startLeasing, sender.publicKey);
+            var signature = buildSignature(signatureData, sender);
+
+            return {
+                recipient: startLeasing.recipient,
+                amount: startLeasing.amount.toCoins(),
+                timestamp: startLeasing.time,
+                fee: startLeasing.fee.toCoins(),
+                senderPublicKey: sender.publicKey,
+                signature: signature
+            };
+        };
+
+        function buildCancelLeasingSignatureData (cancelLeasing, senderPublicKey) {
+            var typeByte = [constants.CANCEL_LEASING_TRANSACTION_TYPE];
+            var publicKeyBytes = utilityService.base58StringToByteArray(senderPublicKey);
+            var transactionIdBytes = utilityService.base58StringToByteArray(cancelLeasing.startLeasingTransactionId);
+            var feeBytes = utilityService.longToByteArray(cancelLeasing.fee.toCoins());
+            var timestampBytes = utilityService.longToByteArray(cancelLeasing.time);
+
+            return [].concat(typeByte, publicKeyBytes, feeBytes, timestampBytes, transactionIdBytes);
+        }
+
+        this.buildCancelLeasingRequest = function (cancelLeasing, sender) {
+            validateSender(sender);
+
+            var currentTimeMillis = utilityService.getTime();
+            cancelLeasing.time = cancelLeasing.time || currentTimeMillis;
+
+            var signatureData = buildCancelLeasingSignatureData(cancelLeasing, sender.publicKey);
+            var signature = buildSignature(signatureData, sender);
+
+            return {
+                txId: cancelLeasing.startLeasingTransactionId,
+                timestamp: cancelLeasing.time,
+                fee: cancelLeasing.fee.toCoins(),
+                senderPublicKey: sender.publicKey,
+                signature: signature
+            };
+        };
+    }
+
+    WavesLeasingRequestService.$inject = ['constants.transactions', 'utilityService', 'cryptoService'];
+
+    angular
+        .module('waves.core.services')
+        .service('leasingRequestService', WavesLeasingRequestService);
+})();
+
+(function () {
+    'use strict';
+
     angular
         .module('waves.core.services')
         .service('apiService', ['Restangular', function (rest) {
@@ -1890,6 +2032,13 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
                 }
             };
 
+            var aliasApi = rest.all('alias').all('broadcast');
+            this.alias = {
+                create: function (signedCreateAliasTransaction) {
+                    return aliasApi.all('create').post(signedCreateAliasTransaction);
+                }
+            };
+
             var assetApi = rest.all('assets');
             var assetBroadcastApi = assetApi.all('broadcast');
             this.assets = {
@@ -1921,8 +2070,12 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 
     angular
         .module('waves.core.services')
-        .service('utilityService', ['cryptoService', function (cryptoService) {
+        .service('utilityService', ['constants.network', 'cryptoService', function (constants, cryptoService) {
             var me = this;
+
+            this.getNetworkIdByte = function () {
+                return constants.NETWORK_CODE.charCodeAt(0) & 0xFF;
+            };
 
             // long to big-endian bytes
             this.longToByteArray = function (value) {
@@ -1948,6 +2101,18 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
                 }
 
                 return result;
+            };
+
+            this.stringToByteArrayWithSize = function (string) {
+                var bytes = converters.stringToByteArray(string);
+
+                return me.byteArrayWithSize(bytes);
+            };
+
+            this.byteArrayWithSize = function (byteArray) {
+                var result = me.shortToByteArray(byteArray.length);
+
+                return result.concat(byteArray);
             };
 
             this.currencyToBytes = function (currencyId, mandatory) {

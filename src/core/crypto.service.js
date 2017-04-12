@@ -9,6 +9,8 @@
         .module('waves.core.services')
         .service('cryptoService', ['constants.network', '$window', function(constants, window) {
 
+            // private version of getNetworkId byte in order to avoid circular dependency
+            // between cryptoService and utilityService
             var getNetworkIdByte = function() {
                 return constants.NETWORK_CODE.charCodeAt(0) & 0xFF;
             };
