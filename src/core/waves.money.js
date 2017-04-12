@@ -86,6 +86,22 @@ var Currency = (function () {
         precision: 2
     });
 
+    var WCT = new Currency({
+        id: 'DHgwrRvVyqJsepd32YbBqUeDH4GJ1N984X8QoekjgH8J',
+        displayName: 'Waves Community',
+        shortName: 'WCT',
+        symbol: 'WCT',
+        precision: 2
+    });
+
+    var MRT = new Currency({
+        id: '4uK8i4ThRGbehENwa6MxyLtxAjAo1Rj9fduborGExarC',
+        displayName: 'Miner Reward',
+        shortName: 'MRT',
+        symbol: 'MRT',
+        precision: 2
+    });
+
     var MATCHER_CURRENCY = new Currency({
         id: null,
         displayName: 'MATCHER_CURRENCY',
