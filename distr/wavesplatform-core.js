@@ -845,6 +845,8 @@ var Currency = (function () {
         currencyCache[USD.id] = USD;
         currencyCache[EUR.id] = EUR;
         currencyCache[CNY.id] = CNY;
+        currencyCache[WCT.id] = WCT;
+        currencyCache[MRT.id] = MRT;
     }
 
     invalidateCache();
@@ -868,6 +870,8 @@ var Currency = (function () {
         USD: USD,
         EUR: EUR,
         CNY: CNY,
+        WCT: WCT,
+        MRT: MRT,
         MATCHER_CURRENCY: MATCHER_CURRENCY
     };
 })();
