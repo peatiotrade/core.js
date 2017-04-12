@@ -1065,6 +1065,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
             ASSET_ISSUE_TRANSACTION_TYPE: 3,
             ASSET_TRANSFER_TRANSACTION_TYPE: 4,
             ASSET_REISSUE_TRANSACTION_TYPE: 5,
+            EXCHANGE_TRANSACTION_TYPE: 7,
             START_LEASING_TRANSACTION_TYPE: 8,
             CANCEL_LEASING_TRANSACTION_TYPE: 9,
             CREATE_ALIAS_TRANSACTION_TYPE: 10
@@ -2979,7 +2980,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
             order.time = order.time || currentTimeMillis;
 
             var date = new Date(currentTimeMillis);
-            order.expiration = order.expiration || date.setDate(date.getDate() + 30);
+            order.expiration = order.expiration || date.setDate(date.getDate() + 20);
 
             var matcherCurrency = _.clone(Currency.MATCHER_CURRENCY);
             matcherCurrency.id = order.price.currency.id;
