@@ -24,8 +24,8 @@
         }
 
         function buildCreateOrderSignatureData (order, senderPublicKey) {
-            var amountAssetIdBytes = utilityService.currencyToBytes(order.amount.currency.id);
-            var priceAssetIdBytes = utilityService.currencyToBytes(order.price.currency.id);
+            var amountAssetIdBytes = utilityService.currencyToBytes(order.price.amountAsset.id);
+            var priceAssetIdBytes = utilityService.currencyToBytes(order.price.priceAsset.id);
             var assetPairBytes = [].concat(amountAssetIdBytes, priceAssetIdBytes);
 
             var isSell = order.orderType === SELL_ORDER_TYPE;
@@ -33,7 +33,7 @@
 
             var publicKeyBytes = utilityService.base58StringToByteArray(senderPublicKey);
             var matcherKeyBytes = utilityService.base58StringToByteArray(order.matcherKey);
-            var priceBytes = utilityService.longToByteArray(order.price.toCoins());
+            var priceBytes = utilityService.longToByteArray(order.price.toBackendPrice());
             var amountBytes = utilityService.longToByteArray(order.amount.toCoins());
             var timestampBytes = utilityService.longToByteArray(order.time);
             var expirationBytes = utilityService.longToByteArray(order.expiration);
@@ -52,22 +52,16 @@
             var date = new Date(currentTimeMillis);
             order.expiration = order.expiration || date.setDate(date.getDate() + 20);
 
-            var matcherCurrency = _.clone(Currency.MATCHER_CURRENCY);
-            matcherCurrency.id = order.price.currency.id;
-
-            var clonedOrder = _.clone(order);
-            clonedOrder.price = Money.fromTokens(order.price.toTokens(), matcherCurrency);
-
-            var signatureData = buildCreateOrderSignatureData(clonedOrder, sender.publicKey);
+            var signatureData = buildCreateOrderSignatureData(order, sender.publicKey);
             var signature = buildSignature(signatureData, sender);
 
             return {
                 orderType: order.orderType,
                 assetPair: {
-                    amountAsset: order.amount.currency.id,
-                    priceAsset: order.price.currency.id
+                    amountAsset: order.price.amountAsset.id,
+                    priceAsset: order.price.priceAsset.id
                 },
-                price: clonedOrder.price.toCoins(),
+                price: order.price.toBackendPrice(),
                 amount: order.amount.toCoins(),
                 timestamp: order.time,
                 expiration: order.expiration,

@@ -102,13 +102,6 @@ var Currency = (function () {
         precision: 2
     });
 
-    var MATCHER_CURRENCY = new Currency({
-        id: null,
-        displayName: 'MATCHER_CURRENCY',
-        shortName: 'MC',
-        precision: 8
-    });
-
     function invalidateCache() {
         currencyCache = {};
 
@@ -144,8 +137,7 @@ var Currency = (function () {
         EUR: EUR,
         CNY: CNY,
         WCT: WCT,
-        MRT: MRT,
-        MATCHER_CURRENCY: MATCHER_CURRENCY
+        MRT: MRT
     };
 })();
 

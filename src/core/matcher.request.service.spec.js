@@ -28,7 +28,10 @@ describe('Matcher.Request.Service', function() {
 
     it('should successfully sign create order request', function () {
         var amount = Money.fromTokens(2, Currency.WAV);
-        var price = Money.fromTokens(0.5, asset);
+        var price = OrderPrice.fromTokens(0.5, {
+            amountAsset: Currency.WAV,
+            priceAsset: asset
+        });
         var fee = Money.fromTokens(0.01, Currency.WAV);
         var order = {
             orderType: 'sell',
