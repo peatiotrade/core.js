@@ -3048,7 +3048,7 @@ var OrderPrice = (function () {
     };
 
     OrderPrice.prototype.toBackendPrice = function () {
-        return this.toCoins() * MATCHER_SCALE;
+        return Math.round(this.toCoins() * MATCHER_SCALE);
     };
 
     function roundToPriceAsset(price, pair) {
