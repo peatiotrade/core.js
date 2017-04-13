@@ -146,4 +146,40 @@ describe('order.price', function() {
         expect(p.toCoins()).toEqual(1.03 * 1e2);
         expect(p.toBackendPrice()).toEqual(1.03 * 1e2 * TEN_TO_POW8);
     });
+
+    it('converts backend price to valid OrderPrice when assets precisions are equal to 8', function () {
+        var backendPrice = 1.47 * 1e8;
+        var pair = {
+            amountAsset: Currency.WAV,
+            priceAsset: Currency.BTC
+        };
+
+        var p = OrderPrice.fromBackendPrice(backendPrice, pair);
+        expect(p.toTokens()).toEqual(1.47);
+        expect(p.toCoins()).toEqual(1.47);
+        expect(p.toBackendPrice()).toEqual(backendPrice);
+    });
+
+    it('converts backend price to valid OrderPrice when assets precisions are equal to 2', function () {
+        var backendPrice = 1.47 * 1e8;
+        var pair = {
+            amountAsset: Currency.USD,
+            priceAsset: Currency.EUR
+        };
+
+        var p = OrderPrice.fromBackendPrice(backendPrice, pair);
+        expect(p.toTokens()).toEqual(1.47);
+        expect(p.toCoins()).toEqual(1.47);
+        expect(p.toBackendPrice()).toEqual(backendPrice);
+    });
+
+    it('fails to convert backend price to valid OrderPrice when it contains too many significant digits', function () {
+        var backendPrice = 1.473 * 1e8;
+        var pair = {
+            amountAsset: Currency.USD,
+            priceAsset: Currency.EUR
+        };
+
+        expect(function () {OrderPrice.fromBackendPrice(backendPrice, pair);}).toThrowError();
+    });
 });

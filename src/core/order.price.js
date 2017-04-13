@@ -1,8 +1,11 @@
 var OrderPrice = (function () {
+
+    var MATCHER_SCALE = 1e8;
+
     function OrderPrice(price, pair) {
         this.amountAsset = pair.amountAsset;
         this.priceAsset = pair.priceAsset;
-        this.price = new Decimal(new Decimal(price).toFixed(this.priceAsset.precision, Decimal.ROUND_FLOOR));
+        this.price = roundToPriceAsset(price, pair);
     }
 
     OrderPrice.prototype.toTokens = function () {
@@ -14,16 +17,39 @@ var OrderPrice = (function () {
     };
 
     OrderPrice.prototype.toBackendPrice = function () {
-        return this.toCoins() * 1e8;
+        return this.toCoins() * MATCHER_SCALE;
     };
+
+    function roundToPriceAsset(price, pair) {
+        return new Decimal(new Decimal(price).toFixed(pair.priceAsset.precision, Decimal.ROUND_FLOOR));
+    }
+
+    function isValidBackendPrice(price, pair) {
+        var normalizedPrice = normalizePrice(price, pair);
+        var roundedPrice = roundToPriceAsset(normalizedPrice, pair);
+
+        return normalizedPrice.eq(roundedPrice);
+    }
+
+    function normalizePrice(price, pair) {
+        return new Decimal(price)
+            .div(MATCHER_SCALE)
+            .div(Math.pow(10, pair.priceAsset.precision - pair.amountAsset.precision));
+    }
 
     return {
         fromTokens: function (price, pair) {
             return new OrderPrice(price, pair);
         },
 
-        fromCoins: function () {},
-        fromBackendPrice: function () {},
-        isValidPrice: function () {}
+        fromBackendPrice: function (price, pair) {
+            if (!isValidBackendPrice(price, pair)) {
+                throw new Error('Backend price contains too many significant digits');
+            }
+
+            var normalizedPrice = normalizePrice(price, pair);
+
+            return new OrderPrice(normalizedPrice, pair);
+        }
     };
 })();
