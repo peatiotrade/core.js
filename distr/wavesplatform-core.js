@@ -2214,9 +2214,15 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 (function() {
     'use strict';
 
+    var STORAGE_STRUCTURE_VERSION = 1;
+
     angular
         .module('waves.core.services')
         .provider('storageService', [function () {
+            function getStorageVersion () {
+                return STORAGE_STRUCTURE_VERSION;
+            }
+
             function isLocalStorageEnabled(window) {
                 var storage, fail, uid;
                 try {
@@ -2235,8 +2241,11 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 
             this.$get = ['$window', 'chromeStorageService', 'html5StorageService',
                 function($window, chromeStorageService, html5StorageService) {
-                return isLocalStorageEnabled($window) ? html5StorageService : chromeStorageService;
-            }];
+                    var result = isLocalStorageEnabled($window) ? html5StorageService : chromeStorageService;
+                    result.getStorageVersion = getStorageVersion;
+
+                    return result;
+                }];
         }]);
 })();
 
