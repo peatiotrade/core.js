@@ -3064,13 +3064,6 @@ var OrderPrice = (function () {
         return new Decimal(new Decimal(price).toFixed(pair.priceAsset.precision, Decimal.ROUND_FLOOR));
     }
 
-    function isValidBackendPrice(price, pair) {
-        var normalizedPrice = normalizePrice(price, pair);
-        var roundedPrice = roundToPriceAsset(normalizedPrice, pair);
-
-        return normalizedPrice.eq(roundedPrice);
-    }
-
     function normalizePrice(price, pair) {
         return new Decimal(price)
             .div(MATCHER_SCALE)
@@ -3083,10 +3076,6 @@ var OrderPrice = (function () {
         },
 
         fromBackendPrice: function (price, pair) {
-            if (!isValidBackendPrice(price, pair)) {
-                throw new Error('Backend price contains too many significant digits');
-            }
-
             var normalizedPrice = normalizePrice(price, pair);
 
             return new OrderPrice(normalizedPrice, pair);

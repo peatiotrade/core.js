@@ -173,13 +173,13 @@ describe('order.price', function() {
         expect(p.toBackendPrice()).toEqual(backendPrice);
     });
 
-    it('fails to convert backend price to valid OrderPrice when it contains too many significant digits', function () {
+    it('converts backend price to valid OrderPrice when it contains too many significant digits', function () {
         var backendPrice = 1.473 * 1e8;
         var pair = {
             amountAsset: Currency.USD,
             priceAsset: Currency.EUR
         };
 
-        expect(function () {OrderPrice.fromBackendPrice(backendPrice, pair);}).toThrowError();
+        expect(OrderPrice.fromBackendPrice(backendPrice, pair).toTokens()).toEqual(1.47);
     });
 });
