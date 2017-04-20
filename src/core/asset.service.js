@@ -36,6 +36,10 @@
         }
 
         function validateReissue(reissue) {
+            if (reissue.totalTokens.currency === Currency.WAV) {
+                throw new Error('Reissuing Waves is not allowed.');
+            }
+
             if (angular.isUndefined(reissue.totalTokens))
                 throw new Error('Total tokens amount hasn\'t been set');
 

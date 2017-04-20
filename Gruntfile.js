@@ -50,7 +50,6 @@ module.exports = function (grunt) {
                         'src/core/localstorage.html5.service.js',
                         'src/core/storage.provider.js',
                         'src/core/formatting.service.js',
-                        'src/core/transfer.service.js',
                         'src/core/formatting.filter.js',
                         'src/core/waves.money.filter.js',
                         'src/core/base58.service.js',
