@@ -1665,6 +1665,10 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
         }
 
         function validateReissue(reissue) {
+            if (reissue.totalTokens.currency === Currency.WAV) {
+                throw new Error('Reissuing Waves is not allowed.');
+            }
+
             if (angular.isUndefined(reissue.totalTokens))
                 throw new Error('Total tokens amount hasn\'t been set');
 
@@ -2063,7 +2067,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
     angular
         .module('waves.core.services')
         .service('utilityService', ['constants.network', 'cryptoService', function (constants, cryptoService) {
-            var me = this;
+            var self = this;
 
             this.getNetworkIdByte = function () {
                 return constants.NETWORK_CODE.charCodeAt(0) & 0xFF;
@@ -2098,24 +2102,21 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
             this.stringToByteArrayWithSize = function (string) {
                 var bytes = converters.stringToByteArray(string);
 
-                return me.byteArrayWithSize(bytes);
+                return self.byteArrayWithSize(bytes);
             };
 
             this.byteArrayWithSize = function (byteArray) {
-                var result = me.shortToByteArray(byteArray.length);
+                var result = self.shortToByteArray(byteArray.length);
 
                 return result.concat(byteArray);
             };
 
             this.currencyToBytes = function (currencyId, mandatory) {
                 if (mandatory) {
-                    if (!currencyId)
-                        throw new Error('CurrencyId is mandatory');
-
-                    return me.base58StringToByteArray(currencyId);
+                    return self.base58StringToByteArray(currencyId);
+                } else {
+                    return currencyId ? [1].concat(self.base58StringToByteArray(currencyId)) : [0];
                 }
-                return currencyId ?
-                    [1].concat(me.base58StringToByteArray(currencyId)) : [0];
             };
 
             this.booleanToBytes = function (flag) {
@@ -2128,10 +2129,6 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 
             this.getTime = function() {
                 return Date.now();
-            };
-
-            this.isEnterKey = function (charCode) {
-                return (charCode == 10 || charCode == 13);
             };
         }]);
 })();
@@ -2526,83 +2523,6 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
                 return $filter('date')(date, format);
             };
         }]);
-})();
-
-(function () {
-    'use strict';
-
-    function WavesTransferService (constants, cryptoService, utilityService) {
-        function buildSignatureData (senderPublicKey, recipientAddress, amount, fee, wavesTime) {
-            var typeBytes = converters.int32ToBytes(constants.PAYMENT_TRANSACTION_TYPE).reverse();
-            var timestampBytes = utilityService.longToByteArray(wavesTime);
-            var amountBytes = utilityService.longToByteArray(amount);
-            var feeBytes = utilityService.longToByteArray(fee);
-            var publicKey = utilityService.base58StringToByteArray(senderPublicKey);
-            var recipient = utilityService.base58StringToByteArray(recipientAddress);
-
-            var signatureBytes = [];
-
-            return signatureBytes.concat(typeBytes, timestampBytes, publicKey, recipient, amountBytes, feeBytes);
-        }
-
-        function validatePayment(payment) {
-            if (angular.isUndefined(payment.amount))
-                throw new Error('Payment amount hasn\'t been set');
-
-            if (angular.isUndefined(payment.fee))
-                throw new Error('Payment fee hasn\'t been set');
-
-            if (angular.isUndefined(payment.recipient))
-                throw new Error('Payment recipient hasn\'t been set');
-
-            if (payment.fee.currency !== Currency.WAV)
-                throw new Error('Transaction fee must be set in WAV currency');
-        }
-
-        function validateSender(sender) {
-            if (angular.isUndefined(sender.publicKey))
-                throw new Error('Sender account public key hasn\'t been set');
-
-            if (angular.isUndefined(sender.privateKey))
-                throw new Error('Sender account private key hasn\'t been set');
-
-            if (angular.isUndefined(sender.address))
-                throw new Error('Sender account address hasn\'t been set');
-        }
-
-        this.createTransaction = function (payment, sender) {
-            validatePayment(payment);
-            validateSender(sender);
-
-            if (angular.isUndefined(payment.time))
-                payment.time = utilityService.getTime();
-
-            var amount = payment.amount.toCoins();
-            var fee = payment.fee.toCoins();
-            var recipient = payment.recipient;
-
-            var signatureData = buildSignatureData(sender.publicKey, recipient, amount, fee, payment.time);
-
-            var privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
-            var signature = cryptoService.nonDeterministicSign(privateKeyBytes, signatureData);
-
-            return {
-                recipient: recipient,
-                timestamp: payment.time,
-                signature: signature,
-                amount: amount,
-                senderPublicKey: sender.publicKey,
-                sender: sender.address,
-                fee: fee
-            };
-        };
-    }
-
-    WavesTransferService.$inject = ['constants.transactions', 'cryptoService', 'utilityService'];
-
-    angular
-        .module('waves.core.services')
-        .service('transferService', WavesTransferService);
 })();
 
 /**

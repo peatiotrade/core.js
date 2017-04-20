@@ -4,7 +4,7 @@
     angular
         .module('waves.core.services')
         .service('utilityService', ['constants.network', 'cryptoService', function (constants, cryptoService) {
-            var me = this;
+            var self = this;
 
             this.getNetworkIdByte = function () {
                 return constants.NETWORK_CODE.charCodeAt(0) & 0xFF;
@@ -39,24 +39,21 @@
             this.stringToByteArrayWithSize = function (string) {
                 var bytes = converters.stringToByteArray(string);
 
-                return me.byteArrayWithSize(bytes);
+                return self.byteArrayWithSize(bytes);
             };
 
             this.byteArrayWithSize = function (byteArray) {
-                var result = me.shortToByteArray(byteArray.length);
+                var result = self.shortToByteArray(byteArray.length);
 
                 return result.concat(byteArray);
             };
 
             this.currencyToBytes = function (currencyId, mandatory) {
                 if (mandatory) {
-                    if (!currencyId)
-                        throw new Error('CurrencyId is mandatory');
-
-                    return me.base58StringToByteArray(currencyId);
+                    return self.base58StringToByteArray(currencyId);
+                } else {
+                    return currencyId ? [1].concat(self.base58StringToByteArray(currencyId)) : [0];
                 }
-                return currencyId ?
-                    [1].concat(me.base58StringToByteArray(currencyId)) : [0];
             };
 
             this.booleanToBytes = function (flag) {
@@ -69,10 +66,6 @@
 
             this.getTime = function() {
                 return Date.now();
-            };
-
-            this.isEnterKey = function (charCode) {
-                return (charCode == 10 || charCode == 13);
             };
         }]);
 })();
