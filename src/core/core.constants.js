@@ -4,7 +4,7 @@
     angular
         .module('waves.core.constants', [])
         .constant('constants.network', {
-            NETWORK_NAME: 'devel',
+            NETWORK_NAME: 'devel', // 'devnet', 'testnet', 'mainnet'
             ADDRESS_VERSION: 1,
             NETWORK_CODE: 'T',
             INITIAL_NONCE: 0

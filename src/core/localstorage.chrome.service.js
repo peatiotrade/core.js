@@ -3,26 +3,59 @@
 
     angular
         .module('waves.core.services')
-        .service('chromeStorageService', ['$q', function($q) {
+        .service('chromeStorageService', ['$q', function ($q) {
             var $key = 'WavesAccounts';
+            var self = this;
 
-            this.saveState = function(state) {
+            self.saveState = function (state) {
                 var deferred = $q.defer();
                 var json = {};
                 json[$key] = state;
 
-                chrome.storage.sync.set(json, function() {
+                chrome.storage.local.set(json, function () {
                     deferred.resolve();
                 });
 
                 return deferred.promise;
             };
 
-            this.loadState = function() {
+            self.loadState = function () {
                 var deferred = $q.defer();
 
-                chrome.storage.sync.get($key, function(data) {
+                self.loadSyncState().then(function (syncState) {
+                    if (syncState) {
+                        self.saveState(syncState)
+                            .then(function () {
+                                return self.clearSyncState();
+                            })
+                            .then(function () {
+                                deferred.resolve(syncState);
+                            });
+                    } else {
+                        chrome.storage.local.get($key, function (data) {
+                            deferred.resolve(data[$key]);
+                        });
+                    }
+                });
+
+                return deferred.promise;
+            };
+
+            self.loadSyncState = function () {
+                var deferred = $q.defer();
+
+                chrome.storage.sync.get($key, function (data) {
                     deferred.resolve(data[$key]);
+                });
+
+                return deferred.promise;
+            };
+
+            self.clearSyncState = function () {
+                var deferred = $q.defer();
+
+                chrome.storage.sync.clear(function () {
+                    deferred.resolve();
                 });
 
                 return deferred.promise;
