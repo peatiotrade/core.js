@@ -751,16 +751,18 @@ var Currency = (function () {
     function Currency(data) {
         data = data || {};
 
-        // base58 encoded asset id of the currency
-        this.id = data.id;
-        this.roundingMode = Decimal.ROUND_HALF_UP;
+        this.id = data.id; // base58 encoded asset id of the currency
         this.displayName = data.displayName;
         this.shortName = data.shortName || data.displayName;
         this.symbol = data.symbol || '';
-        // number of decimal places after a decimal point
-        this.precision = data.precision;
-        if (data.roundingMode !== undefined)
+        this.precision = data.precision; // number of decimal places after a decimal point
+        this.verified = data.verified || false;
+
+        if (data.roundingMode !== undefined) {
             this.roundingMode = data.roundingMode;
+        } else {
+            this.roundingMode = Decimal.ROUND_HALF_UP;
+        }
 
         return this;
     }
@@ -770,7 +772,8 @@ var Currency = (function () {
         displayName: 'Waves',
         shortName: 'WAV',
         symbol: 'W',
-        precision: 8
+        precision: 8,
+        verified: true
     });
 
     var UPC = new Currency({
@@ -778,7 +781,8 @@ var Currency = (function () {
         displayName: 'Upcoin',
         shortName: 'UPC',
         symbol: 'U',
-        precision: 2
+        precision: 2,
+        verified: true
     });
 
     var BTC = new Currency({
@@ -786,7 +790,8 @@ var Currency = (function () {
         displayName: 'Bitcoin',
         shortName: 'BTC',
         symbol: 'B',
-        precision: 8
+        precision: 8,
+        verified: true
     });
 
     var USD = new Currency({
@@ -794,7 +799,8 @@ var Currency = (function () {
         displayName: 'US Dollar',
         shortName: 'USD',
         symbol: '$',
-        precision: 2
+        precision: 2,
+        verified: true
     });
 
     var EUR = new Currency({
@@ -802,7 +808,8 @@ var Currency = (function () {
         displayName: 'Euro',
         shortName: 'EUR',
         symbol: '€',
-        precision: 2
+        precision: 2,
+        verified: true
     });
 
     var CNY = new Currency({
@@ -810,7 +817,8 @@ var Currency = (function () {
         displayName: 'Chinese Yuan',
         shortName: 'CNY',
         symbol: '¥',
-        precision: 2
+        precision: 2,
+        verified: true
     });
 
     var WCT = new Currency({
@@ -818,7 +826,8 @@ var Currency = (function () {
         displayName: 'Waves Community',
         shortName: 'WCT',
         symbol: 'WCT',
-        precision: 2
+        precision: 2,
+        verified: true
     });
 
     var MRT = new Currency({
@@ -826,7 +835,8 @@ var Currency = (function () {
         displayName: 'Miner Reward',
         shortName: 'MRT',
         symbol: 'MRT',
-        precision: 2
+        precision: 2,
+        verified: true
     });
 
     function invalidateCache() {
@@ -2064,6 +2074,8 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 (function () {
     'use strict';
 
+    var BASE58_REGEX = new RegExp('^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{0,}$');
+
     angular
         .module('waves.core.services')
         .service('utilityService', ['constants.network', 'cryptoService', function (constants, cryptoService) {
@@ -2129,6 +2141,10 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 
             this.getTime = function() {
                 return Date.now();
+            };
+
+            this.isValidBase58String = function (input) {
+                return BASE58_REGEX.test(input);
             };
         }]);
 })();
@@ -2540,87 +2556,6 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
                 return formattingService.formatTimestamp(timestamp, dateOnly);
             };
         }]);
-})();
-
-/**
- * @author Björn Wenzel
- */
-(function () {
-    'use strict';
-
-    var getCurrency = function (currencyKey) {
-        if (angular.isUndefined(currencyKey))
-            currencyKey = 'WAV';
-
-        if (angular.isUndefined(Currency[currencyKey]))
-            throw new Error('CAN\'t find specified currency: ' + currencyKey);
-
-        return Currency[currencyKey];
-    };
-
-    angular.module('waves.core.filter')
-        .filter('wavesInteger', function () {
-            return function (amount, currencyKey) {
-                return Money.fromCoins(amount, getCurrency(currencyKey)).formatIntegerPart();
-            };
-        })
-        .filter('wavesFraction', function () {
-            return function (amount, currencyKey) {
-                return Money.fromCoins(amount, getCurrency(currencyKey)).formatFractionPart();
-            };
-        })
-        .filter('waves', function () {
-            return function (amount, currencyKey) {
-                return Money.fromCoins(amount, getCurrency(currencyKey)).formatAmount();
-            };
-        })
-        .filter('wavesDisplayName', function () {
-            return function (currencyKey) {
-                return Money.fromCoins(0, getCurrency(currencyKey)).currency.displayName;
-            };
-        });
-})();
-
-(function () {
-    'use strict';
-
-    angular
-        .module('waves.core.services')
-        .service('base58Service', function () {
-            var BASE58_REGEX = new RegExp('^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{0,}$');
-
-            this.isValid = function (input) {
-                return BASE58_REGEX.test(input);
-            };
-
-        });
-
-})();
-
-(function () {
-    'use strict';
-    angular.module('waves.core.directives')
-        .directive('base58', function (base58Service) {
-            return {
-                require: 'ngModel',
-                link: function (scope, elm, attrs, ctrl) {
-                    ctrl.$validators.base58 = function (modelValue, viewValue) {
-                        if (ctrl.$isEmpty(modelValue)) {
-                            // consider empty models to be valid
-                            return true;
-                        }
-
-                        if (base58Service.isValid(viewValue)) {
-                            // it is valid
-                            return true;
-                        }
-
-                        // it is invalid
-                        return false;
-                    };
-                }
-            };
-        });
 })();
 
 (function () {

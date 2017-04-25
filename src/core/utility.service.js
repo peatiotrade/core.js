@@ -1,6 +1,8 @@
 (function () {
     'use strict';
 
+    var BASE58_REGEX = new RegExp('^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{0,}$');
+
     angular
         .module('waves.core.services')
         .service('utilityService', ['constants.network', 'cryptoService', function (constants, cryptoService) {
@@ -66,6 +68,10 @@
 
             this.getTime = function() {
                 return Date.now();
+            };
+
+            this.isValidBase58String = function (input) {
+                return BASE58_REGEX.test(input);
             };
         }]);
 })();

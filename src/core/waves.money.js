@@ -24,16 +24,18 @@ var Currency = (function () {
     function Currency(data) {
         data = data || {};
 
-        // base58 encoded asset id of the currency
-        this.id = data.id;
-        this.roundingMode = Decimal.ROUND_HALF_UP;
+        this.id = data.id; // base58 encoded asset id of the currency
         this.displayName = data.displayName;
         this.shortName = data.shortName || data.displayName;
         this.symbol = data.symbol || '';
-        // number of decimal places after a decimal point
-        this.precision = data.precision;
-        if (data.roundingMode !== undefined)
+        this.precision = data.precision; // number of decimal places after a decimal point
+        this.verified = data.verified || false;
+
+        if (data.roundingMode !== undefined) {
             this.roundingMode = data.roundingMode;
+        } else {
+            this.roundingMode = Decimal.ROUND_HALF_UP;
+        }
 
         return this;
     }
@@ -43,7 +45,8 @@ var Currency = (function () {
         displayName: 'Waves',
         shortName: 'WAV',
         symbol: 'W',
-        precision: 8
+        precision: 8,
+        verified: true
     });
 
     var UPC = new Currency({
@@ -51,7 +54,8 @@ var Currency = (function () {
         displayName: 'Upcoin',
         shortName: 'UPC',
         symbol: 'U',
-        precision: 2
+        precision: 2,
+        verified: true
     });
 
     var BTC = new Currency({
@@ -59,7 +63,8 @@ var Currency = (function () {
         displayName: 'Bitcoin',
         shortName: 'BTC',
         symbol: 'B',
-        precision: 8
+        precision: 8,
+        verified: true
     });
 
     var USD = new Currency({
@@ -67,7 +72,8 @@ var Currency = (function () {
         displayName: 'US Dollar',
         shortName: 'USD',
         symbol: '$',
-        precision: 2
+        precision: 2,
+        verified: true
     });
 
     var EUR = new Currency({
@@ -75,7 +81,8 @@ var Currency = (function () {
         displayName: 'Euro',
         shortName: 'EUR',
         symbol: '€',
-        precision: 2
+        precision: 2,
+        verified: true
     });
 
     var CNY = new Currency({
@@ -83,7 +90,8 @@ var Currency = (function () {
         displayName: 'Chinese Yuan',
         shortName: 'CNY',
         symbol: '¥',
-        precision: 2
+        precision: 2,
+        verified: true
     });
 
     var WCT = new Currency({
@@ -91,7 +99,8 @@ var Currency = (function () {
         displayName: 'Waves Community',
         shortName: 'WCT',
         symbol: 'WCT',
-        precision: 2
+        precision: 2,
+        verified: true
     });
 
     var MRT = new Currency({
@@ -99,7 +108,8 @@ var Currency = (function () {
         displayName: 'Miner Reward',
         shortName: 'MRT',
         symbol: 'MRT',
-        precision: 2
+        precision: 2,
+        verified: true
     });
 
     function invalidateCache() {
