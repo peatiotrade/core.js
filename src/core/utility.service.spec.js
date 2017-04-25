@@ -19,4 +19,19 @@ describe('Utility.Service', function() {
     it('should correctly convert short values to byte array', function () {
         expect(utilityService.shortToByteArray(14851)).toEqual([58, 3]);
     });
+
+    var allBase58Chars = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+
+    it('should validate base58 string positive', function () {
+        expect(utilityService.isValidBase58String('abc')).toBeTruthy();
+        expect(utilityService.isValidBase58String(allBase58Chars)).toBeTruthy();
+    });
+
+    it('should validate base58 string negative', function () {
+        expect(utilityService.isValidBase58String('0')).toBeFalsy();
+        expect(utilityService.isValidBase58String('l')).toBeFalsy();
+        expect(utilityService.isValidBase58String('I')).toBeFalsy();
+        expect(utilityService.isValidBase58String('O')).toBeFalsy();
+        expect(utilityService.isValidBase58String(' ')).toBeFalsy();
+    });
 });

@@ -2064,6 +2064,8 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 (function () {
     'use strict';
 
+    var BASE58_REGEX = new RegExp('^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{0,}$');
+
     angular
         .module('waves.core.services')
         .service('utilityService', ['constants.network', 'cryptoService', function (constants, cryptoService) {
@@ -2129,6 +2131,10 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 
             this.getTime = function() {
                 return Date.now();
+            };
+
+            this.isValidBase58String = function (input) {
+                return BASE58_REGEX.test(input);
             };
         }]);
 })();
@@ -2540,87 +2546,6 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
                 return formattingService.formatTimestamp(timestamp, dateOnly);
             };
         }]);
-})();
-
-/**
- * @author Björn Wenzel
- */
-(function () {
-    'use strict';
-
-    var getCurrency = function (currencyKey) {
-        if (angular.isUndefined(currencyKey))
-            currencyKey = 'WAV';
-
-        if (angular.isUndefined(Currency[currencyKey]))
-            throw new Error('CAN\'t find specified currency: ' + currencyKey);
-
-        return Currency[currencyKey];
-    };
-
-    angular.module('waves.core.filter')
-        .filter('wavesInteger', function () {
-            return function (amount, currencyKey) {
-                return Money.fromCoins(amount, getCurrency(currencyKey)).formatIntegerPart();
-            };
-        })
-        .filter('wavesFraction', function () {
-            return function (amount, currencyKey) {
-                return Money.fromCoins(amount, getCurrency(currencyKey)).formatFractionPart();
-            };
-        })
-        .filter('waves', function () {
-            return function (amount, currencyKey) {
-                return Money.fromCoins(amount, getCurrency(currencyKey)).formatAmount();
-            };
-        })
-        .filter('wavesDisplayName', function () {
-            return function (currencyKey) {
-                return Money.fromCoins(0, getCurrency(currencyKey)).currency.displayName;
-            };
-        });
-})();
-
-(function () {
-    'use strict';
-
-    angular
-        .module('waves.core.services')
-        .service('base58Service', function () {
-            var BASE58_REGEX = new RegExp('^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{0,}$');
-
-            this.isValid = function (input) {
-                return BASE58_REGEX.test(input);
-            };
-
-        });
-
-})();
-
-(function () {
-    'use strict';
-    angular.module('waves.core.directives')
-        .directive('base58', function (base58Service) {
-            return {
-                require: 'ngModel',
-                link: function (scope, elm, attrs, ctrl) {
-                    ctrl.$validators.base58 = function (modelValue, viewValue) {
-                        if (ctrl.$isEmpty(modelValue)) {
-                            // consider empty models to be valid
-                            return true;
-                        }
-
-                        if (base58Service.isValid(viewValue)) {
-                            // it is valid
-                            return true;
-                        }
-
-                        // it is invalid
-                        return false;
-                    };
-                }
-            };
-        });
 })();
 
 (function () {
