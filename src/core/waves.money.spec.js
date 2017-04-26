@@ -58,6 +58,12 @@ describe('waves.money', function() {
         expect(m.formatAmount(false, true)).toEqual('12,345.45698700');
         expect(m.formatAmount(false, false)).toEqual('12345.45698700');
         expect(m.formatAmount(true, true)).toEqual('12,345.456987');
+
+        m = Money.fromTokens(9000.005455990000, Currency.BTC);
+        expect(m.formatAmount(true, false)).toEqual('9000.00545599');
+
+        m = Money.fromTokens(900.0052567600001, Currency.BTC);
+        expect(m.formatAmount(true, false)).toEqual('900.00525676');
     });
 
     it('strips excess zeros after formatting', function () {

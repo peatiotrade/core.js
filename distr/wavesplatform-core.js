@@ -888,7 +888,8 @@ var Money = function(amount, currency) {
     if (currency === undefined)
         throw Error('Currency is required');
 
-    this.amount = new Decimal(amount);
+    this.amount = new Decimal(amount)
+        .toDecimalPlaces(currency.precision, Decimal.ROUND_FLOOR);
     this.currency = currency;
 
     var integerPart = function (value) {
