@@ -767,6 +767,13 @@ var Currency = (function () {
         return this;
     }
 
+    Currency.prototype.toString = function () {
+        if (this.shortName)
+            return this.shortName;
+
+        return this.displayName;
+    };
+
     var WAV = new Currency({
         id: '',
         displayName: 'Waves',
@@ -1000,6 +1007,10 @@ var Money = function(amount, currency) {
             throw new Error('Multiplication by NaN is not supported');
 
         return new Money(this.amount.mul(multiplier), this.currency);
+    };
+
+    this.toString = function () {
+        return this.formatAmount(false, true) + ' ' + this.currency.toString();
     };
 
     return this;

@@ -20,6 +20,10 @@ describe('waves.money', function() {
         expect(Currency.create({id: Currency.CNY.id})).toBe(Currency.CNY);
     });
 
+    it('converts predefined currency to string', function () {
+        expect(Currency.WAV.toString()).toEqual('WAV');
+    });
+
     it('returns new instance of currency if a client doesn\'t set currency id', function () {
         var c1 = Currency.create({
             displayName: 'one',
@@ -32,6 +36,7 @@ describe('waves.money', function() {
         });
 
         expect(c1).not.toBe(c2);
+        expect(c1.toString()).toEqual('one');
     });
 
     it('precisely converts tokens to coins', function () {
