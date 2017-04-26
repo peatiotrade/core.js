@@ -55,8 +55,9 @@ describe('waves.money', function() {
         expect(m.formatFractionPart()).toEqual('.98410000');
 
         m = Money.fromTokens(12345.456987, Currency.WAV);
-        expect(m.formatAmount()).toEqual('12,345.45698700');
-        expect(m.formatAmount(true)).toEqual('12,345.456987');
+        expect(m.formatAmount(false, true)).toEqual('12,345.45698700');
+        expect(m.formatAmount(false, false)).toEqual('12345.45698700');
+        expect(m.formatAmount(true, true)).toEqual('12,345.456987');
     });
 
     it('strips excess zeros after formatting', function () {

@@ -199,12 +199,12 @@ var Money = function(amount, currency) {
         return parts.join(DECIMAL_SEPARATOR);
     };
 
-    this.formatAmount = function (stripZeroes) {
+    this.formatAmount = function (stripZeroes, useThousandsSeparator) {
         var result = stripZeroes ?
             this.toTokens().toFixed(this.amount.decimalPlaces()) :
             format(this.amount);
 
-        return formatWithThousandsSeparator(result);
+        return useThousandsSeparator ? formatWithThousandsSeparator(result) : result;
     };
 
     this.formatIntegerPart = function () {
