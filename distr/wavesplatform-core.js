@@ -846,6 +846,24 @@ var Currency = (function () {
         verified: true
     });
 
+    var WGO = new Currency({
+        id: '4eT6R8R2XuTcBuTHiXVQsh2dN2mg3c2Qnp95EWBNHygg',
+        displayName: 'WavesGo',
+        shortName: 'WGO',
+        symbol: 'WGO',
+        precision: 8,
+        verified: true
+    });
+
+    var INC = new Currency({
+        id: 'FLbGXzrpqkvucZqsHDcNxePTkh2ChmEi4GdBfDRRJVof',
+        displayName: 'Incent',
+        shortName: 'INC',
+        symbol: 'INC',
+        precision: 8,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -857,6 +875,8 @@ var Currency = (function () {
         currencyCache[CNY.id] = CNY;
         currencyCache[WCT.id] = WCT;
         currencyCache[MRT.id] = MRT;
+        currencyCache[WGO.id] = WGO;
+        currencyCache[INC.id] = INC;
     }
 
     invalidateCache();
@@ -881,7 +901,9 @@ var Currency = (function () {
         EUR: EUR,
         CNY: CNY,
         WCT: WCT,
-        MRT: MRT
+        MRT: MRT,
+        WGO: WGO,
+        INC: INC
     };
 })();
 
@@ -2748,14 +2770,8 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 (function () {
     'use strict';
 
-    var WAVES_ASSET_ID = 'WAVES';
-
-    function Pair (id, name) {
-        return {
-            id: denormalizeId(id),
-            name: name
-        };
-    }
+    var WAVES_ASSET_ID = 'WAVES',
+        WAVES_PRECISION = 8;
 
     function denormalizeId(id) {
         return id === WAVES_ASSET_ID ? '' : id;
@@ -2809,8 +2825,18 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
                     var id = normalizeId(market.amountAsset) + '/' + normalizeId(market.priceAsset);
                     var pair = {
                         id: id,
-                        first: new Pair(market.amountAsset, market.amountAssetName),
-                        second: new Pair(market.priceAsset, market.priceAssetName),
+                        amountAssetInfo: market.amountAssetInfo,
+                        amountAsset: Currency.create({
+                            id: denormalizeId(market.amountAsset),
+                            displayName: market.amountAssetName,
+                            precision: market.amountAssetInfo ? market.amountAssetInfo.decimals : WAVES_PRECISION
+                        }),
+                        priceAssetInfo: market.priceAssetInfo,
+                        priceAsset: Currency.create({
+                            id: denormalizeId(market.priceAsset),
+                            displayName: market.priceAssetName,
+                            precision: market.priceAssetInfo ? market.priceAssetInfo.decimals : WAVES_PRECISION
+                        }),
                         created: market.created
                     };
                     pairs.push(pair);

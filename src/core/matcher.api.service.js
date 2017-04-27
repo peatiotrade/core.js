@@ -1,14 +1,8 @@
 (function () {
     'use strict';
 
-    var WAVES_ASSET_ID = 'WAVES';
-
-    function Pair (id, name) {
-        return {
-            id: denormalizeId(id),
-            name: name
-        };
-    }
+    var WAVES_ASSET_ID = 'WAVES',
+        WAVES_PRECISION = 8;
 
     function denormalizeId(id) {
         return id === WAVES_ASSET_ID ? '' : id;
@@ -62,8 +56,18 @@
                     var id = normalizeId(market.amountAsset) + '/' + normalizeId(market.priceAsset);
                     var pair = {
                         id: id,
-                        first: new Pair(market.amountAsset, market.amountAssetName),
-                        second: new Pair(market.priceAsset, market.priceAssetName),
+                        amountAssetInfo: market.amountAssetInfo,
+                        amountAsset: Currency.create({
+                            id: denormalizeId(market.amountAsset),
+                            displayName: market.amountAssetName,
+                            precision: market.amountAssetInfo ? market.amountAssetInfo.decimals : WAVES_PRECISION
+                        }),
+                        priceAssetInfo: market.priceAssetInfo,
+                        priceAsset: Currency.create({
+                            id: denormalizeId(market.priceAsset),
+                            displayName: market.priceAssetName,
+                            precision: market.priceAssetInfo ? market.priceAssetInfo.decimals : WAVES_PRECISION
+                        }),
                         created: market.created
                     };
                     pairs.push(pair);

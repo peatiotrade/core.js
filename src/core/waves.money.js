@@ -119,6 +119,24 @@ var Currency = (function () {
         verified: true
     });
 
+    var WGO = new Currency({
+        id: '4eT6R8R2XuTcBuTHiXVQsh2dN2mg3c2Qnp95EWBNHygg',
+        displayName: 'WavesGo',
+        shortName: 'WGO',
+        symbol: 'WGO',
+        precision: 8,
+        verified: true
+    });
+
+    var INC = new Currency({
+        id: 'FLbGXzrpqkvucZqsHDcNxePTkh2ChmEi4GdBfDRRJVof',
+        displayName: 'Incent',
+        shortName: 'INC',
+        symbol: 'INC',
+        precision: 8,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -130,6 +148,8 @@ var Currency = (function () {
         currencyCache[CNY.id] = CNY;
         currencyCache[WCT.id] = WCT;
         currencyCache[MRT.id] = MRT;
+        currencyCache[WGO.id] = WGO;
+        currencyCache[INC.id] = INC;
     }
 
     invalidateCache();
@@ -154,7 +174,9 @@ var Currency = (function () {
         EUR: EUR,
         CNY: CNY,
         WCT: WCT,
-        MRT: MRT
+        MRT: MRT,
+        WGO: WGO,
+        INC: INC
     };
 })();
 
