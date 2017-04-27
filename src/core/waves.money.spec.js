@@ -20,6 +20,10 @@ describe('waves.money', function() {
         expect(Currency.create({id: Currency.CNY.id})).toBe(Currency.CNY);
     });
 
+    it('converts predefined currency to string', function () {
+        expect(Currency.WAV.toString()).toEqual('WAV');
+    });
+
     it('returns new instance of currency if a client doesn\'t set currency id', function () {
         var c1 = Currency.create({
             displayName: 'one',
@@ -32,6 +36,7 @@ describe('waves.money', function() {
         });
 
         expect(c1).not.toBe(c2);
+        expect(c1.toString()).toEqual('one');
     });
 
     it('precisely converts tokens to coins', function () {
@@ -55,8 +60,15 @@ describe('waves.money', function() {
         expect(m.formatFractionPart()).toEqual('.98410000');
 
         m = Money.fromTokens(12345.456987, Currency.WAV);
-        expect(m.formatAmount()).toEqual('12,345.45698700');
-        expect(m.formatAmount(true)).toEqual('12,345.456987');
+        expect(m.formatAmount(false, true)).toEqual('12,345.45698700');
+        expect(m.formatAmount(false, false)).toEqual('12345.45698700');
+        expect(m.formatAmount(true, true)).toEqual('12,345.456987');
+
+        m = Money.fromTokens(9000.005455990000, Currency.BTC);
+        expect(m.formatAmount(true, false)).toEqual('9000.00545599');
+
+        m = Money.fromTokens(900.0052567600001, Currency.BTC);
+        expect(m.formatAmount(true, false)).toEqual('900.00525676');
     });
 
     it('strips excess zeros after formatting', function () {

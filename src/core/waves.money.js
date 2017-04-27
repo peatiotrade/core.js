@@ -40,6 +40,13 @@ var Currency = (function () {
         return this;
     }
 
+    Currency.prototype.toString = function () {
+        if (this.shortName)
+            return this.shortName;
+
+        return this.displayName;
+    };
+
     var WAV = new Currency({
         id: '',
         displayName: 'Waves',
@@ -183,7 +190,8 @@ var Money = function(amount, currency) {
     if (currency === undefined)
         throw Error('Currency is required');
 
-    this.amount = new Decimal(amount);
+    this.amount = new Decimal(amount)
+        .toDecimalPlaces(currency.precision, Decimal.ROUND_FLOOR);
     this.currency = currency;
 
     var integerPart = function (value) {
@@ -221,12 +229,12 @@ var Money = function(amount, currency) {
         return parts.join(DECIMAL_SEPARATOR);
     };
 
-    this.formatAmount = function (stripZeroes) {
+    this.formatAmount = function (stripZeroes, useThousandsSeparator) {
         var result = stripZeroes ?
             this.toTokens().toFixed(this.amount.decimalPlaces()) :
             format(this.amount);
 
-        return formatWithThousandsSeparator(result);
+        return useThousandsSeparator ? formatWithThousandsSeparator(result) : result;
     };
 
     this.formatIntegerPart = function () {
@@ -294,6 +302,10 @@ var Money = function(amount, currency) {
             throw new Error('Multiplication by NaN is not supported');
 
         return new Money(this.amount.mul(multiplier), this.currency);
+    };
+
+    this.toString = function () {
+        return this.formatAmount(false, true) + ' ' + this.currency.toString();
     };
 
     return this;
