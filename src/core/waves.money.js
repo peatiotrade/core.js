@@ -137,6 +137,15 @@ var Currency = (function () {
         verified: true
     });
 
+    var RBX = new Currency({
+        id: 'AnERqFRffNVrCbviXbDEdzrU6ipXCP5Y1PKpFdRnyQAy',
+        displayName: 'Ripto Bux',
+        shortName: 'RBX',
+        symbol: 'RBX',
+        precision: 8,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -150,6 +159,7 @@ var Currency = (function () {
         currencyCache[MRT.id] = MRT;
         currencyCache[WGO.id] = WGO;
         currencyCache[INC.id] = INC;
+        currencyCache[RBX.id] = RBX;
     }
 
     invalidateCache();
@@ -176,7 +186,8 @@ var Currency = (function () {
         WCT: WCT,
         MRT: MRT,
         WGO: WGO,
-        INC: INC
+        INC: INC,
+        RBX: RBX
     };
 })();
 
