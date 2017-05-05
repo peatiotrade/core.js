@@ -2868,6 +2868,24 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 (function () {
     'use strict';
 
+    function WavesDatafeedApiService (rest) {
+        var apiRoot = rest.all('api');
+
+        this.getSymbols = function () {
+            return apiRoot.get('symbols');
+        };
+    }
+
+    WavesDatafeedApiService.$inject = ['DatafeedRestangular'];
+
+    angular
+        .module('waves.core.services')
+        .service('datafeedApiService', WavesDatafeedApiService);
+})();
+
+(function () {
+    'use strict';
+
     var SELL_ORDER_TYPE = 'sell';
     var BUY_ORDER_TYPE = 'buy';
     var PRICE_SCALE_FACTOR = 1e8;
