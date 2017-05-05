@@ -55,6 +55,7 @@ module.exports = function (grunt) {
                         'src/core/coinomat.service.js',
                         'src/core/coinomat.fiat.service.js',
                         'src/core/matcher.api.service.js',
+                        'src/core/datafeed.api.service.js',
                         'src/core/matcher.request.service.js',
                         'src/core/order.price.js'
                     ]
