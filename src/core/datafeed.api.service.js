@@ -10,13 +10,14 @@
     }
 
     function WavesDatafeedApiService (rest) {
-        var apiRoot = rest.all('api');
+        var self = this,
+            apiRoot = rest.all('api');
 
-        this.getSymbols = function () {
+        self.getSymbols = function () {
             return apiRoot.get('symbols');
         };
 
-        this.getCandles = function (pair, from, to, frame) {
+        self.getCandles = function (pair, from, to, frame) {
             frame = frame || DEFAULT_FRAME;
             to = to || Date.now();
             from = from || to - 50 * frame * MINUTE;
@@ -30,7 +31,17 @@
                 .get(to);
         };
 
-        this.getTrades = function (pair, limit) {
+        self.getLastCandles = function (pair, limit, frame) {
+            frame = frame || DEFAULT_FRAME;
+            limit = limit || DEFAULT_LIMIT;
+
+            var to = Date.now(),
+                from = to - limit * frame * MINUTE;
+
+            return self.getCandles(pair, from, to, frame);
+        };
+
+        self.getTrades = function (pair, limit) {
             limit = limit || DEFAULT_LIMIT;
 
             return apiRoot
@@ -40,7 +51,7 @@
                 .get(limit);
         };
 
-        this.getTradesByAddress = function (pair, address, limit) {
+        self.getTradesByAddress = function (pair, address, limit) {
             limit = limit || DEFAULT_LIMIT;
 
             return apiRoot
