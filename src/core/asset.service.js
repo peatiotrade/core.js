@@ -20,7 +20,7 @@
             if (angular.isUndefined(asset.decimalPlaces))
                 throw new Error('Token decimal places amount hasn\'t been set');
 
-            if (asset.fee.currency !== Currency.WAV)
+            if (asset.fee.currency !== Currency.WAVES)
                 throw new Error('Transaction fee must be nominated in Waves');
         }
 
@@ -36,7 +36,7 @@
         }
 
         function validateReissue(reissue) {
-            if (reissue.totalTokens.currency === Currency.WAV) {
+            if (reissue.totalTokens.currency === Currency.WAVES) {
                 throw new Error('Reissuing Waves is not allowed.');
             }
 
@@ -46,7 +46,7 @@
             if (angular.isUndefined(reissue.fee))
                 throw new Error('Transaction fee hasn\'t been set');
 
-            if (reissue.fee.currency !== Currency.WAV)
+            if (reissue.fee.currency !== Currency.WAVES)
                 throw new Error('Transaction fee must be nominated in Waves');
         }
 

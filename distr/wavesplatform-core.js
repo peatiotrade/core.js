@@ -774,21 +774,12 @@ var Currency = (function () {
         return this.displayName;
     };
 
-    var WAV = new Currency({
+    var WAVES = new Currency({
         id: '',
         displayName: 'Waves',
-        shortName: 'WAV',
-        symbol: 'W',
+        shortName: 'WAVES',
+        symbol: 'WAVES',
         precision: 8,
-        verified: true
-    });
-
-    var UPC = new Currency({
-        id: '4764Pr9DpKQAHAjAVA2uqnrYidLMnM7vpDDLCDWujFTt',
-        displayName: 'Upcoin',
-        shortName: 'UPC',
-        symbol: 'U',
-        precision: 2,
         verified: true
     });
 
@@ -855,11 +846,11 @@ var Currency = (function () {
         verified: true
     });
 
-    var INC = new Currency({
+    var INCNT = new Currency({
         id: 'FLbGXzrpqkvucZqsHDcNxePTkh2ChmEi4GdBfDRRJVof',
         displayName: 'Incent',
-        shortName: 'INC',
-        symbol: 'INC',
+        shortName: 'INCNT',
+        symbol: 'INCNT',
         precision: 8,
         verified: true
     });
@@ -873,11 +864,37 @@ var Currency = (function () {
         verified: true
     });
 
+    var BAt = new Currency({
+        id: 'APz41KyoKuBBh8t3oZjqvhbbsg6f63tpZM5Ck5LYx6h',
+        displayName: 'B@nkcoin',
+        shortName: 'B@',
+        symbol: 'B@',
+        precision: 8,
+        verified: true
+    });
+
+    var UPC = new Currency({
+        id: '4764Pr9DpKQAHAjAVA2uqnrYidLMnM7vpDDLCDWujFTt',
+        displayName: 'Upcoin',
+        shortName: 'UPC',
+        symbol: 'UPC',
+        precision: 2,
+        verified: true
+    });
+
+    var KLN = new Currency({
+        id: 'EYz8Zvs62D4d7F5ZgXHCWuzuFaZg63FYnfVQrTWQoLSK',
+        displayName: 'Kolion',
+        shortName: 'KLN',
+        symbol: 'KLN',
+        precision: 4,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
-        currencyCache[WAV.id] = WAV;
-        currencyCache[UPC.id] = UPC;
+        currencyCache[WAVES.id] = WAVES;
         currencyCache[BTC.id] = BTC;
         currencyCache[USD.id] = USD;
         currencyCache[EUR.id] = EUR;
@@ -885,8 +902,11 @@ var Currency = (function () {
         currencyCache[WCT.id] = WCT;
         currencyCache[MRT.id] = MRT;
         currencyCache[WGO.id] = WGO;
-        currencyCache[INC.id] = INC;
+        currencyCache[INCNT.id] = INCNT;
         currencyCache[RBX.id] = RBX;
+        currencyCache[BAt.id] = BAt;
+        currencyCache[UPC.id] = UPC;
+        currencyCache[KLN.id] = KLN;
     }
 
     invalidateCache();
@@ -904,8 +924,7 @@ var Currency = (function () {
             return currencyCache[data.id];
         },
         invalidateCache: invalidateCache,
-        WAV: WAV,
-        UPC: UPC,
+        WAVES: WAVES,
         BTC: BTC,
         USD: USD,
         EUR: EUR,
@@ -913,8 +932,11 @@ var Currency = (function () {
         WCT: WCT,
         MRT: MRT,
         WGO: WGO,
-        INC: INC,
-        RBX: RBX
+        INCNT: INCNT,
+        RBX: RBX,
+        BAt: BAt,
+        UPC: UPC,
+        KLN: KLN
     };
 })();
 
@@ -1065,7 +1087,7 @@ Money.fromCoins = function (amount, currency) {
 };
 
 // set up decimal to format 0.00000001 as is instead of 1e-8
-Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
+Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 
 
 (function() {
@@ -1704,7 +1726,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
             if (angular.isUndefined(asset.decimalPlaces))
                 throw new Error('Token decimal places amount hasn\'t been set');
 
-            if (asset.fee.currency !== Currency.WAV)
+            if (asset.fee.currency !== Currency.WAVES)
                 throw new Error('Transaction fee must be nominated in Waves');
         }
 
@@ -1720,7 +1742,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
         }
 
         function validateReissue(reissue) {
-            if (reissue.totalTokens.currency === Currency.WAV) {
+            if (reissue.totalTokens.currency === Currency.WAVES) {
                 throw new Error('Reissuing Waves is not allowed.');
             }
 
@@ -1730,7 +1752,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
             if (angular.isUndefined(reissue.fee))
                 throw new Error('Transaction fee hasn\'t been set');
 
-            if (reissue.fee.currency !== Currency.WAV)
+            if (reissue.fee.currency !== Currency.WAVES)
                 throw new Error('Transaction fee must be nominated in Waves');
         }
 
@@ -2623,7 +2645,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
                     case Currency.BTC.id:
                         return 'WBTC';
 
-                    case Currency.WAV.id:
+                    case Currency.WAVES.id:
                         return 'WAVES';
                 }
 
@@ -2640,7 +2662,7 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
                     case Currency.BTC.id:
                         return 'BTC';
 
-                    case Currency.WAV.id:
+                    case Currency.WAVES.id:
                         return 'WAVES';
                 }
 
@@ -2868,11 +2890,50 @@ Decimal.config({toExpNeg: -(Currency.WAV.precision + 1)});
 (function () {
     'use strict';
 
+    var MINUTE = 60 * 1000,
+        DEFAULT_FRAME = 30,
+        DEFAULT_LIMIT = 50;
+
     function WavesDatafeedApiService (rest) {
         var apiRoot = rest.all('api');
 
         this.getSymbols = function () {
             return apiRoot.get('symbols');
+        };
+
+        this.getCandles = function (pair, from, to, frame) {
+            frame = frame || DEFAULT_FRAME;
+            to = to || Date.now();
+            from = from || to - 50 * frame * MINUTE;
+
+            return apiRoot
+                .all('candles')
+                .all(pair.amountAsset.id)
+                .all(pair.priceAsset.id)
+                .all(frame)
+                .all(from)
+                .get(to);
+        };
+
+        this.getTrades = function (pair, limit) {
+            limit = limit || DEFAULT_LIMIT;
+
+            return apiRoot
+                .all('trades')
+                .all(pair.amountAsset.id)
+                .all(pair.priceAsset.id)
+                .get(limit);
+        };
+
+        this.getTradesByAddress = function (pair, address, limit) {
+            limit = limit || DEFAULT_LIMIT;
+
+            return apiRoot
+                .all('trades')
+                .all(pair.amountAsset.id)
+                .all(pair.priceAsset.id)
+                .all(address)
+                .get(limit);
         };
     }
 

@@ -18,7 +18,7 @@
                     case Currency.BTC.id:
                         return 'WBTC';
 
-                    case Currency.WAV.id:
+                    case Currency.WAVES.id:
                         return 'WAVES';
                 }
 
@@ -35,7 +35,7 @@
                     case Currency.BTC.id:
                         return 'BTC';
 
-                    case Currency.WAV.id:
+                    case Currency.WAVES.id:
                         return 'WAVES';
                 }
 

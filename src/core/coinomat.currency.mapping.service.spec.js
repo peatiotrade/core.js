@@ -20,7 +20,7 @@ describe('Coinomat.Currency.Mapping.Service', function() {
     });
 
     it('should return correct codes for waves', function() {
-        expect(mappingService.gatewayCurrencyCode(Currency.WAV)).toEqual('WAVES');
-        expect(mappingService.platformCurrencyCode(Currency.WAV)).toEqual('WAVES');
+        expect(mappingService.gatewayCurrencyCode(Currency.WAVES)).toEqual('WAVES');
+        expect(mappingService.platformCurrencyCode(Currency.WAVES)).toEqual('WAVES');
     });
 });
