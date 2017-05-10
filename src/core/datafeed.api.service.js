@@ -5,6 +5,10 @@
         DEFAULT_FRAME = 30,
         DEFAULT_LIMIT = 50;
 
+    function serializeId(id) {
+        return id === '' ? 'WAVES' : id;
+    }
+
     function WavesDatafeedApiService (rest) {
         var apiRoot = rest.all('api');
 
@@ -19,8 +23,8 @@
 
             return apiRoot
                 .all('candles')
-                .all(pair.amountAsset.id)
-                .all(pair.priceAsset.id)
+                .all(serializeId(pair.amountAsset.id))
+                .all(serializeId(pair.priceAsset.id))
                 .all(frame)
                 .all(from)
                 .get(to);
@@ -31,8 +35,8 @@
 
             return apiRoot
                 .all('trades')
-                .all(pair.amountAsset.id)
-                .all(pair.priceAsset.id)
+                .all(serializeId(pair.amountAsset.id))
+                .all(serializeId(pair.priceAsset.id))
                 .get(limit);
         };
 
@@ -41,8 +45,8 @@
 
             return apiRoot
                 .all('trades')
-                .all(pair.amountAsset.id)
-                .all(pair.priceAsset.id)
+                .all(serializeId(pair.amountAsset.id))
+                .all(serializeId(pair.priceAsset.id))
                 .all(address)
                 .get(limit);
         };
