@@ -864,6 +864,15 @@ var Currency = (function () {
         verified: true
     });
 
+    var MER = new Currency({
+        id: 'HzfaJp8YQWLvQG4FkUxq2Q7iYWMYQ2k8UF89vVJAjWPj',
+        displayName: 'Mercury',
+        shortName: 'MER',
+        symbol: 'MER',
+        precision: 8,
+        verified: true
+    });
+
     var BAt = new Currency({
         id: 'APz41KyoKuBBh8t3oZjqvhbbsg6f63tpZM5Ck5LYx6h',
         displayName: 'B@nkcoin',
@@ -904,6 +913,7 @@ var Currency = (function () {
         currencyCache[WGO.id] = WGO;
         currencyCache[INCNT.id] = INCNT;
         currencyCache[RBX.id] = RBX;
+        currencyCache[MER.id] = MER;
         currencyCache[BAt.id] = BAt;
         currencyCache[UPC.id] = UPC;
         currencyCache[KLN.id] = KLN;
@@ -934,6 +944,7 @@ var Currency = (function () {
         WGO: WGO,
         INCNT: INCNT,
         RBX: RBX,
+        MER: MER,
         BAt: BAt,
         UPC: UPC,
         KLN: KLN
@@ -2924,10 +2935,12 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
             frame = frame || DEFAULT_FRAME;
             limit = limit || DEFAULT_LIMIT;
 
-            var to = Date.now(),
-                from = to - limit * frame * MINUTE;
-
-            return self.getCandles(pair, from, to, frame);
+            return apiRoot
+                .all('candles')
+                .all(serializeId(pair.amountAsset.id))
+                .all(serializeId(pair.priceAsset.id))
+                .all(frame)
+                .get(limit);
         };
 
         self.getTrades = function (pair, limit) {
