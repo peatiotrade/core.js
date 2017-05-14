@@ -2935,10 +2935,12 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
             frame = frame || DEFAULT_FRAME;
             limit = limit || DEFAULT_LIMIT;
 
-            var to = Date.now(),
-                from = to - limit * frame * MINUTE;
-
-            return self.getCandles(pair, from, to, frame);
+            return apiRoot
+                .all('candles')
+                .all(serializeId(pair.amountAsset.id))
+                .all(serializeId(pair.priceAsset.id))
+                .all(frame)
+                .get(limit);
         };
 
         self.getTrades = function (pair, limit) {
