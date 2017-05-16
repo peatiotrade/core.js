@@ -173,6 +173,15 @@ var Currency = (function () {
         verified: true
     });
 
+    var TKS = new Currency({
+        id: 'BDMRyZsmDZpgKhdM7fUTknKcUbVVkDpMcqEj31PUzjMy',
+        displayName: 'Tokes',
+        shortName: 'TKS',
+        symbol: 'TKS',
+        precision: 8,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -190,6 +199,7 @@ var Currency = (function () {
         currencyCache[BAt.id] = BAt;
         currencyCache[UPC.id] = UPC;
         currencyCache[KLN.id] = KLN;
+        currencyCache[TKS.id] = TKS;
     }
 
     invalidateCache();
@@ -220,7 +230,8 @@ var Currency = (function () {
         MER: MER,
         BAt: BAt,
         UPC: UPC,
-        KLN: KLN
+        KLN: KLN,
+        TKS: TKS
     };
 })();
 
