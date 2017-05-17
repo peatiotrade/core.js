@@ -73,5 +73,19 @@
             this.isValidBase58String = function (input) {
                 return BASE58_REGEX.test(input);
             };
+
+            this.validateSender = function (sender) {
+                if (!sender) {
+                    throw new Error('Sender hasn\'t been set');
+                }
+
+                if (!sender.publicKey) {
+                    throw new Error('Sender account public key hasn\'t been set');
+                }
+
+                if (!sender.privateKey) {
+                    throw new Error('Sender account private key hasn\'t been set');
+                }
+            };
         }]);
 })();

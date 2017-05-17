@@ -1730,14 +1730,6 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
     'use strict';
 
     function WavesAssetService(constants, utilityService, cryptoService) {
-        function validateSender(sender) {
-            if (angular.isUndefined(sender.publicKey))
-                throw new Error('Sender account public key hasn\'t been set');
-
-            if (angular.isUndefined(sender.privateKey))
-                throw new Error('Sender account private key hasn\'t been set');
-        }
-
         function validateAsset(asset) {
             if (angular.isUndefined(asset.name))
                 throw new Error('Asset name hasn\'t been set');
@@ -1795,7 +1787,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 
         this.createAssetIssueTransaction = function (asset, sender) {
             validateAsset(asset);
-            validateSender(sender);
+            utilityService.validateSender(sender);
 
             asset.time = asset.time || utilityService.getTime();
             asset.reissuable = angular.isDefined(asset.reissuable) ? asset.reissuable : false;
@@ -1841,7 +1833,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 
         this.createAssetTransferTransaction = function (transfer, sender) {
             validateTransfer(transfer);
-            validateSender(sender);
+            utilityService.validateSender(sender);
 
             transfer.time = transfer.time || utilityService.getTime();
             transfer.attachment = transfer.attachment || [];
@@ -1891,7 +1883,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 
         this.createAssetReissueTransaction = function (reissue, sender) {
             validateReissue(reissue);
-            validateSender(sender);
+            utilityService.validateSender(sender);
 
             reissue.reissuable = angular.isDefined(reissue.reissuable) ? reissue.reissuable : false;
             reissue.time = reissue.time || utilityService.getTime();
@@ -1926,17 +1918,6 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
     var ALIAS_VERSION = 2;
 
     function WavesAliasRequestService (constants, utilityService, cryptoService) {
-        function validateSender(sender) {
-            if (!sender)
-                throw new Error('Sender hasn\'t been set');
-
-            if (!sender.publicKey)
-                throw new Error('Sender account public key hasn\'t been set');
-
-            if (!sender.privateKey)
-                throw new Error('Sender account private key hasn\'t been set');
-        }
-
         function buildSignature(bytes, sender) {
             var privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
 
@@ -1957,7 +1938,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         }
 
         this.buildCreateAliasRequest = function (alias, sender) {
-            validateSender(sender);
+            utilityService.validateSender(sender);
 
             var currentTimeMillis = utilityService.getTime();
             alias.time = alias.time || currentTimeMillis;
@@ -1986,17 +1967,6 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
     'use strict';
 
     function WavesLeasingRequestService (constants, utilityService, cryptoService) {
-        function validateSender(sender) {
-            if (!sender)
-                throw new Error('Sender hasn\'t been set');
-
-            if (!sender.publicKey)
-                throw new Error('Sender account public key hasn\'t been set');
-
-            if (!sender.privateKey)
-                throw new Error('Sender account private key hasn\'t been set');
-        }
-
         function buildSignature(bytes, sender) {
             var privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
 
@@ -2015,7 +1985,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         }
 
         this.buildStartLeasingRequest = function (startLeasing, sender) {
-            validateSender(sender);
+            utilityService.validateSender(sender);
 
             var currentTimeMillis = utilityService.getTime();
             startLeasing.time = startLeasing.time || currentTimeMillis;
@@ -2044,7 +2014,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         }
 
         this.buildCancelLeasingRequest = function (cancelLeasing, sender) {
-            validateSender(sender);
+            utilityService.validateSender(sender);
 
             var currentTimeMillis = utilityService.getTime();
             cancelLeasing.time = cancelLeasing.time || currentTimeMillis;
@@ -2234,6 +2204,20 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 
             this.isValidBase58String = function (input) {
                 return BASE58_REGEX.test(input);
+            };
+
+            this.validateSender = function (sender) {
+                if (!sender) {
+                    throw new Error('Sender hasn\'t been set');
+                }
+
+                if (!sender.publicKey) {
+                    throw new Error('Sender account public key hasn\'t been set');
+                }
+
+                if (!sender.privateKey) {
+                    throw new Error('Sender account private key hasn\'t been set');
+                }
             };
         }]);
 })();
@@ -2987,21 +2971,8 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
     'use strict';
 
     var SELL_ORDER_TYPE = 'sell';
-    var BUY_ORDER_TYPE = 'buy';
-    var PRICE_SCALE_FACTOR = 1e8;
 
     function WavesMatcherRequestService (utilityService, cryptoService) {
-        function validateSender(sender) {
-            if (!sender)
-                throw new Error('Sender hasn\'t been set');
-
-            if (!sender.publicKey)
-                throw new Error('Sender account public key hasn\'t been set');
-
-            if (!sender.privateKey)
-                throw new Error('Sender account private key hasn\'t been set');
-        }
-
         function buildSignature(bytes, sender) {
             var privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
 
@@ -3029,7 +3000,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         }
 
         this.buildCreateOrderRequest = function (order, sender) {
-            validateSender(sender);
+            utilityService.validateSender(sender);
 
             var currentTimeMillis = utilityService.getTime();
             order.time = order.time || currentTimeMillis;
@@ -3065,7 +3036,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         }
 
         this.buildCancelOrderRequest = function (orderId, sender) {
-            validateSender(sender);
+            utilityService.validateSender(sender);
 
             if (!orderId)
                 throw new Error('orderId hasn\'t been set');

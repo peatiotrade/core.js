@@ -2,21 +2,8 @@
     'use strict';
 
     var SELL_ORDER_TYPE = 'sell';
-    var BUY_ORDER_TYPE = 'buy';
-    var PRICE_SCALE_FACTOR = 1e8;
 
     function WavesMatcherRequestService (utilityService, cryptoService) {
-        function validateSender(sender) {
-            if (!sender)
-                throw new Error('Sender hasn\'t been set');
-
-            if (!sender.publicKey)
-                throw new Error('Sender account public key hasn\'t been set');
-
-            if (!sender.privateKey)
-                throw new Error('Sender account private key hasn\'t been set');
-        }
-
         function buildSignature(bytes, sender) {
             var privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
 
@@ -44,7 +31,7 @@
         }
 
         this.buildCreateOrderRequest = function (order, sender) {
-            validateSender(sender);
+            utilityService.validateSender(sender);
 
             var currentTimeMillis = utilityService.getTime();
             order.time = order.time || currentTimeMillis;
@@ -80,7 +67,7 @@
         }
 
         this.buildCancelOrderRequest = function (orderId, sender) {
-            validateSender(sender);
+            utilityService.validateSender(sender);
 
             if (!orderId)
                 throw new Error('orderId hasn\'t been set');
