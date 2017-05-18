@@ -12,7 +12,7 @@
         return id ? id : WAVES_ASSET_ID;
     }
 
-    function WavesMatcherApiService (rest) {
+    function WavesMatcherApiService (rest, utilityService, cryptoService) {
         var apiRoot = rest.all('matcher');
         var orderBookRoot = apiRoot.all('orderbook');
 
@@ -49,6 +49,32 @@
                 });
         };
 
+        function buildLoadUserOrdersSignature(timestamp, sender) {
+            utilityService.validateSender(sender);
+
+            var publicKeyBytes = utilityService.base58StringToByteArray(sender.publicKey),
+                timestampBytes = utilityService.longToByteArray(timestamp),
+                signatureData = [].concat(publicKeyBytes, timestampBytes),
+
+                privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
+
+            return cryptoService.nonDeterministicSign(privateKeyBytes, signatureData);
+        }
+
+        this.loadUserOrders = function (amountAsset, priceAsset, sender) {
+            var timestamp = Date.now(),
+                signature = buildLoadUserOrdersSignature(timestamp, sender);
+
+            return orderBookRoot
+                .all(normalizeId(amountAsset))
+                .all(normalizeId(priceAsset))
+                .all('publicKey')
+                .get(sender.publicKey, {}, {
+                    Timestamp: timestamp,
+                    Signature: signature
+                });
+        };
+
         this.loadAllMarkets = function () {
             return orderBookRoot.get('').then(function (response) {
                 var pairs = [];
@@ -78,7 +104,7 @@
         };
     }
 
-    WavesMatcherApiService.$inject = ['MatcherRestangular'];
+    WavesMatcherApiService.$inject = ['MatcherRestangular', 'utilityService', 'cryptoService'];
 
     angular
         .module('waves.core.services')

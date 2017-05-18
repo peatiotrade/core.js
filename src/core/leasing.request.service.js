@@ -2,17 +2,6 @@
     'use strict';
 
     function WavesLeasingRequestService (constants, utilityService, cryptoService) {
-        function validateSender(sender) {
-            if (!sender)
-                throw new Error('Sender hasn\'t been set');
-
-            if (!sender.publicKey)
-                throw new Error('Sender account public key hasn\'t been set');
-
-            if (!sender.privateKey)
-                throw new Error('Sender account private key hasn\'t been set');
-        }
-
         function buildSignature(bytes, sender) {
             var privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
 
@@ -31,7 +20,7 @@
         }
 
         this.buildStartLeasingRequest = function (startLeasing, sender) {
-            validateSender(sender);
+            utilityService.validateSender(sender);
 
             var currentTimeMillis = utilityService.getTime();
             startLeasing.time = startLeasing.time || currentTimeMillis;
@@ -60,7 +49,7 @@
         }
 
         this.buildCancelLeasingRequest = function (cancelLeasing, sender) {
-            validateSender(sender);
+            utilityService.validateSender(sender);
 
             var currentTimeMillis = utilityService.getTime();
             cancelLeasing.time = cancelLeasing.time || currentTimeMillis;

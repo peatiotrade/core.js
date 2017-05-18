@@ -2,14 +2,6 @@
     'use strict';
 
     function WavesAssetService(constants, utilityService, cryptoService) {
-        function validateSender(sender) {
-            if (angular.isUndefined(sender.publicKey))
-                throw new Error('Sender account public key hasn\'t been set');
-
-            if (angular.isUndefined(sender.privateKey))
-                throw new Error('Sender account private key hasn\'t been set');
-        }
-
         function validateAsset(asset) {
             if (angular.isUndefined(asset.name))
                 throw new Error('Asset name hasn\'t been set');
@@ -67,7 +59,7 @@
 
         this.createAssetIssueTransaction = function (asset, sender) {
             validateAsset(asset);
-            validateSender(sender);
+            utilityService.validateSender(sender);
 
             asset.time = asset.time || utilityService.getTime();
             asset.reissuable = angular.isDefined(asset.reissuable) ? asset.reissuable : false;
@@ -113,7 +105,7 @@
 
         this.createAssetTransferTransaction = function (transfer, sender) {
             validateTransfer(transfer);
-            validateSender(sender);
+            utilityService.validateSender(sender);
 
             transfer.time = transfer.time || utilityService.getTime();
             transfer.attachment = transfer.attachment || [];
@@ -163,7 +155,7 @@
 
         this.createAssetReissueTransaction = function (reissue, sender) {
             validateReissue(reissue);
-            validateSender(sender);
+            utilityService.validateSender(sender);
 
             reissue.reissuable = angular.isDefined(reissue.reissuable) ? reissue.reissuable : false;
             reissue.time = reissue.time || utilityService.getTime();
