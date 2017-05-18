@@ -28,6 +28,14 @@
                 .post(signedCancelRequest);
         };
 
+        this.deleteOrder = function (firstAssetId, secondAssetId, signedCancelRequest) {
+            return orderBookRoot
+                .all(normalizeId(firstAssetId))
+                .all(normalizeId(secondAssetId))
+                .all('delete')
+                .post(signedCancelRequest);
+        };
+
         this.orderStatus = function (firstAssetId, secondAssetId, orderId) {
             return orderBookRoot
                 .all(normalizeId(firstAssetId))
