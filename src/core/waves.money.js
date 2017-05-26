@@ -182,6 +182,15 @@ var Currency = (function () {
         verified: true
     });
 
+    var WPN = new Currency({
+        id: 'BkFyeRdrLquxds5FenxyonyfTwMVJJ6o6L7VTaPr5fs3',
+        displayName: 'WavesPool.NET',
+        shortName: 'WPN',
+        symbol: 'WPN',
+        precision: 8,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -200,6 +209,7 @@ var Currency = (function () {
         currencyCache[UPC.id] = UPC;
         currencyCache[KLN.id] = KLN;
         currencyCache[TKS.id] = TKS;
+        currencyCache[WPN.id] = WPN;
     }
 
     invalidateCache();
@@ -231,7 +241,8 @@ var Currency = (function () {
         BAt: BAt,
         UPC: UPC,
         KLN: KLN,
-        TKS: TKS
+        TKS: TKS,
+        WPN: WPN
     };
 })();
 
