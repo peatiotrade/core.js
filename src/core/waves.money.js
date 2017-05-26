@@ -191,6 +191,15 @@ var Currency = (function () {
         verified: true
     });
 
+    var EFYT = new Currency({
+        id: '725Yv9oceWsB4GsYwyy4A52kEwyVrL5avubkeChSnL46',
+        displayName: 'Ergo First Year Token',
+        shortName: 'EFYT',
+        symbol: 'EFYT',
+        precision: 8,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -210,6 +219,7 @@ var Currency = (function () {
         currencyCache[KLN.id] = KLN;
         currencyCache[TKS.id] = TKS;
         currencyCache[WPN.id] = WPN;
+        currencyCache[EFYT.id] = EFYT;
     }
 
     invalidateCache();
@@ -242,7 +252,8 @@ var Currency = (function () {
         UPC: UPC,
         KLN: KLN,
         TKS: TKS,
-        WPN: WPN
+        WPN: WPN,
+        EFYT: EFYT
     };
 })();
 
