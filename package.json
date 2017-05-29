@@ -1,6 +1,6 @@
 {
   "name": "wavesplatform-core-js",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Shared javascript components for access to waves nodes",
   "license": "Apache-2.0",
   "engines": {
