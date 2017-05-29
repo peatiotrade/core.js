@@ -14,14 +14,14 @@
 
     function WavesMatcherApiService (rest, utilityService, cryptoService) {
         var apiRoot = rest.all('matcher');
-        var orderBookRoot = apiRoot.all('orderbook');
+        var orderbookRoot = apiRoot.all('orderbook');
 
         this.createOrder = function (signedOrderRequest) {
-            return orderBookRoot.post(signedOrderRequest);
+            return orderbookRoot.post(signedOrderRequest);
         };
 
         this.cancelOrder = function (firstAssetId, secondAssetId, signedCancelRequest) {
-            return orderBookRoot
+            return orderbookRoot
                 .all(normalizeId(firstAssetId))
                 .all(normalizeId(secondAssetId))
                 .all('cancel')
@@ -29,7 +29,7 @@
         };
 
         this.deleteOrder = function (firstAssetId, secondAssetId, signedCancelRequest) {
-            return orderBookRoot
+            return orderbookRoot
                 .all(normalizeId(firstAssetId))
                 .all(normalizeId(secondAssetId))
                 .all('delete')
@@ -37,7 +37,7 @@
         };
 
         this.orderStatus = function (firstAssetId, secondAssetId, orderId) {
-            return orderBookRoot
+            return orderbookRoot
                 .all(normalizeId(firstAssetId))
                 .all(normalizeId(secondAssetId))
                 .get(orderId);
@@ -48,7 +48,7 @@
         };
 
         this.loadOrderbook = function (firstAssetId, secondAssetId) {
-            return orderBookRoot.all(normalizeId(firstAssetId)).get(normalizeId(secondAssetId))
+            return orderbookRoot.all(normalizeId(firstAssetId)).get(normalizeId(secondAssetId))
                 .then(function (response) {
                     response.pair.amountAsset = denormalizeId(response.pair.amountAsset);
                     response.pair.priceAsset = denormalizeId(response.pair.priceAsset);
@@ -73,7 +73,7 @@
             var timestamp = Date.now(),
                 signature = buildLoadUserOrdersSignature(timestamp, sender);
 
-            return orderBookRoot
+            return orderbookRoot
                 .all(normalizeId(amountAsset))
                 .all(normalizeId(priceAsset))
                 .all('publicKey')
@@ -84,7 +84,7 @@
         };
 
         this.loadAllMarkets = function () {
-            return orderBookRoot.get('').then(function (response) {
+            return orderbookRoot.get('').then(function (response) {
                 var pairs = [];
                 _.forEach(response.markets, function (market) {
                     var id = normalizeId(market.amountAsset) + '/' + normalizeId(market.priceAsset);
@@ -109,6 +109,23 @@
 
                 return pairs;
             });
+        };
+
+        this.getTradableBalance = function (amountAsset, priceAsset, address) {
+            var normAmountAsset = normalizeId(amountAsset),
+                normPriceAsset = normalizeId(priceAsset);
+
+            return orderbookRoot
+                .all(normAmountAsset)
+                .all(normPriceAsset)
+                .all('tradableBalance')
+                .get(address)
+                .then(function (response) {
+                    var result = {};
+                    result[denormalizeId(normAmountAsset)] = response[normAmountAsset];
+                    result[denormalizeId(normPriceAsset)] = response[normPriceAsset];
+                    return result;
+                });
         };
     }
 
