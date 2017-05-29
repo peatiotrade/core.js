@@ -27,9 +27,7 @@ module.exports = function (grunt) {
                     local: [
                         'src/vendor/blake2b.js',
                         'src/vendor/converters.js',
-                        'src/vendor/extensions.js',
 
-                        // project sources
                         'src/core/waves.money.js',
                         'src/core/core.module.js',
                         'src/core/core.constants.js',
