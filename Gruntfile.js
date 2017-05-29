@@ -1,7 +1,5 @@
 /*global module:false*/
 module.exports = function (grunt) {
-
-    // Project configuration
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         meta: {
@@ -10,7 +8,7 @@ module.exports = function (grunt) {
                 prod: ['src/**/*.js', '!src/**/*.spec.js'],
                 ordered: {
                     libraries: [
-                        // this library doesn't work properly being included after angular
+                        // This library doesn't work properly if included after Angular
                         'bower_components/js-sha3/src/sha3.js',
 
                         'bower_components/angular/angular.js',
@@ -62,7 +60,6 @@ module.exports = function (grunt) {
             editor: 'gedit --new-window -s ',
             target: 'wavesplatform-core'
         },
-        // Task configuration.
         jshint: {
             all: ['<%= meta.sources.all %>', '!src/vendor/*.js']
         },
@@ -130,68 +127,9 @@ module.exports = function (grunt) {
                 }
             }
         },
-        clean: ['distr/**'],
-        bump: {
-            options: {
-                files: ['package.json', 'bower.json'],
-                updateConfigs: ['pkg'],
-                commit: true, // debug
-                push: 'branch', // debug
-                pushTo: 'origin',
-                createTag: false,
-                commitMessage: "chore(version): bumping version v%VERSION%",
-            }
-        },
-        shell: {
-            release: {
-                command: "<%= meta.editor %> distr/CHANGELOG.tmp"
-            }
-        },
-        conventionalChangelog: {
-            release: {
-                options: {
-                    changelogOpts: {
-                        // conventional-changelog options go here
-                        preset: 'angular',
-                        append: false,
-                        releaseCount: 0
-                    },
-                    context: {
-                        // context goes here
-                    },
-                    gitRawCommitsOpts: {
-                        // git-raw-commits options go here
-                    },
-                    parserOpts: {
-                        // conventional-commits-parser options go here
-                    },
-                    writerOpts: {
-                        // conventional-changelog-writer options go here
-                    }
-                },
-                src: 'distr/CHANGELOG.tmp'
-            }
-        },
-        "github-release": {
-            options: {
-                repository : "wavesplatform/wavesplatform.core.js",
-                auth: {
-                    user: process.env["GITHUB_ACCESS_TOKEN"],
-                    password: ''
-                },
-                release: {
-                    tag_name: "v<%= pkg.version %>",
-                    name: "v<%= pkg.version %>",
-                    bodyFilename: 'distr/CHANGELOG.tmp',
-                    draft: true,
-                    prerelease: true
-                }
-            },
-            files: []
-        }
+        clean: ['distr/**']
     });
 
-    // These plugins provide necessary tasks.
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -201,18 +139,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-jscs');
-    grunt.loadNpmTasks('grunt-bump');
-    grunt.loadNpmTasks('waves-grunt-github-releaser');
-    grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-karma');
-    grunt.loadNpmTasks('grunt-conventional-changelog');
 
-    grunt.registerTask('emptyChangelog', 'Creates an empty changelog', function() {
-        grunt.file.write('distr/CHANGELOG.tmp', '');
-    });
-
-    grunt.registerTask('distr', ['clean', 'build', 'emptyChangelog']);
-    grunt.registerTask('publish', ['distr', 'conventionalChangelog', 'shell', 'github-release']);
+    grunt.registerTask('distr', ['clean', 'build']);
     grunt.registerTask('test', ['jshint', 'jscs', 'karma:development']);
     grunt.registerTask('build', [
         'jscs',
