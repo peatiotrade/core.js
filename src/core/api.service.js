@@ -3,7 +3,7 @@
 
     angular
         .module('waves.core.services')
-        .service('apiService', ['Restangular', function (rest) {
+        .service('apiService', ['Restangular', 'cryptoService', function (rest, cryptoService) {
             var blocksApi = rest.all('blocks');
 
             this.blocks = {
@@ -84,6 +84,14 @@
                 },
                 massPay: function (signedTransactions) {
                     return assetBroadcastApi.all('batch-transfer').post(signedTransactions);
+                },
+                isUniqueName: function (assetName) {
+                    assetName = cryptoService.base58.encode(converters.stringToByteArray(assetName));
+                    return assetApi.all('asset-id-by-unique-name')
+                        .get(assetName)
+                        .then(function (response) {
+                            return response.assetId;
+                        });
                 }
             };
         }]);
