@@ -848,6 +848,15 @@ var Currency = (function () {
         verified: true
     });
 
+    var MGO = new Currency({
+        id: '2Y8eFFXDTkxgCvXbMT5K4J38cpDYYbQdciJEZb48vTDj',
+        displayName: 'Mobile Go Token',
+        shortName: 'MGO',
+        symbol: 'MGO',
+        precision: 8,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -868,6 +877,7 @@ var Currency = (function () {
         currencyCache[TKS.id] = TKS;
         currencyCache[WPN.id] = WPN;
         currencyCache[EFYT.id] = EFYT;
+        currencyCache[MGO.id] = MGO;
     }
 
     invalidateCache();
@@ -901,7 +911,8 @@ var Currency = (function () {
         KLN: KLN,
         TKS: TKS,
         WPN: WPN,
-        EFYT: EFYT
+        EFYT: EFYT,
+        MGO: MGO
     };
 })();
 
