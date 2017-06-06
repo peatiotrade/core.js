@@ -857,6 +857,15 @@ var Currency = (function () {
         verified: true
     });
 
+    var ETT = new Currency({
+        id: '8ofu3VpEaVCFjRqLLqzTMNs5URKUUQMrPp3k6oFmiCc6',
+        displayName: 'EncryptoTel',
+        shortName: 'ETT',
+        symbol: 'ETT',
+        precision: 8,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -878,6 +887,7 @@ var Currency = (function () {
         currencyCache[WPN.id] = WPN;
         currencyCache[EFYT.id] = EFYT;
         currencyCache[MGO.id] = MGO;
+        currencyCache[ETT.id] = ETT;
     }
 
     invalidateCache();
@@ -912,7 +922,8 @@ var Currency = (function () {
         TKS: TKS,
         WPN: WPN,
         EFYT: EFYT,
-        MGO: MGO
+        MGO: MGO,
+        ETT: ETT
     };
 })();
 
