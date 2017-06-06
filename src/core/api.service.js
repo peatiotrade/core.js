@@ -85,9 +85,16 @@
                 massPay: function (signedTransactions) {
                     return assetBroadcastApi.all('batch-transfer').post(signedTransactions);
                 },
+                makeAssetNameUnique: function (signedMakeAssetNameUniqueTransaction) {
+                    return assetApi
+                        .all('broadcast')
+                        .all('make-asset-name-unique')
+                        .post(signedMakeAssetNameUniqueTransaction);
+                },
                 isUniqueName: function (assetName) {
                     assetName = cryptoService.base58.encode(converters.stringToByteArray(assetName));
-                    return assetApi.all('asset-id-by-unique-name')
+                    return assetApi
+                        .all('asset-id-by-unique-name')
                         .get(assetName)
                         .then(function (response) {
                             return response.assetId;

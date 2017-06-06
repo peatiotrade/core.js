@@ -1128,7 +1128,8 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
             EXCHANGE_TRANSACTION_TYPE: 7,
             START_LEASING_TRANSACTION_TYPE: 8,
             CANCEL_LEASING_TRANSACTION_TYPE: 9,
-            CREATE_ALIAS_TRANSACTION_TYPE: 10
+            CREATE_ALIAS_TRANSACTION_TYPE: 10,
+            MAKE_ASSET_NAME_UNIQUE_TRANSACTION_TYPE: 11
         });
 })();
 
@@ -1931,6 +1932,56 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 (function () {
     'use strict';
 
+    function UniqueAssetsRequestService (constants, utilityService, cryptoService) {
+        function buildSignature(bytes, sender) {
+            var privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
+            return cryptoService.nonDeterministicSign(privateKeyBytes, bytes);
+        }
+
+        function buildMakeAssetUniqueSignatureData(networkByte, senderPublicKey, assetId, fee, timestamp) {
+            var typeByte = [constants.MAKE_ASSET_NAME_UNIQUE_TRANSACTION_TYPE];
+
+            var publicKeyBytes = utilityService.base58StringToByteArray(senderPublicKey);
+            var assetIdBytes = utilityService.base58StringToByteArray(assetId);
+            var feeBytes = utilityService.longToByteArray(fee);
+            var timestampBytes = utilityService.longToByteArray(timestamp);
+
+            return [].concat(typeByte, networkByte, publicKeyBytes, assetIdBytes, feeBytes, timestampBytes);
+        }
+
+        this.buildMakeAssetNameUniqueRequest = function (asset, sender) {
+            utilityService.validateSender(sender);
+
+            var networkByte = utilityService.getNetworkIdByte();
+
+            var assetId = asset.assetId;
+            var fee = asset.fee.toCoins();
+            var time = asset.time || utilityService.getTime();
+
+            var signatureData = buildMakeAssetUniqueSignatureData(networkByte, sender.publicKey, assetId, fee, time);
+            var signature = buildSignature(signatureData, sender);
+
+            return {
+                senderPublicKey: sender.publicKey,
+                assetId: assetId,
+                fee: fee,
+                networkByte: networkByte,
+                timestamp: time,
+                signature: signature
+            };
+        };
+    }
+
+    UniqueAssetsRequestService.$inject = ['constants.transactions', 'utilityService', 'cryptoService'];
+
+    angular
+        .module('waves.core.services')
+        .service('uniqueAssetsRequestService', UniqueAssetsRequestService);
+})();
+
+(function () {
+    'use strict';
+
     function WavesLeasingRequestService (constants, utilityService, cryptoService) {
         function buildSignature(bytes, sender) {
             var privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
@@ -2091,9 +2142,16 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
                 massPay: function (signedTransactions) {
                     return assetBroadcastApi.all('batch-transfer').post(signedTransactions);
                 },
+                makeAssetNameUnique: function (signedMakeAssetNameUniqueTransaction) {
+                    return assetApi
+                        .all('broadcast')
+                        .all('make-asset-name-unique')
+                        .post(signedMakeAssetNameUniqueTransaction);
+                },
                 isUniqueName: function (assetName) {
                     assetName = cryptoService.base58.encode(converters.stringToByteArray(assetName));
-                    return assetApi.all('asset-id-by-unique-name')
+                    return assetApi
+                        .all('asset-id-by-unique-name')
                         .get(assetName)
                         .then(function (response) {
                             return response.assetId;

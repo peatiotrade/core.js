@@ -39,6 +39,7 @@ module.exports = function (grunt) {
                         'src/core/crypto.service.js',
                         'src/core/asset.service.js',
                         'src/core/alias.request.service.js',
+                        'src/core/unique.assets.request.service.js',
                         'src/core/leasing.request.service.js',
                         'src/core/api.service.js',
                         'src/core/utility.service.js',
@@ -54,6 +55,7 @@ module.exports = function (grunt) {
                         'src/core/datafeed.api.service.js',
                         'src/core/matcher.request.service.js',
                         'src/core/order.price.js'
+
                     ]
                 }
             },
