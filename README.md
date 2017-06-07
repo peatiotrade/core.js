@@ -1,2 +1,1 @@
-# wavesplatform.core.js
-Shared javascript components for access to waves nodes
+# Shared Angular components for accessing the Waves nodes
