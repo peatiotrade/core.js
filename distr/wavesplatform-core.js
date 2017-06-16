@@ -866,6 +866,15 @@ var Currency = (function () {
         verified: true
     });
 
+    var ZRC = new Currency({
+        id: '5ZPuAVxAwYvptbCgSVKdTzeud9dhbZ7vvxHVnZUoxf4h',
+        displayName: 'ZrCoin',
+        shortName: 'ZRC',
+        symbol: 'ZRC',
+        precision: 8,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -888,6 +897,7 @@ var Currency = (function () {
         currencyCache[EFYT.id] = EFYT;
         currencyCache[MGO.id] = MGO;
         currencyCache[ETT.id] = ETT;
+        currencyCache[ZRC.id] = ZRC;
     }
 
     invalidateCache();
@@ -923,7 +933,8 @@ var Currency = (function () {
         WPN: WPN,
         EFYT: EFYT,
         MGO: MGO,
-        ETT: ETT
+        ETT: ETT,
+        ZRC: ZRC
     };
 })();
 
