@@ -236,6 +236,15 @@ var Currency = (function () {
         verified: true
     });
 
+    var PING = new Currency({
+        id: 'Bi4w2UuGRt2jAJFfRb8b3SwDUV5x8krCzX2zZHcRfPNc',
+        displayName: 'CryptoPing',
+        shortName: 'PING',
+        symbol: 'PING',
+        precision: 8,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -260,6 +269,7 @@ var Currency = (function () {
         currencyCache[ETT.id] = ETT;
         currencyCache[ZRC.id] = ZRC;
         currencyCache[PBKX.id] = PBKX;
+        currencyCache[PING.id] = PING;
     }
 
     invalidateCache();
@@ -297,7 +307,8 @@ var Currency = (function () {
         MGO: MGO,
         ETT: ETT,
         ZRC: ZRC,
-        PBKX: PBKX
+        PBKX: PBKX,
+        PING: PING
     };
 })();
 
