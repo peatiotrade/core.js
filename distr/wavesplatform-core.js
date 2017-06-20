@@ -875,6 +875,15 @@ var Currency = (function () {
         verified: true
     });
 
+    var PBKX = new Currency({
+        id: '39wcSXj4MdRNRJXA88rVxF7EXWjYixaA3J3EteoN6DMM',
+        displayName: 'privateBANKX',
+        shortName: 'PBKX',
+        symbol: 'PBKX',
+        precision: 0,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -898,6 +907,7 @@ var Currency = (function () {
         currencyCache[MGO.id] = MGO;
         currencyCache[ETT.id] = ETT;
         currencyCache[ZRC.id] = ZRC;
+        currencyCache[PBKX.id] = PBKX;
     }
 
     invalidateCache();
@@ -934,7 +944,8 @@ var Currency = (function () {
         EFYT: EFYT,
         MGO: MGO,
         ETT: ETT,
-        ZRC: ZRC
+        ZRC: ZRC,
+        PBKX: PBKX
     };
 })();
 
