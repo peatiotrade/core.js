@@ -245,6 +245,24 @@ var Currency = (function () {
         verified: true
     });
 
+    var STAR = new Currency({
+        id: 'BTfuGGoeA934Ta1fgcehQ5UhbHuWKj4don64ZNBuMT38',
+        displayName: 'Starrie',
+        shortName: 'STAR',
+        symbol: 'STAR',
+        precision: 8,
+        verified: true
+    });
+
+    var BEAR = new Currency({
+        id: '9gnc5UCY6RxtSi9FEJkcD57r5NBgdr45DVYtunyDLrgC',
+        displayName: 'BearWaves',
+        shortName: 'BEAR',
+        symbol: 'BEAR',
+        precision: 2,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -270,6 +288,8 @@ var Currency = (function () {
         currencyCache[ZRC.id] = ZRC;
         currencyCache[PBKX.id] = PBKX;
         currencyCache[PING.id] = PING;
+        currencyCache[STAR.id] = STAR;
+        currencyCache[BEAR.id] = BEAR;
     }
 
     invalidateCache();
@@ -308,7 +328,9 @@ var Currency = (function () {
         ETT: ETT,
         ZRC: ZRC,
         PBKX: PBKX,
-        PING: PING
+        PING: PING,
+        STAR: STAR,
+        BEAR: BEAR
     };
 })();
 
