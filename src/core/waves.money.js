@@ -263,6 +263,24 @@ var Currency = (function () {
         verified: true
     });
 
+    var DAR = new Currency({
+        id: 'K5JcgN8UdwNdh5sbdAuPMm5XEd5aFvoXaC3iHsHVz1d',
+        displayName: 'Darcrus',
+        shortName: 'DAR',
+        symbol: 'DAR',
+        precision: 6,
+        verified: true
+    });
+
+    var GLIPP = new Currency({
+        id: '9g5JiYThxFTxknSMA3TT5xoXG7GYjRrTJxxLeeoQ36kJ',
+        displayName: 'GLIPP',
+        shortName: 'GLIPP',
+        symbol: 'GLIPP',
+        precision: 8,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -290,6 +308,8 @@ var Currency = (function () {
         currencyCache[PING.id] = PING;
         currencyCache[STAR.id] = STAR;
         currencyCache[BEAR.id] = BEAR;
+        currencyCache[DAR.id] = DAR;
+        currencyCache[GLIPP.id] = GLIPP;
     }
 
     invalidateCache();
@@ -330,7 +350,9 @@ var Currency = (function () {
         PBKX: PBKX,
         PING: PING,
         STAR: STAR,
-        BEAR: BEAR
+        BEAR: BEAR,
+        DAR: DAR,
+        GLIPP: GLIPP
     };
 })();
 
