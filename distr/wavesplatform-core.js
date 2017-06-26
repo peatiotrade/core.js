@@ -929,6 +929,33 @@ var Currency = (function () {
         verified: true
     });
 
+    var TNT = new Currency({
+        id: '6284oD9Aky3gZwwwqCFEZzvyx5qeeswAbYEtCHcMyKUR',
+        displayName: 'TrackNetToken',
+        shortName: 'TNT',
+        symbol: 'TNT',
+        precision: 4,
+        verified: true
+    });
+
+    var BKT = new Currency({
+        id: '9c7U7bXdP23oHpmGKwGfSsjFrpxdRcp3tp28qbfhEc3d',
+        displayName: '$bkt',
+        shortName: 'BKT',
+        symbol: 'BKT',
+        precision: 0,
+        verified: true
+    });
+
+    var WGR = new Currency({
+        id: '8t8DMJFQu5GEhvAetiA8aHa3yPjxLj54sBnZsjnJ5dsw',
+        displayName: 'Wagerr',
+        shortName: 'WGR',
+        symbol: 'WGR',
+        precision: 8,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -958,6 +985,9 @@ var Currency = (function () {
         currencyCache[BEAR.id] = BEAR;
         currencyCache[DAR.id] = DAR;
         currencyCache[GLIPP.id] = GLIPP;
+        currencyCache[TNT.id] = TNT;
+        currencyCache[BKT.id] = BKT;
+        currencyCache[WGR.id] = WGR;
     }
 
     invalidateCache();
@@ -1000,7 +1030,10 @@ var Currency = (function () {
         STAR: STAR,
         BEAR: BEAR,
         DAR: DAR,
-        GLIPP: GLIPP
+        GLIPP: GLIPP,
+        TNT: TNT,
+        BKT: BKT,
+        WGR: WGR
     };
 })();
 
