@@ -2223,10 +2223,17 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
                 }
             };
 
-            var aliasApi = rest.all('alias').all('broadcast');
+            var aliasApi = rest.all('alias');
             this.alias = {
                 create: function (signedCreateAliasTransaction) {
-                    return aliasApi.all('create').post(signedCreateAliasTransaction);
+                    return aliasApi.all('broadcast').all('create').post(signedCreateAliasTransaction);
+                },
+                getByAddress: function (address) {
+                    return aliasApi.all('by-address').get(address).then(function (response) {
+                        return response.map(function (alias) {
+                            return alias.slice(8);
+                        });
+                    });
                 }
             };
 
