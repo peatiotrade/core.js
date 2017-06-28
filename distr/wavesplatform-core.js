@@ -1220,6 +1220,12 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 
     angular
         .module('waves.core.constants')
+        .constant('constants.features', {
+            ALIAS_VERSION: 2
+        });
+
+    angular
+        .module('waves.core.constants')
         .constant('constants.ui', {
             MINIMUM_PAYMENT_AMOUNT : 1e-8,
             MINIMUM_TRANSACTION_FEE : 0.001,
@@ -1991,21 +1997,22 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 (function () {
     'use strict';
 
-    var ALIAS_VERSION = 2;
-
-    function WavesAliasRequestService (constants, utilityService, cryptoService) {
+    function AliasRequestService(txConstants, featureConstants, utilityService, cryptoService) {
         function buildSignature(bytes, sender) {
             var privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
-
             return cryptoService.nonDeterministicSign(privateKeyBytes, bytes);
         }
 
         function buildCreateAliasSignatureData (alias, senderPublicKey) {
-            var typeByte = [constants.CREATE_ALIAS_TRANSACTION_TYPE];
+            var typeByte = [txConstants.CREATE_ALIAS_TRANSACTION_TYPE];
             var publicKeyBytes = utilityService.base58StringToByteArray(senderPublicKey);
 
-            var stringPartBytes = utilityService.stringToByteArrayWithSize(alias.alias);
-            var tempBytes = [].concat([ALIAS_VERSION], [utilityService.getNetworkIdByte()], stringPartBytes);
+            var tempBytes = [].concat(
+                [featureConstants.ALIAS_VERSION],
+                [utilityService.getNetworkIdByte()],
+                utilityService.stringToByteArrayWithSize(alias.alias)
+            );
+
             var aliasBytes = utilityService.byteArrayWithSize(tempBytes);
             var feeBytes = utilityService.longToByteArray(alias.fee.toCoins());
             var timestampBytes = utilityService.longToByteArray(alias.time);
@@ -2032,11 +2039,11 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         };
     }
 
-    WavesAliasRequestService.$inject = ['constants.transactions', 'utilityService', 'cryptoService'];
+    AliasRequestService.$inject = ['constants.transactions', 'constants.features', 'utilityService', 'cryptoService'];
 
     angular
         .module('waves.core.services')
-        .service('aliasRequestService', WavesAliasRequestService);
+        .service('aliasRequestService', AliasRequestService);
 })();
 
 (function () {
