@@ -95,6 +95,27 @@ describe('Asset.Service', function() {
             .toEqual('677UVgKBAVZdweVbn6wKhPLP9UxVSh3x4fBXPgepKoHtsV9nSd8HXBMxCdsYn41g3EE63bcihnUHwhXoSu9GZTLf');
     });
 
+    it('should successfully sign transfer transaction with an alias', function () {
+        var transfer = {
+            recipient: 'test alias',
+            time: 1478864678621,
+            amount: new Money(10, asset),
+            fee: new Money(0.001, Currency.WAVES)
+        };
+
+        var actual = assetService.createAssetTransferTransaction(transfer, sender);
+
+        expect(actual.timestamp).toEqual(transfer.time);
+        expect(actual.recipient).toEqual(transfer.recipient);
+        expect(actual.assetId).toEqual(asset.id);
+        expect(actual.senderPublicKey).toEqual(sender.publicKey);
+        expect(actual.amount).toEqual(transfer.amount.toCoins());
+        expect(actual.fee).toEqual(transfer.fee.toCoins());
+        expect(actual.attachment).toEqual('');
+        expect(actual.signature)
+            .toEqual('67FiDJsPcTo58PQXB4vwVAi5MVk7dQqYiEuiZUWyKJCfP89cd9zhJsu3cvGPEpaK71BsT4v42grpcYZYESS2AmZy');
+    });
+
     it('should successfully sign asset reissue transaction', function () {
         var amount = new Money(1000000, asset);
         var reissue = {
