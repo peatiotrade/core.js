@@ -20,6 +20,12 @@
 
     angular
         .module('waves.core.constants')
+        .constant('constants.features', {
+            ALIAS_VERSION: 2
+        });
+
+    angular
+        .module('waves.core.constants')
         .constant('constants.ui', {
             MINIMUM_PAYMENT_AMOUNT : 1e-8,
             MINIMUM_TRANSACTION_FEE : 0.001,

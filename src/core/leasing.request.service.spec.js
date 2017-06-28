@@ -5,6 +5,7 @@ describe('Leasing.Request.Service', function() {
         privateKey: '9dXhQYWZ5468TRhksJqpGT6nUySENxXi9nsCZH9AefD1'
     };
     var recipient = '3MsiHfvFVUULdn8bpVoDQ7JLKKjtPXUrCLT';
+    var alias = 'test alias';
 
     // Initialization of the module before each test case
     beforeEach(module('waves.core.services'));
@@ -39,6 +40,26 @@ describe('Leasing.Request.Service', function() {
         expect(request.recipient).toEqual(recipient);
         expect(request.signature)
             .toEqual('4KV99VcLG51uej8tcdJBwcc3Kj2tCAxwT7JNwycxNQzAGURxcyo2XhmMTWiD1gVqs4GhkAYHGrjsBR2CJcdU5X6Z');
+    });
+
+    it('should successfully sign start leasing request with an alias', function () {
+        var amount = Money.fromTokens(2, Currency.WAVES);
+        var fee = Money.fromTokens(0.01, Currency.WAVES);
+        var startLeasing = {
+            recipient: alias,
+            amount: amount,
+            time: 1491491715188,
+            fee: fee
+        };
+
+        var request = requestService.buildStartLeasingRequest(startLeasing, sender);
+
+        expect(request.amount).toEqual(200000000);
+        expect(request.fee).toEqual(1000000);
+        expect(request.senderPublicKey).toEqual(sender.publicKey);
+        expect(request.recipient).toEqual('alias:T:' + alias);
+        expect(request.signature)
+            .toEqual('HuKk26pPjxusLhch6ehwbFeBc8iiMuKd2pzwhwTf5rEFqSyyUiU3ChpVw3w86daRPMPkVUNkf6b9SmTetFgGxXy');
     });
 
     it('should successfully sign cancel leasing request', function () {

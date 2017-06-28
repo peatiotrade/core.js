@@ -1,17 +1,28 @@
 (function () {
     'use strict';
 
-    function WavesLeasingRequestService (constants, utilityService, cryptoService) {
+    function LeasingRequestService(txConstants, featureConstants, utilityService, cryptoService) {
+        function formRecipientBytes(recipient) {
+            if (recipient.slice(0, 6) === 'alias:') {
+                return [].concat(
+                    [featureConstants.ALIAS_VERSION],
+                    [utilityService.getNetworkIdByte()],
+                    utilityService.stringToByteArrayWithSize(recipient.slice(8)) // Remove leading 'asset:W:'
+                );
+            } else {
+                return utilityService.base58StringToByteArray(recipient);
+            }
+        }
+
         function buildSignature(bytes, sender) {
             var privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
-
             return cryptoService.nonDeterministicSign(privateKeyBytes, bytes);
         }
 
         function buildStartLeasingSignatureData (startLeasing, senderPublicKey) {
-            var typeByte = [constants.START_LEASING_TRANSACTION_TYPE];
+            var typeByte = [txConstants.START_LEASING_TRANSACTION_TYPE];
             var publicKeyBytes = utilityService.base58StringToByteArray(senderPublicKey);
-            var recipientBytes = utilityService.base58StringToByteArray(startLeasing.recipient);
+            var recipientBytes = formRecipientBytes(startLeasing.recipient);
             var amountBytes = utilityService.longToByteArray(startLeasing.amount.toCoins());
             var feeBytes = utilityService.longToByteArray(startLeasing.fee.toCoins());
             var timestampBytes = utilityService.longToByteArray(startLeasing.time);
@@ -24,6 +35,7 @@
 
             var currentTimeMillis = utilityService.getTime();
             startLeasing.time = startLeasing.time || currentTimeMillis;
+            startLeasing.recipient = utilityService.resolveAddressOrAlias(startLeasing.recipient);
 
             var signatureData = buildStartLeasingSignatureData(startLeasing, sender.publicKey);
             var signature = buildSignature(signatureData, sender);
@@ -39,7 +51,7 @@
         };
 
         function buildCancelLeasingSignatureData (cancelLeasing, senderPublicKey) {
-            var typeByte = [constants.CANCEL_LEASING_TRANSACTION_TYPE];
+            var typeByte = [txConstants.CANCEL_LEASING_TRANSACTION_TYPE];
             var publicKeyBytes = utilityService.base58StringToByteArray(senderPublicKey);
             var transactionIdBytes = utilityService.base58StringToByteArray(cancelLeasing.startLeasingTransactionId);
             var feeBytes = utilityService.longToByteArray(cancelLeasing.fee.toCoins());
@@ -67,9 +79,9 @@
         };
     }
 
-    WavesLeasingRequestService.$inject = ['constants.transactions', 'utilityService', 'cryptoService'];
+    LeasingRequestService.$inject = ['constants.transactions', 'constants.features', 'utilityService', 'cryptoService'];
 
     angular
         .module('waves.core.services')
-        .service('leasingRequestService', WavesLeasingRequestService);
+        .service('leasingRequestService', LeasingRequestService);
 })();

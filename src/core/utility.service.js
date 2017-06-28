@@ -87,5 +87,14 @@
                     throw new Error('Sender account private key hasn\'t been set');
                 }
             };
+
+            // Add a prefix in case of alias
+            this.resolveAddressOrAlias = function (string) {
+                if (string.length <= 30) {
+                    return 'alias:' + constants.NETWORK_CODE + ':' + string;
+                } else {
+                    return string;
+                }
+            };
         }]);
 })();
