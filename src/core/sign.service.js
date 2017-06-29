@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    function BytesService(txConstants, featureConstants, cryptoService, utilityService) {
+    function SignService(txConstants, featureConstants, cryptoService, utilityService) {
         var self = this;
 
         // Transaction types
@@ -66,9 +66,9 @@
         };
     }
 
-    BytesService.$inject = ['constants.transactions', 'constants.features', 'cryptoService', 'utilityService'];
+    SignService.$inject = ['constants.transactions', 'constants.features', 'cryptoService', 'utilityService'];
 
     angular
         .module('waves.core.services')
-        .service('signService', BytesService);
+        .service('signService', SignService);
 })();

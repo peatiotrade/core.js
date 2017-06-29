@@ -2790,21 +2790,21 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 
     var LANGUAGE = 'ru_RU';
 
-    function ensureTunnelCreated (response) {
+    function ensureTunnelCreated(response) {
         if (!response.ok) {
             console.log(response);
             throw new Error('Failed to create tunnel: ' + response.error);
         }
     }
 
-    function ensureTunnelObtained (response) {
+    function ensureTunnelObtained(response) {
         if (!response.tunnel) {
             console.log(response);
             throw new Error('Failed to get tunnel: ' + response.error);
         }
     }
 
-    function WavesCoinomatService (rest, mappingService) {
+    function CoinomatService(rest, mappingService) {
         var apiRoot = rest.all('api').all('v1');
 
         /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
@@ -2868,17 +2868,17 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         };
     }
 
-    WavesCoinomatService.$inject = ['CoinomatRestangular', 'coinomatCurrencyMappingService'];
+    CoinomatService.$inject = ['CoinomatRestangular', 'coinomatCurrencyMappingService'];
 
     angular
         .module('waves.core.services')
-        .service('coinomatService', WavesCoinomatService);
+        .service('coinomatService', CoinomatService);
 })();
 
 (function () {
     'use strict';
 
-    function WavesCoinomatFiatService (rest, currencyMappingService) {
+    function CoinomatFiatService(rest, currencyMappingService) {
         var apiRoot = rest.all('api').all('v2').all('indacoin');
 
         this.getLimits = function (address, fiatCurrency, cryptoCurrency) {
@@ -2907,11 +2907,11 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         };
     }
 
-    WavesCoinomatFiatService.$inject = ['CoinomatRestangular', 'coinomatCurrencyMappingService'];
+    CoinomatFiatService.$inject = ['CoinomatRestangular', 'coinomatCurrencyMappingService'];
 
     angular
         .module('waves.core.services')
-        .service('coinomatFiatService', WavesCoinomatFiatService);
+        .service('coinomatFiatService', CoinomatFiatService);
 })();
 
 (function () {
@@ -2928,7 +2928,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         return id ? id : WAVES_ASSET_ID;
     }
 
-    function WavesMatcherApiService (rest, utilityService, cryptoService, validateService) {
+    function MatcherApiService(rest, utilityService, cryptoService, validateService) {
         var apiRoot = rest.all('matcher');
         var orderbookRoot = apiRoot.all('orderbook');
 
@@ -3045,11 +3045,11 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         };
     }
 
-    WavesMatcherApiService.$inject = ['MatcherRestangular', 'utilityService', 'cryptoService', 'validateService'];
+    MatcherApiService.$inject = ['MatcherRestangular', 'utilityService', 'cryptoService', 'validateService'];
 
     angular
         .module('waves.core.services')
-        .service('matcherApiService', WavesMatcherApiService);
+        .service('matcherApiService', MatcherApiService);
 })();
 
 (function () {
@@ -3063,7 +3063,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         return id === '' ? 'WAVES' : id;
     }
 
-    function WavesDatafeedApiService (rest) {
+    function DatafeedApiService(rest) {
         var self = this,
             apiRoot = rest.all('api');
 
@@ -3119,11 +3119,11 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         };
     }
 
-    WavesDatafeedApiService.$inject = ['DatafeedRestangular'];
+    DatafeedApiService.$inject = ['DatafeedRestangular'];
 
     angular
         .module('waves.core.services')
-        .service('datafeedApiService', WavesDatafeedApiService);
+        .service('datafeedApiService', DatafeedApiService);
 })();
 
 (function () {
@@ -3131,14 +3131,13 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 
     var SELL_ORDER_TYPE = 'sell';
 
-    function WavesMatcherRequestService (utilityService, cryptoService, validateService) {
+    function MatcherRequestService(utilityService, cryptoService, validateService) {
         function buildSignature(bytes, sender) {
             var privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
-
             return cryptoService.nonDeterministicSign(privateKeyBytes, bytes);
         }
 
-        function buildCreateOrderSignatureData (order, senderPublicKey) {
+        function buildCreateOrderSignatureData(order, senderPublicKey) {
             var amountAssetIdBytes = utilityService.currencyToBytes(order.price.amountAsset.id);
             var priceAssetIdBytes = utilityService.currencyToBytes(order.price.priceAsset.id);
             var assetPairBytes = [].concat(amountAssetIdBytes, priceAssetIdBytes);
@@ -3187,7 +3186,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
             };
         };
 
-        function buildCancelOrderSignatureData (orderId, senderPublicKey) {
+        function buildCancelOrderSignatureData(orderId, senderPublicKey) {
             var publicKeyBytes = utilityService.base58StringToByteArray(senderPublicKey);
             var orderIdBytes = utilityService.base58StringToByteArray(orderId);
 
@@ -3211,11 +3210,11 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         };
     }
 
-    WavesMatcherRequestService.$inject = ['utilityService', 'cryptoService', 'validateService'];
+    MatcherRequestService.$inject = ['utilityService', 'cryptoService', 'validateService'];
 
     angular
         .module('waves.core.services')
-        .service('matcherRequestService', WavesMatcherRequestService);
+        .service('matcherRequestService', MatcherRequestService);
 })();
 
 var OrderPrice = (function () {
@@ -3266,7 +3265,7 @@ var OrderPrice = (function () {
 (function () {
     'use strict';
 
-    function BytesService(txConstants, featureConstants, cryptoService, utilityService) {
+    function SignService(txConstants, featureConstants, cryptoService, utilityService) {
         var self = this;
 
         // Transaction types
@@ -3331,11 +3330,11 @@ var OrderPrice = (function () {
         };
     }
 
-    BytesService.$inject = ['constants.transactions', 'constants.features', 'cryptoService', 'utilityService'];
+    SignService.$inject = ['constants.transactions', 'constants.features', 'cryptoService', 'utilityService'];
 
     angular
         .module('waves.core.services')
-        .service('signService', BytesService);
+        .service('signService', SignService);
 })();
 
 (function () {

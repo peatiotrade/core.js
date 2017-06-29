@@ -12,7 +12,7 @@
         return id ? id : WAVES_ASSET_ID;
     }
 
-    function WavesMatcherApiService (rest, utilityService, cryptoService, validateService) {
+    function MatcherApiService(rest, utilityService, cryptoService, validateService) {
         var apiRoot = rest.all('matcher');
         var orderbookRoot = apiRoot.all('orderbook');
 
@@ -129,9 +129,9 @@
         };
     }
 
-    WavesMatcherApiService.$inject = ['MatcherRestangular', 'utilityService', 'cryptoService', 'validateService'];
+    MatcherApiService.$inject = ['MatcherRestangular', 'utilityService', 'cryptoService', 'validateService'];
 
     angular
         .module('waves.core.services')
-        .service('matcherApiService', WavesMatcherApiService);
+        .service('matcherApiService', MatcherApiService);
 })();
