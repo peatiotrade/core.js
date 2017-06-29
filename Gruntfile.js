@@ -54,8 +54,8 @@ module.exports = function (grunt) {
                         'src/core/matcher.api.service.js',
                         'src/core/datafeed.api.service.js',
                         'src/core/matcher.request.service.js',
-                        'src/core/order.price.js'
-
+                        'src/core/order.price.js',
+                        'src/core/sign.service.js'
                     ]
                 }
             },

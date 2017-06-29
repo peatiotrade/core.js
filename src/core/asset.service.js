@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    function AssetService(txConstants, featureConstants, utilityService, cryptoService) {
+    function AssetService(txConstants, signService, utilityService, cryptoService) {
         function validateAsset(asset) {
             if (angular.isUndefined(asset.name)) {
                 throw new Error('Asset name hasn\'t been set');
@@ -104,16 +104,7 @@
             var publicKeyBytes = utilityService.base58StringToByteArray(senderPublicKey);
             var assetIdBytes = utilityService.currencyToBytes(transfer.amount.currency.id);
 
-            var recipientBytes;
-            if (transfer.recipient.slice(0, 6) === 'alias:') {
-                recipientBytes = [].concat(
-                    [featureConstants.ALIAS_VERSION],
-                    [utilityService.getNetworkIdByte()],
-                    utilityService.stringToByteArrayWithSize(transfer.recipient.slice(8)) // Remove leading 'asset:W:'
-                );
-            } else {
-                recipientBytes = utilityService.base58StringToByteArray(transfer.recipient);
-            }
+            var recipientBytes = signService.getRecipientBytes(transfer.recipient);
 
             var amountBytes = utilityService.longToByteArray(transfer.amount.toCoins());
             var feeBytes = utilityService.longToByteArray(transfer.fee.toCoins());
@@ -198,7 +189,7 @@
         };
     }
 
-    AssetService.$inject = ['constants.transactions', 'constants.features', 'utilityService', 'cryptoService'];
+    AssetService.$inject = ['constants.transactions', 'signService', 'utilityService', 'cryptoService'];
 
     angular
         .module('waves.core.services')
