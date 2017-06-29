@@ -3,7 +3,7 @@
 
     var SELL_ORDER_TYPE = 'sell';
 
-    function WavesMatcherRequestService (utilityService, cryptoService) {
+    function WavesMatcherRequestService (utilityService, cryptoService, validateService) {
         function buildSignature(bytes, sender) {
             var privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
 
@@ -31,7 +31,7 @@
         }
 
         this.buildCreateOrderRequest = function (order, sender) {
-            utilityService.validateSender(sender);
+            validateService.validateSender(sender);
 
             var currentTimeMillis = utilityService.getTime();
             order.time = order.time || currentTimeMillis;
@@ -67,7 +67,7 @@
         }
 
         this.buildCancelOrderRequest = function (orderId, sender) {
-            utilityService.validateSender(sender);
+            validateService.validateSender(sender);
 
             if (!orderId)
                 throw new Error('orderId hasn\'t been set');
@@ -83,7 +83,7 @@
         };
     }
 
-    WavesMatcherRequestService.$inject = ['utilityService', 'cryptoService'];
+    WavesMatcherRequestService.$inject = ['utilityService', 'cryptoService', 'validateService'];
 
     angular
         .module('waves.core.services')

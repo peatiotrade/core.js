@@ -74,20 +74,6 @@
                 return BASE58_REGEX.test(input);
             };
 
-            this.validateSender = function (sender) {
-                if (!sender) {
-                    throw new Error('Sender hasn\'t been set');
-                }
-
-                if (!sender.publicKey) {
-                    throw new Error('Sender account public key hasn\'t been set');
-                }
-
-                if (!sender.privateKey) {
-                    throw new Error('Sender account private key hasn\'t been set');
-                }
-            };
-
             // Add a prefix in case of alias
             this.resolveAddressOrAlias = function (string) {
                 if (string.length <= 30) {

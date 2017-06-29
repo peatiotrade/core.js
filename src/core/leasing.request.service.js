@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    function LeasingRequestService(signService, utilityService) {
+    function LeasingRequestService(signService, utilityService, validateService) {
         function buildStartLeasingSignatureData (startLeasing, senderPublicKey) {
             return [].concat(
                 signService.getStartLeasingTxTypeBytes(),
@@ -14,7 +14,7 @@
         }
 
         this.buildStartLeasingRequest = function (startLeasing, sender) {
-            utilityService.validateSender(sender);
+            validateService.validateSender(sender);
 
             var currentTimeMillis = utilityService.getTime();
             startLeasing.time = startLeasing.time || currentTimeMillis;
@@ -44,7 +44,7 @@
         }
 
         this.buildCancelLeasingRequest = function (cancelLeasing, sender) {
-            utilityService.validateSender(sender);
+            validateService.validateSender(sender);
 
             var currentTimeMillis = utilityService.getTime();
             cancelLeasing.time = cancelLeasing.time || currentTimeMillis;
@@ -62,7 +62,7 @@
         };
     }
 
-    LeasingRequestService.$inject = ['signService', 'utilityService'];
+    LeasingRequestService.$inject = ['signService', 'utilityService', 'validateService'];
 
     angular
         .module('waves.core.services')

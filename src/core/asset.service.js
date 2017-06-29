@@ -1,56 +1,8 @@
 (function () {
     'use strict';
 
-    function AssetService(txConstants, signService, utilityService, cryptoService) {
-        function validateAsset(asset) {
-            if (angular.isUndefined(asset.name)) {
-                throw new Error('Asset name hasn\'t been set');
-            }
-
-            if (angular.isUndefined(asset.totalTokens)) {
-                throw new Error('Total tokens amount hasn\'t been set');
-            }
-
-            if (angular.isUndefined(asset.decimalPlaces)) {
-                throw new Error('Token decimal places amount hasn\'t been set');
-            }
-
-            if (asset.fee.currency !== Currency.WAVES) {
-                throw new Error('Transaction fee must be nominated in Waves');
-            }
-        }
-
-        function validateTransfer(transfer) {
-            if (angular.isUndefined(transfer.recipient)) {
-                throw new Error('Recipient account hasn\'t been set');
-            }
-
-            if (angular.isUndefined(transfer.fee)) {
-                throw new Error('Transaction fee hasn\'t been set');
-            }
-
-            if (angular.isUndefined(transfer.amount)) {
-                throw new Error('Transaction amount hasn\'t been set');
-            }
-        }
-
-        function validateReissue(reissue) {
-            if (reissue.totalTokens.currency === Currency.WAVES) {
-                throw new Error('Reissuing Waves is not allowed.');
-            }
-
-            if (angular.isUndefined(reissue.totalTokens)) {
-                throw new Error('Total tokens amount hasn\'t been set');
-            }
-
-            if (angular.isUndefined(reissue.fee)) {
-                throw new Error('Transaction fee hasn\'t been set');
-            }
-
-            if (reissue.fee.currency !== Currency.WAVES) {
-                throw new Error('Transaction fee must be nominated in Waves');
-            }
-        }
+    function AssetService(txConstants, signService, validateService, utilityService,
+                          cryptoService) {
 
         function buildCreateAssetSignatureData (asset, tokensQuantity, senderPublicKey) {
             var typeByte = [txConstants.ASSET_ISSUE_TRANSACTION_TYPE];
@@ -68,8 +20,8 @@
         }
 
         this.createAssetIssueTransaction = function (asset, sender) {
-            validateAsset(asset);
-            utilityService.validateSender(sender);
+            validateService.validateAssetIssue(asset);
+            validateService.validateSender(sender);
 
             asset.time = asset.time || utilityService.getTime();
             asset.reissuable = angular.isDefined(asset.reissuable) ? asset.reissuable : false;
@@ -117,8 +69,8 @@
         }
 
         this.createAssetTransferTransaction = function (transfer, sender) {
-            validateTransfer(transfer);
-            utilityService.validateSender(sender);
+            validateService.validateAssetTransfer(transfer);
+            validateService.validateSender(sender);
 
             transfer.time = transfer.time || utilityService.getTime();
             transfer.attachment = transfer.attachment || [];
@@ -166,8 +118,8 @@
         }
 
         this.createAssetReissueTransaction = function (reissue, sender) {
-            validateReissue(reissue);
-            utilityService.validateSender(sender);
+            validateService.validateAssetReissue(reissue);
+            validateService.validateSender(sender);
 
             reissue.reissuable = angular.isDefined(reissue.reissuable) ? reissue.reissuable : false;
             reissue.time = reissue.time || utilityService.getTime();
@@ -189,7 +141,8 @@
         };
     }
 
-    AssetService.$inject = ['constants.transactions', 'signService', 'utilityService', 'cryptoService'];
+    AssetService.$inject = ['constants.transactions', 'signService', 'validateService', 'utilityService',
+                            'cryptoService'];
 
     angular
         .module('waves.core.services')

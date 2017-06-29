@@ -1,7 +1,9 @@
 (function () {
     'use strict';
 
-    function AliasRequestService(txConstants, featureConstants, utilityService, cryptoService) {
+    function AliasRequestService(txConstants, featureConstants, utilityService, cryptoService,
+                                 validateService) {
+
         function buildSignature(bytes, sender) {
             var privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
             return cryptoService.nonDeterministicSign(privateKeyBytes, bytes);
@@ -25,7 +27,7 @@
         }
 
         this.buildCreateAliasRequest = function (alias, sender) {
-            utilityService.validateSender(sender);
+            validateService.validateSender(sender);
 
             var currentTimeMillis = utilityService.getTime();
             alias.time = alias.time || currentTimeMillis;
@@ -43,7 +45,8 @@
         };
     }
 
-    AliasRequestService.$inject = ['constants.transactions', 'constants.features', 'utilityService', 'cryptoService'];
+    AliasRequestService.$inject = ['constants.transactions', 'constants.features', 'utilityService', 'cryptoService',
+                                   'validateService'];
 
     angular
         .module('waves.core.services')

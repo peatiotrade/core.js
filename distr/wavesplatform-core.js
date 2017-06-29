@@ -1798,56 +1798,8 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 (function () {
     'use strict';
 
-    function AssetService(txConstants, signService, utilityService, cryptoService) {
-        function validateAsset(asset) {
-            if (angular.isUndefined(asset.name)) {
-                throw new Error('Asset name hasn\'t been set');
-            }
-
-            if (angular.isUndefined(asset.totalTokens)) {
-                throw new Error('Total tokens amount hasn\'t been set');
-            }
-
-            if (angular.isUndefined(asset.decimalPlaces)) {
-                throw new Error('Token decimal places amount hasn\'t been set');
-            }
-
-            if (asset.fee.currency !== Currency.WAVES) {
-                throw new Error('Transaction fee must be nominated in Waves');
-            }
-        }
-
-        function validateTransfer(transfer) {
-            if (angular.isUndefined(transfer.recipient)) {
-                throw new Error('Recipient account hasn\'t been set');
-            }
-
-            if (angular.isUndefined(transfer.fee)) {
-                throw new Error('Transaction fee hasn\'t been set');
-            }
-
-            if (angular.isUndefined(transfer.amount)) {
-                throw new Error('Transaction amount hasn\'t been set');
-            }
-        }
-
-        function validateReissue(reissue) {
-            if (reissue.totalTokens.currency === Currency.WAVES) {
-                throw new Error('Reissuing Waves is not allowed.');
-            }
-
-            if (angular.isUndefined(reissue.totalTokens)) {
-                throw new Error('Total tokens amount hasn\'t been set');
-            }
-
-            if (angular.isUndefined(reissue.fee)) {
-                throw new Error('Transaction fee hasn\'t been set');
-            }
-
-            if (reissue.fee.currency !== Currency.WAVES) {
-                throw new Error('Transaction fee must be nominated in Waves');
-            }
-        }
+    function AssetService(txConstants, signService, validateService, utilityService,
+                          cryptoService) {
 
         function buildCreateAssetSignatureData (asset, tokensQuantity, senderPublicKey) {
             var typeByte = [txConstants.ASSET_ISSUE_TRANSACTION_TYPE];
@@ -1865,8 +1817,8 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         }
 
         this.createAssetIssueTransaction = function (asset, sender) {
-            validateAsset(asset);
-            utilityService.validateSender(sender);
+            validateService.validateAssetIssue(asset);
+            validateService.validateSender(sender);
 
             asset.time = asset.time || utilityService.getTime();
             asset.reissuable = angular.isDefined(asset.reissuable) ? asset.reissuable : false;
@@ -1914,8 +1866,8 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         }
 
         this.createAssetTransferTransaction = function (transfer, sender) {
-            validateTransfer(transfer);
-            utilityService.validateSender(sender);
+            validateService.validateAssetTransfer(transfer);
+            validateService.validateSender(sender);
 
             transfer.time = transfer.time || utilityService.getTime();
             transfer.attachment = transfer.attachment || [];
@@ -1963,8 +1915,8 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         }
 
         this.createAssetReissueTransaction = function (reissue, sender) {
-            validateReissue(reissue);
-            utilityService.validateSender(sender);
+            validateService.validateAssetReissue(reissue);
+            validateService.validateSender(sender);
 
             reissue.reissuable = angular.isDefined(reissue.reissuable) ? reissue.reissuable : false;
             reissue.time = reissue.time || utilityService.getTime();
@@ -1986,7 +1938,8 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         };
     }
 
-    AssetService.$inject = ['constants.transactions', 'signService', 'utilityService', 'cryptoService'];
+    AssetService.$inject = ['constants.transactions', 'signService', 'validateService', 'utilityService',
+                            'cryptoService'];
 
     angular
         .module('waves.core.services')
@@ -1996,7 +1949,9 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 (function () {
     'use strict';
 
-    function AliasRequestService(txConstants, featureConstants, utilityService, cryptoService) {
+    function AliasRequestService(txConstants, featureConstants, utilityService, cryptoService,
+                                 validateService) {
+
         function buildSignature(bytes, sender) {
             var privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
             return cryptoService.nonDeterministicSign(privateKeyBytes, bytes);
@@ -2020,7 +1975,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         }
 
         this.buildCreateAliasRequest = function (alias, sender) {
-            utilityService.validateSender(sender);
+            validateService.validateSender(sender);
 
             var currentTimeMillis = utilityService.getTime();
             alias.time = alias.time || currentTimeMillis;
@@ -2038,7 +1993,8 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         };
     }
 
-    AliasRequestService.$inject = ['constants.transactions', 'constants.features', 'utilityService', 'cryptoService'];
+    AliasRequestService.$inject = ['constants.transactions', 'constants.features', 'utilityService', 'cryptoService',
+                                   'validateService'];
 
     angular
         .module('waves.core.services')
@@ -2048,7 +2004,9 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 (function () {
     'use strict';
 
-    function UniqueAssetsRequestService (constants, utilityService, cryptoService) {
+    function UniqueAssetsRequestService (constants, utilityService, cryptoService,
+                                         validateService) {
+
         function buildSignature(bytes, sender) {
             var privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
             return cryptoService.nonDeterministicSign(privateKeyBytes, bytes);
@@ -2066,7 +2024,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         }
 
         this.buildMakeAssetNameUniqueRequest = function (asset, sender) {
-            utilityService.validateSender(sender);
+            validateService.validateSender(sender);
 
             var networkByte = utilityService.getNetworkIdByte();
 
@@ -2088,7 +2046,8 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         };
     }
 
-    UniqueAssetsRequestService.$inject = ['constants.transactions', 'utilityService', 'cryptoService'];
+    UniqueAssetsRequestService.$inject = ['constants.transactions', 'utilityService', 'cryptoService',
+                                          'validateService'];
 
     angular
         .module('waves.core.services')
@@ -2098,7 +2057,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 (function () {
     'use strict';
 
-    function LeasingRequestService(signService, utilityService) {
+    function LeasingRequestService(signService, utilityService, validateService) {
         function buildStartLeasingSignatureData (startLeasing, senderPublicKey) {
             return [].concat(
                 signService.getStartLeasingTxTypeBytes(),
@@ -2111,7 +2070,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         }
 
         this.buildStartLeasingRequest = function (startLeasing, sender) {
-            utilityService.validateSender(sender);
+            validateService.validateSender(sender);
 
             var currentTimeMillis = utilityService.getTime();
             startLeasing.time = startLeasing.time || currentTimeMillis;
@@ -2141,7 +2100,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         }
 
         this.buildCancelLeasingRequest = function (cancelLeasing, sender) {
-            utilityService.validateSender(sender);
+            validateService.validateSender(sender);
 
             var currentTimeMillis = utilityService.getTime();
             cancelLeasing.time = cancelLeasing.time || currentTimeMillis;
@@ -2159,7 +2118,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         };
     }
 
-    LeasingRequestService.$inject = ['signService', 'utilityService'];
+    LeasingRequestService.$inject = ['signService', 'utilityService', 'validateService'];
 
     angular
         .module('waves.core.services')
@@ -2358,20 +2317,6 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 
             this.isValidBase58String = function (input) {
                 return BASE58_REGEX.test(input);
-            };
-
-            this.validateSender = function (sender) {
-                if (!sender) {
-                    throw new Error('Sender hasn\'t been set');
-                }
-
-                if (!sender.publicKey) {
-                    throw new Error('Sender account public key hasn\'t been set');
-                }
-
-                if (!sender.privateKey) {
-                    throw new Error('Sender account private key hasn\'t been set');
-                }
             };
 
             // Add a prefix in case of alias
@@ -2983,7 +2928,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         return id ? id : WAVES_ASSET_ID;
     }
 
-    function WavesMatcherApiService (rest, utilityService, cryptoService) {
+    function WavesMatcherApiService (rest, utilityService, cryptoService, validateService) {
         var apiRoot = rest.all('matcher');
         var orderbookRoot = apiRoot.all('orderbook');
 
@@ -3029,7 +2974,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         };
 
         function buildLoadUserOrdersSignature(timestamp, sender) {
-            utilityService.validateSender(sender);
+            validateService.validateSender(sender);
 
             var publicKeyBytes = utilityService.base58StringToByteArray(sender.publicKey),
                 timestampBytes = utilityService.longToByteArray(timestamp),
@@ -3100,7 +3045,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         };
     }
 
-    WavesMatcherApiService.$inject = ['MatcherRestangular', 'utilityService', 'cryptoService'];
+    WavesMatcherApiService.$inject = ['MatcherRestangular', 'utilityService', 'cryptoService', 'validateService'];
 
     angular
         .module('waves.core.services')
@@ -3186,7 +3131,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 
     var SELL_ORDER_TYPE = 'sell';
 
-    function WavesMatcherRequestService (utilityService, cryptoService) {
+    function WavesMatcherRequestService (utilityService, cryptoService, validateService) {
         function buildSignature(bytes, sender) {
             var privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
 
@@ -3214,7 +3159,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         }
 
         this.buildCreateOrderRequest = function (order, sender) {
-            utilityService.validateSender(sender);
+            validateService.validateSender(sender);
 
             var currentTimeMillis = utilityService.getTime();
             order.time = order.time || currentTimeMillis;
@@ -3250,7 +3195,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         }
 
         this.buildCancelOrderRequest = function (orderId, sender) {
-            utilityService.validateSender(sender);
+            validateService.validateSender(sender);
 
             if (!orderId)
                 throw new Error('orderId hasn\'t been set');
@@ -3266,7 +3211,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         };
     }
 
-    WavesMatcherRequestService.$inject = ['utilityService', 'cryptoService'];
+    WavesMatcherRequestService.$inject = ['utilityService', 'cryptoService', 'validateService'];
 
     angular
         .module('waves.core.services')
@@ -3391,4 +3336,78 @@ var OrderPrice = (function () {
     angular
         .module('waves.core.services')
         .service('signService', BytesService);
+})();
+
+(function () {
+    'use strict';
+
+    angular
+        .module('waves.core.services')
+        .service('validateService', function () {
+            var self = this;
+
+            self.validateSender = function (sender) {
+                if (!sender) {
+                    throw new Error('Sender hasn\'t been set');
+                }
+
+                if (!sender.publicKey) {
+                    throw new Error('Sender account public key hasn\'t been set');
+                }
+
+                if (!sender.privateKey) {
+                    throw new Error('Sender account private key hasn\'t been set');
+                }
+            };
+
+            self.validateAssetIssue = function (issue) {
+                if (angular.isUndefined(issue.name)) {
+                    throw new Error('Asset name hasn\'t been set');
+                }
+
+                if (angular.isUndefined(issue.totalTokens)) {
+                    throw new Error('Total tokens amount hasn\'t been set');
+                }
+
+                if (angular.isUndefined(issue.decimalPlaces)) {
+                    throw new Error('Token decimal places amount hasn\'t been set');
+                }
+
+                if (issue.fee.currency !== Currency.WAVES) {
+                    throw new Error('Transaction fee must be nominated in Waves');
+                }
+            };
+
+            self.validateAssetTransfer = function (transfer) {
+                if (angular.isUndefined(transfer.recipient)) {
+                    throw new Error('Recipient account hasn\'t been set');
+                }
+
+                if (angular.isUndefined(transfer.fee)) {
+                    throw new Error('Transaction fee hasn\'t been set');
+                }
+
+                if (angular.isUndefined(transfer.amount)) {
+                    throw new Error('Transaction amount hasn\'t been set');
+                }
+            };
+
+            self.validateAssetReissue = function (reissue) {
+                if (reissue.totalTokens.currency === Currency.WAVES) {
+                    throw new Error('Reissuing Waves is not allowed.');
+                }
+
+                if (angular.isUndefined(reissue.totalTokens)) {
+                    throw new Error('Total tokens amount hasn\'t been set');
+                }
+
+                if (angular.isUndefined(reissue.fee)) {
+                    throw new Error('Transaction fee hasn\'t been set');
+                }
+
+                if (reissue.fee.currency !== Currency.WAVES) {
+                    throw new Error('Transaction fee must be nominated in Waves');
+                }
+            };
+        });
 })();

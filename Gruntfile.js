@@ -55,7 +55,8 @@ module.exports = function (grunt) {
                         'src/core/datafeed.api.service.js',
                         'src/core/matcher.request.service.js',
                         'src/core/order.price.js',
-                        'src/core/sign.service.js'
+                        'src/core/sign.service.js',
+                        'src/core/validate.service.js'
                     ]
                 }
             },
