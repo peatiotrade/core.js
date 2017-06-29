@@ -27,7 +27,6 @@ var Currency = (function () {
         this.id = data.id; // base58 encoded asset id of the currency
         this.displayName = data.displayName;
         this.shortName = data.shortName || data.displayName;
-        this.symbol = data.symbol || '';
         this.precision = data.precision; // number of decimal places after a decimal point
         this.verified = data.verified || false;
 
@@ -51,7 +50,6 @@ var Currency = (function () {
         id: '',
         displayName: 'Waves',
         shortName: 'WAVES',
-        symbol: 'WAVES',
         precision: 8,
         verified: true
     });
@@ -60,7 +58,6 @@ var Currency = (function () {
         id: '8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS',
         displayName: 'Bitcoin',
         shortName: 'BTC',
-        symbol: 'B',
         precision: 8,
         verified: true
     });
@@ -69,7 +66,6 @@ var Currency = (function () {
         id: 'Ft8X1v1LTa1ABafufpaCWyVj8KkaxUWE6xBhW6sNFJck',
         displayName: 'US Dollar',
         shortName: 'USD',
-        symbol: '$',
         precision: 2,
         verified: true
     });
@@ -78,7 +74,6 @@ var Currency = (function () {
         id: 'Gtb1WRznfchDnTh37ezoDTJ4wcoKaRsKqKjJjy7nm2zU',
         displayName: 'Euro',
         shortName: 'EUR',
-        symbol: '€',
         precision: 2,
         verified: true
     });
@@ -87,7 +82,6 @@ var Currency = (function () {
         id: 'DEJbZipbKQjwEiRjx2AqQFucrj5CZ3rAc4ZvFM8nAsoA',
         displayName: 'Chinese Yuan',
         shortName: 'CNY',
-        symbol: '¥',
         precision: 2,
         verified: true
     });
@@ -96,7 +90,6 @@ var Currency = (function () {
         id: 'DHgwrRvVyqJsepd32YbBqUeDH4GJ1N984X8QoekjgH8J',
         displayName: 'Waves Community',
         shortName: 'WCT',
-        symbol: 'WCT',
         precision: 2,
         verified: true
     });
@@ -105,7 +98,6 @@ var Currency = (function () {
         id: '4uK8i4ThRGbehENwa6MxyLtxAjAo1Rj9fduborGExarC',
         displayName: 'Miner Reward',
         shortName: 'MRT',
-        symbol: 'MRT',
         precision: 2,
         verified: true
     });
@@ -114,7 +106,6 @@ var Currency = (function () {
         id: '4eT6R8R2XuTcBuTHiXVQsh2dN2mg3c2Qnp95EWBNHygg',
         displayName: 'WavesGo',
         shortName: 'WGO',
-        symbol: 'WGO',
         precision: 8,
         verified: true
     });
@@ -123,7 +114,6 @@ var Currency = (function () {
         id: 'FLbGXzrpqkvucZqsHDcNxePTkh2ChmEi4GdBfDRRJVof',
         displayName: 'Incent',
         shortName: 'INCNT',
-        symbol: 'INCNT',
         precision: 8,
         verified: true
     });
@@ -132,7 +122,6 @@ var Currency = (function () {
         id: 'AnERqFRffNVrCbviXbDEdzrU6ipXCP5Y1PKpFdRnyQAy',
         displayName: 'Ripto Bux',
         shortName: 'RBX',
-        symbol: 'RBX',
         precision: 8,
         verified: true
     });
@@ -141,7 +130,6 @@ var Currency = (function () {
         id: 'HzfaJp8YQWLvQG4FkUxq2Q7iYWMYQ2k8UF89vVJAjWPj',
         displayName: 'Mercury',
         shortName: 'MER',
-        symbol: 'MER',
         precision: 8,
         verified: true
     });
@@ -150,7 +138,6 @@ var Currency = (function () {
         id: 'APz41KyoKuBBh8t3oZjqvhbbsg6f63tpZM5Ck5LYx6h',
         displayName: 'B@nkcoin',
         shortName: 'B@',
-        symbol: 'B@',
         precision: 8,
         verified: true
     });
@@ -159,7 +146,6 @@ var Currency = (function () {
         id: '4764Pr9DpKQAHAjAVA2uqnrYidLMnM7vpDDLCDWujFTt',
         displayName: 'Upcoin',
         shortName: 'UPC',
-        symbol: 'UPC',
         precision: 2,
         verified: true
     });
@@ -168,7 +154,6 @@ var Currency = (function () {
         id: 'EYz8Zvs62D4d7F5ZgXHCWuzuFaZg63FYnfVQrTWQoLSK',
         displayName: 'Kolion',
         shortName: 'KLN',
-        symbol: 'KLN',
         precision: 4,
         verified: true
     });
@@ -177,7 +162,6 @@ var Currency = (function () {
         id: 'BDMRyZsmDZpgKhdM7fUTknKcUbVVkDpMcqEj31PUzjMy',
         displayName: 'Tokes',
         shortName: 'TKS',
-        symbol: 'TKS',
         precision: 8,
         verified: true
     });
@@ -186,7 +170,6 @@ var Currency = (function () {
         id: 'BkFyeRdrLquxds5FenxyonyfTwMVJJ6o6L7VTaPr5fs3',
         displayName: 'WavesPool.NET',
         shortName: 'WPN',
-        symbol: 'WPN',
         precision: 8,
         verified: true
     });
@@ -195,7 +178,6 @@ var Currency = (function () {
         id: '725Yv9oceWsB4GsYwyy4A52kEwyVrL5avubkeChSnL46',
         displayName: 'Ergo First Year Token',
         shortName: 'EFYT',
-        symbol: 'EFYT',
         precision: 8,
         verified: true
     });
@@ -204,7 +186,6 @@ var Currency = (function () {
         id: '2Y8eFFXDTkxgCvXbMT5K4J38cpDYYbQdciJEZb48vTDj',
         displayName: 'Mobile Go Token',
         shortName: 'MGO',
-        symbol: 'MGO',
         precision: 8,
         verified: true
     });
@@ -213,7 +194,6 @@ var Currency = (function () {
         id: '8ofu3VpEaVCFjRqLLqzTMNs5URKUUQMrPp3k6oFmiCc6',
         displayName: 'EncryptoTel',
         shortName: 'ETT',
-        symbol: 'ETT',
         precision: 8,
         verified: true
     });
@@ -222,7 +202,6 @@ var Currency = (function () {
         id: '5ZPuAVxAwYvptbCgSVKdTzeud9dhbZ7vvxHVnZUoxf4h',
         displayName: 'ZrCoin',
         shortName: 'ZRC',
-        symbol: 'ZRC',
         precision: 8,
         verified: true
     });
@@ -231,7 +210,6 @@ var Currency = (function () {
         id: '39wcSXj4MdRNRJXA88rVxF7EXWjYixaA3J3EteoN6DMM',
         displayName: 'privateBANKX',
         shortName: 'PBKX',
-        symbol: 'PBKX',
         precision: 0,
         verified: true
     });
@@ -240,7 +218,6 @@ var Currency = (function () {
         id: 'Bi4w2UuGRt2jAJFfRb8b3SwDUV5x8krCzX2zZHcRfPNc',
         displayName: 'CryptoPing',
         shortName: 'PING',
-        symbol: 'PING',
         precision: 8,
         verified: true
     });
@@ -249,7 +226,6 @@ var Currency = (function () {
         id: 'BTfuGGoeA934Ta1fgcehQ5UhbHuWKj4don64ZNBuMT38',
         displayName: 'Starrie',
         shortName: 'STAR',
-        symbol: 'STAR',
         precision: 8,
         verified: true
     });
@@ -258,7 +234,6 @@ var Currency = (function () {
         id: '9gnc5UCY6RxtSi9FEJkcD57r5NBgdr45DVYtunyDLrgC',
         displayName: 'BearWaves',
         shortName: 'BEAR',
-        symbol: 'BEAR',
         precision: 2,
         verified: true
     });
@@ -267,7 +242,6 @@ var Currency = (function () {
         id: 'K5JcgN8UdwNdh5sbdAuPMm5XEd5aFvoXaC3iHsHVz1d',
         displayName: 'Darcrus',
         shortName: 'DAR',
-        symbol: 'DAR',
         precision: 6,
         verified: true
     });
@@ -276,7 +250,6 @@ var Currency = (function () {
         id: '9g5JiYThxFTxknSMA3TT5xoXG7GYjRrTJxxLeeoQ36kJ',
         displayName: 'GLIPP',
         shortName: 'GLIPP',
-        symbol: 'GLIPP',
         precision: 8,
         verified: true
     });
@@ -285,7 +258,6 @@ var Currency = (function () {
         id: '6284oD9Aky3gZwwwqCFEZzvyx5qeeswAbYEtCHcMyKUR',
         displayName: 'TrackNetToken',
         shortName: 'TNT',
-        symbol: 'TNT',
         precision: 4,
         verified: true
     });
@@ -294,7 +266,6 @@ var Currency = (function () {
         id: '9c7U7bXdP23oHpmGKwGfSsjFrpxdRcp3tp28qbfhEc3d',
         displayName: '$bkt',
         shortName: 'BKT',
-        symbol: 'BKT',
         precision: 0,
         verified: true
     });
@@ -303,7 +274,6 @@ var Currency = (function () {
         id: '8t8DMJFQu5GEhvAetiA8aHa3yPjxLj54sBnZsjnJ5dsw',
         displayName: 'Wagerr',
         shortName: 'WGR',
-        symbol: 'WGR',
         precision: 8,
         verified: true
     });
@@ -312,7 +282,6 @@ var Currency = (function () {
         id: 'EdDvbhk4wJ1kL6pMCq1V36GbQE2nGE7Metb87zbaY2JL',
         displayName: 'Primalbase Token',
         shortName: 'PBT',
-        symbol: 'PBT',
         precision: 4,
         verified: true
     });
