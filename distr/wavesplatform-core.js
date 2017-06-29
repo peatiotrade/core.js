@@ -956,6 +956,15 @@ var Currency = (function () {
         verified: true
     });
 
+    var PBT = new Currency({
+        id: 'EdDvbhk4wJ1kL6pMCq1V36GbQE2nGE7Metb87zbaY2JL',
+        displayName: 'Primalbase Token',
+        shortName: 'PBT',
+        symbol: 'PBT',
+        precision: 4,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -988,6 +997,7 @@ var Currency = (function () {
         currencyCache[TNT.id] = TNT;
         currencyCache[BKT.id] = BKT;
         currencyCache[WGR.id] = WGR;
+        currencyCache[PBT.id] = PBT;
     }
 
     invalidateCache();
@@ -995,8 +1005,9 @@ var Currency = (function () {
     return {
         create: function (data) {
             // if currency data.id is not set - it's a temporary instance
-            if (!_.has(data, 'id'))
+            if (!_.has(data, 'id')) {
                 return new Currency(data);
+            }
 
             if (!currencyCache[data.id]) {
                 currencyCache[data.id] = new Currency(data);
@@ -1033,7 +1044,8 @@ var Currency = (function () {
         GLIPP: GLIPP,
         TNT: TNT,
         BKT: BKT,
-        WGR: WGR
+        WGR: WGR,
+        PBT: PBT
     };
 })();
 
