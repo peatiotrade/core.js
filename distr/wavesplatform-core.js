@@ -1798,22 +1798,24 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 (function () {
     'use strict';
 
-    function AssetService(txConstants, signService, validateService, utilityService,
-                          cryptoService) {
+    function AssetService(signService, validateService, utilityService, cryptoService) {
+        function buildId(transactionBytes) {
+            var hash = cryptoService.blake2b(new Uint8Array(transactionBytes));
+            return cryptoService.base58.encode(hash);
+        }
 
         function buildCreateAssetSignatureData (asset, tokensQuantity, senderPublicKey) {
-            var typeByte = [txConstants.ASSET_ISSUE_TRANSACTION_TYPE];
-            var publicKeyBytes = utilityService.base58StringToByteArray(senderPublicKey);
-            var assetNameBytes = utilityService.stringToByteArrayWithSize(asset.name);
-            var assetDescriptionBytes = utilityService.stringToByteArrayWithSize(asset.description);
-            var quantityBytes = utilityService.longToByteArray(tokensQuantity);
-            var decimalPlacesBytes = [asset.decimalPlaces];
-            var reissuableBytes = utilityService.booleanToBytes(asset.reissuable);
-            var feeBytes = utilityService.longToByteArray(asset.fee.toCoins());
-            var timestampBytes = utilityService.longToByteArray(asset.time);
-
-            return [].concat(typeByte, publicKeyBytes, assetNameBytes, assetDescriptionBytes,
-                quantityBytes, decimalPlacesBytes, reissuableBytes, feeBytes, timestampBytes);
+            return [].concat(
+                signService.getAssetIssueTxTypeBytes(),
+                signService.getPublicKeyBytes(senderPublicKey),
+                signService.getAssetNameBytes(asset.name),
+                signService.getAssetDescriptionBytes(asset.description),
+                signService.getAssetQuantityBytes(tokensQuantity),
+                signService.getAssetDecimalPlacesBytes(asset.decimalPlaces),
+                signService.getAssetIsReissuableBytes(asset.reissuable),
+                signService.getFeeBytes(asset.fee.toCoins()),
+                signService.getTimestampBytes(asset.time)
+            );
         }
 
         this.createAssetIssueTransaction = function (asset, sender) {
@@ -1831,11 +1833,10 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 
             var tokens = new Money(asset.totalTokens, assetCurrency);
             var signatureData = buildCreateAssetSignatureData(asset, tokens.toCoins(), sender.publicKey);
-            var signature = buildSignature(signatureData, sender);
-            var id = buildId(signatureData);
+            var signature = signService.buildSignature(signatureData, sender.privateKey);
 
             return {
-                id: id,
+                id: buildId(signatureData),
                 name: asset.name,
                 description: asset.description,
                 quantity: tokens.toCoins(),
@@ -1849,20 +1850,17 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         };
 
         function buildCreateAssetTransferSignatureData(transfer, senderPublicKey) {
-            var typeByte = [txConstants.ASSET_TRANSFER_TRANSACTION_TYPE];
-            var publicKeyBytes = utilityService.base58StringToByteArray(senderPublicKey);
-            var assetIdBytes = utilityService.currencyToBytes(transfer.amount.currency.id);
-
-            var recipientBytes = signService.getRecipientBytes(transfer.recipient);
-
-            var amountBytes = utilityService.longToByteArray(transfer.amount.toCoins());
-            var feeBytes = utilityService.longToByteArray(transfer.fee.toCoins());
-            var feeAssetBytes = utilityService.currencyToBytes(transfer.fee.currency.id);
-            var timestampBytes = utilityService.longToByteArray(transfer.time);
-            var attachmentBytes = utilityService.byteArrayWithSize(transfer.attachment);
-
-            return [].concat(typeByte, publicKeyBytes, assetIdBytes, feeAssetBytes, timestampBytes,
-                amountBytes, feeBytes, recipientBytes, attachmentBytes);
+            return [].concat(
+                signService.getAssetTransferTxTypeBytes(),
+                signService.getPublicKeyBytes(senderPublicKey),
+                signService.getAssetIdBytes(transfer.amount.currency.id),
+                signService.getFeeAssetIdBytes(transfer.fee.currency.id),
+                signService.getTimestampBytes(transfer.time),
+                signService.getAmountBytes(transfer.amount.toCoins()),
+                signService.getFeeBytes(transfer.fee.toCoins()),
+                signService.getRecipientBytes(transfer.recipient),
+                signService.getAttachmentBytes(transfer.attachment)
+            );
         }
 
         this.createAssetTransferTransaction = function (transfer, sender) {
@@ -1874,11 +1872,10 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
             transfer.recipient = utilityService.resolveAddressOrAlias(transfer.recipient);
 
             var signatureData = buildCreateAssetTransferSignatureData(transfer, sender.publicKey);
-            var signature = buildSignature(signatureData, sender);
-            var id = buildId(signatureData);
+            var signature = signService.buildSignature(signatureData, sender.privateKey);
 
             return {
-                id: id,
+                id: buildId(signatureData),
                 recipient: transfer.recipient,
                 timestamp: transfer.time,
                 assetId: transfer.amount.currency.id,
@@ -1891,27 +1888,16 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
             };
         };
 
-        function buildSignature(bytes, sender) {
-            var privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
-            return cryptoService.nonDeterministicSign(privateKeyBytes, bytes);
-        }
-
-        function buildId(transactionBytes) {
-            var hash = cryptoService.blake2b(new Uint8Array(transactionBytes));
-            return cryptoService.base58.encode(hash);
-        }
-
         function buildCreateAssetReissueSignatureData(reissue, senderPublicKey) {
-            var typeByte = [txConstants.ASSET_REISSUE_TRANSACTION_TYPE];
-            var publicKeyBytes = utilityService.base58StringToByteArray(senderPublicKey);
-            var assetIdBytes = utilityService.currencyToBytes(reissue.totalTokens.currency.id, true);
-            var quantityBytes = utilityService.longToByteArray(reissue.totalTokens.toCoins());
-            var reissuableBytes = utilityService.booleanToBytes(reissue.reissuable);
-            var feeBytes = utilityService.longToByteArray(reissue.fee.toCoins());
-            var timestampBytes = utilityService.longToByteArray(reissue.time);
-
-            return [].concat(typeByte, publicKeyBytes, assetIdBytes, quantityBytes, reissuableBytes,
-                feeBytes, timestampBytes);
+            return [].concat(
+                signService.getAssetReissueTxTypeBytes(),
+                signService.getPublicKeyBytes(senderPublicKey),
+                signService.getAssetIdBytes(reissue.totalTokens.currency.id, true),
+                signService.getAssetQuantityBytes(reissue.totalTokens.toCoins()),
+                signService.getAssetIsReissuableBytes(reissue.reissuable),
+                signService.getFeeBytes(reissue.fee.toCoins()),
+                signService.getTimestampBytes(reissue.time)
+            );
         }
 
         this.createAssetReissueTransaction = function (reissue, sender) {
@@ -1922,11 +1908,10 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
             reissue.time = reissue.time || utilityService.getTime();
 
             var signatureData = buildCreateAssetReissueSignatureData(reissue, sender.publicKey);
-            var signature = buildSignature(signatureData, sender);
-            var id = buildId(signatureData);
+            var signature = signService.buildSignature(signatureData, sender.privateKey);
 
             return {
-                id: id,
+                id: buildId(signatureData),
                 assetId: reissue.totalTokens.currency.id,
                 quantity: reissue.totalTokens.toCoins(),
                 reissuable: reissue.reissuable,
@@ -1938,8 +1923,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         };
     }
 
-    AssetService.$inject = ['constants.transactions', 'signService', 'validateService', 'utilityService',
-                            'cryptoService'];
+    AssetService.$inject = ['signService', 'validateService', 'utilityService', 'cryptoService'];
 
     angular
         .module('waves.core.services')
@@ -2253,12 +2237,12 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         .service('utilityService', ['constants.network', 'cryptoService', function (constants, cryptoService) {
             var self = this;
 
-            this.getNetworkIdByte = function () {
+            self.getNetworkIdByte = function () {
                 return constants.NETWORK_CODE.charCodeAt(0) & 0xFF;
             };
 
             // long to big-endian bytes
-            this.longToByteArray = function (value) {
+            self.longToByteArray = function (value) {
                 var bytes = new Array(7);
                 for (var k = 7; k >= 0; k--) {
                     bytes[k] = value & (255);
@@ -2269,11 +2253,11 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
             };
 
             // short to big-endian bytes
-            this.shortToByteArray = function (value) {
+            self.shortToByteArray = function (value) {
                 return converters.int16ToBytes(value, true);
             };
 
-            this.base58StringToByteArray = function (base58String) {
+            self.base58StringToByteArray = function (base58String) {
                 var decoded = cryptoService.base58.decode(base58String);
                 var result = [];
                 for (var i = 0; i < decoded.length; ++i) {
@@ -2283,44 +2267,34 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
                 return result;
             };
 
-            this.stringToByteArrayWithSize = function (string) {
+            self.stringToByteArrayWithSize = function (string) {
                 var bytes = converters.stringToByteArray(string);
-
                 return self.byteArrayWithSize(bytes);
             };
 
-            this.byteArrayWithSize = function (byteArray) {
+            self.byteArrayWithSize = function (byteArray) {
                 var result = self.shortToByteArray(byteArray.length);
-
                 return result.concat(byteArray);
             };
 
-            this.currencyToBytes = function (currencyId, mandatory) {
-                if (mandatory) {
-                    return self.base58StringToByteArray(currencyId);
-                } else {
-                    return currencyId ? [1].concat(self.base58StringToByteArray(currencyId)) : [0];
-                }
-            };
-
-            this.booleanToBytes = function (flag) {
+            self.booleanToBytes = function (flag) {
                 return flag ? [1] : [0];
             };
 
-            this.endsWithWhitespace = function (value) {
+            self.endsWithWhitespace = function (value) {
                 return /\s+$/g.test(value);
             };
 
-            this.getTime = function() {
+            self.getTime = function() {
                 return Date.now();
             };
 
-            this.isValidBase58String = function (input) {
+            self.isValidBase58String = function (input) {
                 return BASE58_REGEX.test(input);
             };
 
             // Add a prefix in case of alias
-            this.resolveAddressOrAlias = function (string) {
+            self.resolveAddressOrAlias = function (string) {
                 if (string.length <= 30) {
                     return 'alias:' + constants.NETWORK_CODE + ':' + string;
                 } else {
@@ -3131,15 +3105,15 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 
     var SELL_ORDER_TYPE = 'sell';
 
-    function MatcherRequestService(utilityService, cryptoService, validateService) {
+    function MatcherRequestService(signService, utilityService, cryptoService, validateService) {
         function buildSignature(bytes, sender) {
             var privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
             return cryptoService.nonDeterministicSign(privateKeyBytes, bytes);
         }
 
         function buildCreateOrderSignatureData(order, senderPublicKey) {
-            var amountAssetIdBytes = utilityService.currencyToBytes(order.price.amountAsset.id);
-            var priceAssetIdBytes = utilityService.currencyToBytes(order.price.priceAsset.id);
+            var amountAssetIdBytes = signService.getAssetIdBytes(order.price.amountAsset.id);
+            var priceAssetIdBytes = signService.getAssetIdBytes(order.price.priceAsset.id);
             var assetPairBytes = [].concat(amountAssetIdBytes, priceAssetIdBytes);
 
             var isSell = order.orderType === SELL_ORDER_TYPE;
@@ -3210,7 +3184,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         };
     }
 
-    MatcherRequestService.$inject = ['utilityService', 'cryptoService', 'validateService'];
+    MatcherRequestService.$inject = ['signService', 'utilityService', 'cryptoService', 'validateService'];
 
     angular
         .module('waves.core.services')
@@ -3270,6 +3244,18 @@ var OrderPrice = (function () {
 
         // Transaction types
 
+        self.getAssetIssueTxTypeBytes = function () {
+            return [txConstants.ASSET_ISSUE_TRANSACTION_TYPE];
+        };
+
+        self.getAssetReissueTxTypeBytes = function () {
+            return [txConstants.ASSET_REISSUE_TRANSACTION_TYPE];
+        };
+
+        self.getAssetTransferTxTypeBytes = function () {
+            return [txConstants.ASSET_TRANSFER_TRANSACTION_TYPE];
+        };
+
         self.getStartLeasingTxTypeBytes = function () {
             return [txConstants.START_LEASING_TRANSACTION_TYPE];
         };
@@ -3306,8 +3292,40 @@ var OrderPrice = (function () {
             }
         };
 
+        self.getAssetIdBytes = function (assetId, mandatory) {
+            if (mandatory) {
+                return utilityService.base58StringToByteArray(assetId);
+            } else {
+                return assetId ? [1].concat(utilityService.base58StringToByteArray(assetId)) : [0];
+            }
+        };
+
+        self.getAssetNameBytes = function (assetName) {
+            return utilityService.stringToByteArrayWithSize(assetName);
+        };
+
+        self.getAssetDescriptionBytes = function (assetDescription) {
+            return utilityService.stringToByteArrayWithSize(assetDescription);
+        };
+
+        self.getAssetQuantityBytes = function (assetQuantity) {
+            return utilityService.longToByteArray(assetQuantity);
+        };
+
+        self.getAssetDecimalPlacesBytes = function (assetDecimalPlaces) {
+            return [assetDecimalPlaces];
+        };
+
+        self.getAssetIsReissuableBytes = function (assetIsReissuable) {
+            return utilityService.booleanToBytes(assetIsReissuable);
+        };
+
         self.getAmountBytes = function (amount) {
             return utilityService.longToByteArray(amount);
+        };
+
+        self.getFeeAssetIdBytes = function (feeAssetId) {
+            return self.getAssetIdBytes(feeAssetId);
         };
 
         self.getFeeBytes = function (fee) {
@@ -3316,6 +3334,10 @@ var OrderPrice = (function () {
 
         self.getTimestampBytes = function (timestamp) {
             return utilityService.longToByteArray(timestamp);
+        };
+
+        self.getAttachmentBytes = function (attachment) {
+            return utilityService.byteArrayWithSize(attachment);
         };
 
         self.getNetworkBytes = function () {

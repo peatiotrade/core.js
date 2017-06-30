@@ -6,6 +6,18 @@
 
         // Transaction types
 
+        self.getAssetIssueTxTypeBytes = function () {
+            return [txConstants.ASSET_ISSUE_TRANSACTION_TYPE];
+        };
+
+        self.getAssetReissueTxTypeBytes = function () {
+            return [txConstants.ASSET_REISSUE_TRANSACTION_TYPE];
+        };
+
+        self.getAssetTransferTxTypeBytes = function () {
+            return [txConstants.ASSET_TRANSFER_TRANSACTION_TYPE];
+        };
+
         self.getStartLeasingTxTypeBytes = function () {
             return [txConstants.START_LEASING_TRANSACTION_TYPE];
         };
@@ -42,8 +54,40 @@
             }
         };
 
+        self.getAssetIdBytes = function (assetId, mandatory) {
+            if (mandatory) {
+                return utilityService.base58StringToByteArray(assetId);
+            } else {
+                return assetId ? [1].concat(utilityService.base58StringToByteArray(assetId)) : [0];
+            }
+        };
+
+        self.getAssetNameBytes = function (assetName) {
+            return utilityService.stringToByteArrayWithSize(assetName);
+        };
+
+        self.getAssetDescriptionBytes = function (assetDescription) {
+            return utilityService.stringToByteArrayWithSize(assetDescription);
+        };
+
+        self.getAssetQuantityBytes = function (assetQuantity) {
+            return utilityService.longToByteArray(assetQuantity);
+        };
+
+        self.getAssetDecimalPlacesBytes = function (assetDecimalPlaces) {
+            return [assetDecimalPlaces];
+        };
+
+        self.getAssetIsReissuableBytes = function (assetIsReissuable) {
+            return utilityService.booleanToBytes(assetIsReissuable);
+        };
+
         self.getAmountBytes = function (amount) {
             return utilityService.longToByteArray(amount);
+        };
+
+        self.getFeeAssetIdBytes = function (feeAssetId) {
+            return self.getAssetIdBytes(feeAssetId);
         };
 
         self.getFeeBytes = function (fee) {
@@ -52,6 +96,10 @@
 
         self.getTimestampBytes = function (timestamp) {
             return utilityService.longToByteArray(timestamp);
+        };
+
+        self.getAttachmentBytes = function (attachment) {
+            return utilityService.byteArrayWithSize(attachment);
         };
 
         self.getNetworkBytes = function () {

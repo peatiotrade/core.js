@@ -3,15 +3,15 @@
 
     var SELL_ORDER_TYPE = 'sell';
 
-    function MatcherRequestService(utilityService, cryptoService, validateService) {
+    function MatcherRequestService(signService, utilityService, cryptoService, validateService) {
         function buildSignature(bytes, sender) {
             var privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
             return cryptoService.nonDeterministicSign(privateKeyBytes, bytes);
         }
 
         function buildCreateOrderSignatureData(order, senderPublicKey) {
-            var amountAssetIdBytes = utilityService.currencyToBytes(order.price.amountAsset.id);
-            var priceAssetIdBytes = utilityService.currencyToBytes(order.price.priceAsset.id);
+            var amountAssetIdBytes = signService.getAssetIdBytes(order.price.amountAsset.id);
+            var priceAssetIdBytes = signService.getAssetIdBytes(order.price.priceAsset.id);
             var assetPairBytes = [].concat(amountAssetIdBytes, priceAssetIdBytes);
 
             var isSell = order.orderType === SELL_ORDER_TYPE;
@@ -82,7 +82,7 @@
         };
     }
 
-    MatcherRequestService.$inject = ['utilityService', 'cryptoService', 'validateService'];
+    MatcherRequestService.$inject = ['signService', 'utilityService', 'cryptoService', 'validateService'];
 
     angular
         .module('waves.core.services')
