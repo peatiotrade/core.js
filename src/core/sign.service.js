@@ -26,6 +26,10 @@
             return [txConstants.CANCEL_LEASING_TRANSACTION_TYPE];
         };
 
+        self.getCreateAliasTxTypeBytes = function () {
+            return [txConstants.CREATE_ALIAS_TRANSACTION_TYPE];
+        };
+
         // Key pair
 
         self.getPublicKeyBytes = function (publicKey) {
@@ -104,6 +108,14 @@
 
         self.getNetworkBytes = function () {
             return [utilityService.getNetworkIdByte()];
+        };
+
+        self.getAliasBytes = function (alias) {
+            return utilityService.byteArrayWithSize([].concat(
+                [featureConstants.ALIAS_VERSION],
+                [utilityService.getNetworkIdByte()],
+                utilityService.stringToByteArrayWithSize(alias)
+            ));
         };
 
         // Signatures
