@@ -12,7 +12,7 @@
         return id ? id : WAVES_ASSET_ID;
     }
 
-    function WavesMatcherApiService (rest, utilityService, cryptoService) {
+    function MatcherApiService(rest, utilityService, cryptoService, validateService) {
         var apiRoot = rest.all('matcher');
         var orderbookRoot = apiRoot.all('orderbook');
 
@@ -58,7 +58,7 @@
         };
 
         function buildLoadUserOrdersSignature(timestamp, sender) {
-            utilityService.validateSender(sender);
+            validateService.validateSender(sender);
 
             var publicKeyBytes = utilityService.base58StringToByteArray(sender.publicKey),
                 timestampBytes = utilityService.longToByteArray(timestamp),
@@ -129,9 +129,9 @@
         };
     }
 
-    WavesMatcherApiService.$inject = ['MatcherRestangular', 'utilityService', 'cryptoService'];
+    MatcherApiService.$inject = ['MatcherRestangular', 'utilityService', 'cryptoService', 'validateService'];
 
     angular
         .module('waves.core.services')
-        .service('matcherApiService', WavesMatcherApiService);
+        .service('matcherApiService', MatcherApiService);
 })();

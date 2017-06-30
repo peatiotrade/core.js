@@ -9,7 +9,7 @@
         return id === '' ? 'WAVES' : id;
     }
 
-    function WavesDatafeedApiService (rest) {
+    function DatafeedApiService(rest) {
         var self = this,
             apiRoot = rest.all('api');
 
@@ -65,9 +65,9 @@
         };
     }
 
-    WavesDatafeedApiService.$inject = ['DatafeedRestangular'];
+    DatafeedApiService.$inject = ['DatafeedRestangular'];
 
     angular
         .module('waves.core.services')
-        .service('datafeedApiService', WavesDatafeedApiService);
+        .service('datafeedApiService', DatafeedApiService);
 })();

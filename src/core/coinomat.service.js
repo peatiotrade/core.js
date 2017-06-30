@@ -3,21 +3,21 @@
 
     var LANGUAGE = 'ru_RU';
 
-    function ensureTunnelCreated (response) {
+    function ensureTunnelCreated(response) {
         if (!response.ok) {
             console.log(response);
             throw new Error('Failed to create tunnel: ' + response.error);
         }
     }
 
-    function ensureTunnelObtained (response) {
+    function ensureTunnelObtained(response) {
         if (!response.tunnel) {
             console.log(response);
             throw new Error('Failed to get tunnel: ' + response.error);
         }
     }
 
-    function WavesCoinomatService (rest, mappingService) {
+    function CoinomatService(rest, mappingService) {
         var apiRoot = rest.all('api').all('v1');
 
         /* jscs:disable requireCamelCaseOrUpperCaseIdentifiers */
@@ -81,9 +81,9 @@
         };
     }
 
-    WavesCoinomatService.$inject = ['CoinomatRestangular', 'coinomatCurrencyMappingService'];
+    CoinomatService.$inject = ['CoinomatRestangular', 'coinomatCurrencyMappingService'];
 
     angular
         .module('waves.core.services')
-        .service('coinomatService', WavesCoinomatService);
+        .service('coinomatService', CoinomatService);
 })();

@@ -1,75 +1,29 @@
 (function () {
     'use strict';
 
-    function AssetService(txConstants, featureConstants, utilityService, cryptoService) {
-        function validateAsset(asset) {
-            if (angular.isUndefined(asset.name)) {
-                throw new Error('Asset name hasn\'t been set');
-            }
-
-            if (angular.isUndefined(asset.totalTokens)) {
-                throw new Error('Total tokens amount hasn\'t been set');
-            }
-
-            if (angular.isUndefined(asset.decimalPlaces)) {
-                throw new Error('Token decimal places amount hasn\'t been set');
-            }
-
-            if (asset.fee.currency !== Currency.WAVES) {
-                throw new Error('Transaction fee must be nominated in Waves');
-            }
-        }
-
-        function validateTransfer(transfer) {
-            if (angular.isUndefined(transfer.recipient)) {
-                throw new Error('Recipient account hasn\'t been set');
-            }
-
-            if (angular.isUndefined(transfer.fee)) {
-                throw new Error('Transaction fee hasn\'t been set');
-            }
-
-            if (angular.isUndefined(transfer.amount)) {
-                throw new Error('Transaction amount hasn\'t been set');
-            }
-        }
-
-        function validateReissue(reissue) {
-            if (reissue.totalTokens.currency === Currency.WAVES) {
-                throw new Error('Reissuing Waves is not allowed.');
-            }
-
-            if (angular.isUndefined(reissue.totalTokens)) {
-                throw new Error('Total tokens amount hasn\'t been set');
-            }
-
-            if (angular.isUndefined(reissue.fee)) {
-                throw new Error('Transaction fee hasn\'t been set');
-            }
-
-            if (reissue.fee.currency !== Currency.WAVES) {
-                throw new Error('Transaction fee must be nominated in Waves');
-            }
+    function AssetService(signService, validateService, utilityService, cryptoService) {
+        function buildId(transactionBytes) {
+            var hash = cryptoService.blake2b(new Uint8Array(transactionBytes));
+            return cryptoService.base58.encode(hash);
         }
 
         function buildCreateAssetSignatureData (asset, tokensQuantity, senderPublicKey) {
-            var typeByte = [txConstants.ASSET_ISSUE_TRANSACTION_TYPE];
-            var publicKeyBytes = utilityService.base58StringToByteArray(senderPublicKey);
-            var assetNameBytes = utilityService.stringToByteArrayWithSize(asset.name);
-            var assetDescriptionBytes = utilityService.stringToByteArrayWithSize(asset.description);
-            var quantityBytes = utilityService.longToByteArray(tokensQuantity);
-            var decimalPlacesBytes = [asset.decimalPlaces];
-            var reissuableBytes = utilityService.booleanToBytes(asset.reissuable);
-            var feeBytes = utilityService.longToByteArray(asset.fee.toCoins());
-            var timestampBytes = utilityService.longToByteArray(asset.time);
-
-            return [].concat(typeByte, publicKeyBytes, assetNameBytes, assetDescriptionBytes,
-                quantityBytes, decimalPlacesBytes, reissuableBytes, feeBytes, timestampBytes);
+            return [].concat(
+                signService.getAssetIssueTxTypeBytes(),
+                signService.getPublicKeyBytes(senderPublicKey),
+                signService.getAssetNameBytes(asset.name),
+                signService.getAssetDescriptionBytes(asset.description),
+                signService.getAssetQuantityBytes(tokensQuantity),
+                signService.getAssetDecimalPlacesBytes(asset.decimalPlaces),
+                signService.getAssetIsReissuableBytes(asset.reissuable),
+                signService.getFeeBytes(asset.fee.toCoins()),
+                signService.getTimestampBytes(asset.time)
+            );
         }
 
         this.createAssetIssueTransaction = function (asset, sender) {
-            validateAsset(asset);
-            utilityService.validateSender(sender);
+            validateService.validateAssetIssue(asset);
+            validateService.validateSender(sender);
 
             asset.time = asset.time || utilityService.getTime();
             asset.reissuable = angular.isDefined(asset.reissuable) ? asset.reissuable : false;
@@ -82,11 +36,10 @@
 
             var tokens = new Money(asset.totalTokens, assetCurrency);
             var signatureData = buildCreateAssetSignatureData(asset, tokens.toCoins(), sender.publicKey);
-            var signature = buildSignature(signatureData, sender);
-            var id = buildId(signatureData);
+            var signature = signService.buildSignature(signatureData, sender.privateKey);
 
             return {
-                id: id,
+                id: buildId(signatureData),
                 name: asset.name,
                 description: asset.description,
                 quantity: tokens.toCoins(),
@@ -100,45 +53,32 @@
         };
 
         function buildCreateAssetTransferSignatureData(transfer, senderPublicKey) {
-            var typeByte = [txConstants.ASSET_TRANSFER_TRANSACTION_TYPE];
-            var publicKeyBytes = utilityService.base58StringToByteArray(senderPublicKey);
-            var assetIdBytes = utilityService.currencyToBytes(transfer.amount.currency.id);
-
-            var recipientBytes;
-            if (transfer.recipient.slice(0, 6) === 'alias:') {
-                recipientBytes = [].concat(
-                    [featureConstants.ALIAS_VERSION],
-                    [utilityService.getNetworkIdByte()],
-                    utilityService.stringToByteArrayWithSize(transfer.recipient.slice(8)) // Remove leading 'asset:W:'
-                );
-            } else {
-                recipientBytes = utilityService.base58StringToByteArray(transfer.recipient);
-            }
-
-            var amountBytes = utilityService.longToByteArray(transfer.amount.toCoins());
-            var feeBytes = utilityService.longToByteArray(transfer.fee.toCoins());
-            var feeAssetBytes = utilityService.currencyToBytes(transfer.fee.currency.id);
-            var timestampBytes = utilityService.longToByteArray(transfer.time);
-            var attachmentBytes = utilityService.byteArrayWithSize(transfer.attachment);
-
-            return [].concat(typeByte, publicKeyBytes, assetIdBytes, feeAssetBytes, timestampBytes,
-                amountBytes, feeBytes, recipientBytes, attachmentBytes);
+            return [].concat(
+                signService.getAssetTransferTxTypeBytes(),
+                signService.getPublicKeyBytes(senderPublicKey),
+                signService.getAssetIdBytes(transfer.amount.currency.id),
+                signService.getFeeAssetIdBytes(transfer.fee.currency.id),
+                signService.getTimestampBytes(transfer.time),
+                signService.getAmountBytes(transfer.amount.toCoins()),
+                signService.getFeeBytes(transfer.fee.toCoins()),
+                signService.getRecipientBytes(transfer.recipient),
+                signService.getAttachmentBytes(transfer.attachment)
+            );
         }
 
         this.createAssetTransferTransaction = function (transfer, sender) {
-            validateTransfer(transfer);
-            utilityService.validateSender(sender);
+            validateService.validateAssetTransfer(transfer);
+            validateService.validateSender(sender);
 
             transfer.time = transfer.time || utilityService.getTime();
             transfer.attachment = transfer.attachment || [];
             transfer.recipient = utilityService.resolveAddressOrAlias(transfer.recipient);
 
             var signatureData = buildCreateAssetTransferSignatureData(transfer, sender.publicKey);
-            var signature = buildSignature(signatureData, sender);
-            var id = buildId(signatureData);
+            var signature = signService.buildSignature(signatureData, sender.privateKey);
 
             return {
-                id: id,
+                id: buildId(signatureData),
                 recipient: transfer.recipient,
                 timestamp: transfer.time,
                 assetId: transfer.amount.currency.id,
@@ -151,42 +91,30 @@
             };
         };
 
-        function buildSignature(bytes, sender) {
-            var privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
-            return cryptoService.nonDeterministicSign(privateKeyBytes, bytes);
-        }
-
-        function buildId(transactionBytes) {
-            var hash = cryptoService.blake2b(new Uint8Array(transactionBytes));
-            return cryptoService.base58.encode(hash);
-        }
-
         function buildCreateAssetReissueSignatureData(reissue, senderPublicKey) {
-            var typeByte = [txConstants.ASSET_REISSUE_TRANSACTION_TYPE];
-            var publicKeyBytes = utilityService.base58StringToByteArray(senderPublicKey);
-            var assetIdBytes = utilityService.currencyToBytes(reissue.totalTokens.currency.id, true);
-            var quantityBytes = utilityService.longToByteArray(reissue.totalTokens.toCoins());
-            var reissuableBytes = utilityService.booleanToBytes(reissue.reissuable);
-            var feeBytes = utilityService.longToByteArray(reissue.fee.toCoins());
-            var timestampBytes = utilityService.longToByteArray(reissue.time);
-
-            return [].concat(typeByte, publicKeyBytes, assetIdBytes, quantityBytes, reissuableBytes,
-                feeBytes, timestampBytes);
+            return [].concat(
+                signService.getAssetReissueTxTypeBytes(),
+                signService.getPublicKeyBytes(senderPublicKey),
+                signService.getAssetIdBytes(reissue.totalTokens.currency.id, true),
+                signService.getAssetQuantityBytes(reissue.totalTokens.toCoins()),
+                signService.getAssetIsReissuableBytes(reissue.reissuable),
+                signService.getFeeBytes(reissue.fee.toCoins()),
+                signService.getTimestampBytes(reissue.time)
+            );
         }
 
         this.createAssetReissueTransaction = function (reissue, sender) {
-            validateReissue(reissue);
-            utilityService.validateSender(sender);
+            validateService.validateAssetReissue(reissue);
+            validateService.validateSender(sender);
 
             reissue.reissuable = angular.isDefined(reissue.reissuable) ? reissue.reissuable : false;
             reissue.time = reissue.time || utilityService.getTime();
 
             var signatureData = buildCreateAssetReissueSignatureData(reissue, sender.publicKey);
-            var signature = buildSignature(signatureData, sender);
-            var id = buildId(signatureData);
+            var signature = signService.buildSignature(signatureData, sender.privateKey);
 
             return {
-                id: id,
+                id: buildId(signatureData),
                 assetId: reissue.totalTokens.currency.id,
                 quantity: reissue.totalTokens.toCoins(),
                 reissuable: reissue.reissuable,
@@ -198,7 +126,7 @@
         };
     }
 
-    AssetService.$inject = ['constants.transactions', 'constants.features', 'utilityService', 'cryptoService'];
+    AssetService.$inject = ['signService', 'validateService', 'utilityService', 'cryptoService'];
 
     angular
         .module('waves.core.services')

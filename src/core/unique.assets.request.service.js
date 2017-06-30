@@ -1,7 +1,9 @@
 (function () {
     'use strict';
 
-    function UniqueAssetsRequestService (constants, utilityService, cryptoService) {
+    function UniqueAssetsRequestService (constants, utilityService, cryptoService,
+                                         validateService) {
+
         function buildSignature(bytes, sender) {
             var privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
             return cryptoService.nonDeterministicSign(privateKeyBytes, bytes);
@@ -19,7 +21,7 @@
         }
 
         this.buildMakeAssetNameUniqueRequest = function (asset, sender) {
-            utilityService.validateSender(sender);
+            validateService.validateSender(sender);
 
             var networkByte = utilityService.getNetworkIdByte();
 
@@ -41,7 +43,8 @@
         };
     }
 
-    UniqueAssetsRequestService.$inject = ['constants.transactions', 'utilityService', 'cryptoService'];
+    UniqueAssetsRequestService.$inject = ['constants.transactions', 'utilityService', 'cryptoService',
+                                          'validateService'];
 
     angular
         .module('waves.core.services')

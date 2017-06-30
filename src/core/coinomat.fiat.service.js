@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    function WavesCoinomatFiatService (rest, currencyMappingService) {
+    function CoinomatFiatService(rest, currencyMappingService) {
         var apiRoot = rest.all('api').all('v2').all('indacoin');
 
         this.getLimits = function (address, fiatCurrency, cryptoCurrency) {
@@ -30,9 +30,9 @@
         };
     }
 
-    WavesCoinomatFiatService.$inject = ['CoinomatRestangular', 'coinomatCurrencyMappingService'];
+    CoinomatFiatService.$inject = ['CoinomatRestangular', 'coinomatCurrencyMappingService'];
 
     angular
         .module('waves.core.services')
-        .service('coinomatFiatService', WavesCoinomatFiatService);
+        .service('coinomatFiatService', CoinomatFiatService);
 })();
