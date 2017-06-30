@@ -3094,7 +3094,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         function buildCreateOrderSignatureData(order, senderPublicKey) {
             return [].concat(
                 signService.getPublicKeyBytes(senderPublicKey),
-                signService.getMatcherKeyBytes(order.matcherKey),
+                signService.getPublicKeyBytes(order.matcherKey),
                 signService.getAssetIdBytes(order.price.amountAsset.id),
                 signService.getAssetIdBytes(order.price.priceAsset.id),
                 signService.getOrderTypeBytes(order.orderType === SELL_ORDER_TYPE),
@@ -3252,10 +3252,6 @@ var OrderPrice = (function () {
 
         self.getPrivateKeyBytes = function (privateKey) {
             return cryptoService.base58.decode(privateKey);
-        };
-
-        self.getMatcherKeyBytes = function (matcherKey) {
-            return utilityService.base58StringToByteArray(matcherKey);
         };
 
         // Data fields

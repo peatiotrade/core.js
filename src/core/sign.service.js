@@ -40,10 +40,6 @@
             return cryptoService.base58.decode(privateKey);
         };
 
-        self.getMatcherKeyBytes = function (matcherKey) {
-            return utilityService.base58StringToByteArray(matcherKey);
-        };
-
         // Data fields
 
         self.getNetworkBytes = function () {

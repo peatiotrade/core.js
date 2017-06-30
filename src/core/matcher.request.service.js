@@ -7,7 +7,7 @@
         function buildCreateOrderSignatureData(order, senderPublicKey) {
             return [].concat(
                 signService.getPublicKeyBytes(senderPublicKey),
-                signService.getMatcherKeyBytes(order.matcherKey),
+                signService.getPublicKeyBytes(order.matcherKey),
                 signService.getAssetIdBytes(order.price.amountAsset.id),
                 signService.getAssetIdBytes(order.price.priceAsset.id),
                 signService.getOrderTypeBytes(order.orderType === SELL_ORDER_TYPE),
