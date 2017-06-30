@@ -3090,30 +3090,20 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 
     var SELL_ORDER_TYPE = 'sell';
 
-    function MatcherRequestService(signService, utilityService, cryptoService, validateService) {
-        function buildSignature(bytes, sender) {
-            var privateKeyBytes = cryptoService.base58.decode(sender.privateKey);
-            return cryptoService.nonDeterministicSign(privateKeyBytes, bytes);
-        }
-
+    function MatcherRequestService(signService, utilityService, validateService) {
         function buildCreateOrderSignatureData(order, senderPublicKey) {
-            var amountAssetIdBytes = signService.getAssetIdBytes(order.price.amountAsset.id);
-            var priceAssetIdBytes = signService.getAssetIdBytes(order.price.priceAsset.id);
-            var assetPairBytes = [].concat(amountAssetIdBytes, priceAssetIdBytes);
-
-            var isSell = order.orderType === SELL_ORDER_TYPE;
-            var orderTypeBytes = utilityService.booleanToBytes(isSell);
-
-            var publicKeyBytes = utilityService.base58StringToByteArray(senderPublicKey);
-            var matcherKeyBytes = utilityService.base58StringToByteArray(order.matcherKey);
-            var priceBytes = utilityService.longToByteArray(order.price.toBackendPrice());
-            var amountBytes = utilityService.longToByteArray(order.amount.toCoins());
-            var timestampBytes = utilityService.longToByteArray(order.time);
-            var expirationBytes = utilityService.longToByteArray(order.expiration);
-            var feeBytes = utilityService.longToByteArray(order.fee.toCoins());
-
-            return [].concat(publicKeyBytes, matcherKeyBytes, assetPairBytes, orderTypeBytes,
-                priceBytes, amountBytes, timestampBytes, expirationBytes, feeBytes);
+            return [].concat(
+                signService.getPublicKeyBytes(senderPublicKey),
+                signService.getMatcherKeyBytes(order.matcherKey),
+                signService.getAssetIdBytes(order.price.amountAsset.id),
+                signService.getAssetIdBytes(order.price.priceAsset.id),
+                signService.getOrderTypeBytes(order.orderType === SELL_ORDER_TYPE),
+                signService.getAmountBytes(order.price.toBackendPrice()),
+                signService.getAmountBytes(order.amount.toCoins()),
+                signService.getTimestampBytes(order.time),
+                signService.getTimestampBytes(order.expiration),
+                signService.getFeeBytes(order.fee.toCoins())
+            );
         }
 
         this.buildCreateOrderRequest = function (order, sender) {
@@ -3126,7 +3116,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
             order.expiration = order.expiration || date.setDate(date.getDate() + 20);
 
             var signatureData = buildCreateOrderSignatureData(order, sender.publicKey);
-            var signature = buildSignature(signatureData, sender);
+            var signature = signService.buildSignature(signatureData, sender.privateKey);
 
             return {
                 orderType: order.orderType,
@@ -3146,20 +3136,21 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         };
 
         function buildCancelOrderSignatureData(orderId, senderPublicKey) {
-            var publicKeyBytes = utilityService.base58StringToByteArray(senderPublicKey);
-            var orderIdBytes = utilityService.base58StringToByteArray(orderId);
-
-            return [].concat(publicKeyBytes, orderIdBytes);
+            return [].concat(
+                signService.getPublicKeyBytes(senderPublicKey),
+                signService.getOrderIdBytes(orderId)
+            );
         }
 
         this.buildCancelOrderRequest = function (orderId, sender) {
             validateService.validateSender(sender);
 
-            if (!orderId)
+            if (!orderId) {
                 throw new Error('orderId hasn\'t been set');
+            }
 
             var signatureData = buildCancelOrderSignatureData(orderId, sender.publicKey);
-            var signature = buildSignature(signatureData, sender);
+            var signature = signService.buildSignature(signatureData, sender.privateKey);
 
             return {
                 sender: sender.publicKey,
@@ -3169,7 +3160,7 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
         };
     }
 
-    MatcherRequestService.$inject = ['signService', 'utilityService', 'cryptoService', 'validateService'];
+    MatcherRequestService.$inject = ['signService', 'utilityService', 'validateService'];
 
     angular
         .module('waves.core.services')
@@ -3253,7 +3244,7 @@ var OrderPrice = (function () {
             return [txConstants.CREATE_ALIAS_TRANSACTION_TYPE];
         };
 
-        // Key pair
+        // Keys
 
         self.getPublicKeyBytes = function (publicKey) {
             return utilityService.base58StringToByteArray(publicKey);
@@ -3263,7 +3254,15 @@ var OrderPrice = (function () {
             return cryptoService.base58.decode(privateKey);
         };
 
+        self.getMatcherKeyBytes = function (matcherKey) {
+            return utilityService.base58StringToByteArray(matcherKey);
+        };
+
         // Data fields
+
+        self.getNetworkBytes = function () {
+            return [utilityService.getNetworkIdByte()];
+        };
 
         self.getTransactionIdBytes = function (tx) {
             return utilityService.base58StringToByteArray(tx);
@@ -3329,16 +3328,20 @@ var OrderPrice = (function () {
             return utilityService.byteArrayWithSize(attachment);
         };
 
-        self.getNetworkBytes = function () {
-            return [utilityService.getNetworkIdByte()];
-        };
-
         self.getAliasBytes = function (alias) {
             return utilityService.byteArrayWithSize([].concat(
                 [featureConstants.ALIAS_VERSION],
                 [utilityService.getNetworkIdByte()],
                 utilityService.stringToByteArrayWithSize(alias)
             ));
+        };
+
+        self.getOrderTypeBytes = function (orderType) {
+            return utilityService.booleanToBytes(orderType);
+        };
+
+        self.getOrderIdBytes = function (orderId) {
+            return utilityService.base58StringToByteArray(orderId);
         };
 
         // Signatures

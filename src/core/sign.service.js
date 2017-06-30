@@ -30,7 +30,7 @@
             return [txConstants.CREATE_ALIAS_TRANSACTION_TYPE];
         };
 
-        // Key pair
+        // Keys
 
         self.getPublicKeyBytes = function (publicKey) {
             return utilityService.base58StringToByteArray(publicKey);
@@ -40,7 +40,15 @@
             return cryptoService.base58.decode(privateKey);
         };
 
+        self.getMatcherKeyBytes = function (matcherKey) {
+            return utilityService.base58StringToByteArray(matcherKey);
+        };
+
         // Data fields
+
+        self.getNetworkBytes = function () {
+            return [utilityService.getNetworkIdByte()];
+        };
 
         self.getTransactionIdBytes = function (tx) {
             return utilityService.base58StringToByteArray(tx);
@@ -106,16 +114,20 @@
             return utilityService.byteArrayWithSize(attachment);
         };
 
-        self.getNetworkBytes = function () {
-            return [utilityService.getNetworkIdByte()];
-        };
-
         self.getAliasBytes = function (alias) {
             return utilityService.byteArrayWithSize([].concat(
                 [featureConstants.ALIAS_VERSION],
                 [utilityService.getNetworkIdByte()],
                 utilityService.stringToByteArrayWithSize(alias)
             ));
+        };
+
+        self.getOrderTypeBytes = function (orderType) {
+            return utilityService.booleanToBytes(orderType);
+        };
+
+        self.getOrderIdBytes = function (orderId) {
+            return utilityService.base58StringToByteArray(orderId);
         };
 
         // Signatures
