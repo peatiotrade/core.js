@@ -934,6 +934,14 @@ var Currency = (function () {
         verified: true
     });
 
+    var PPIO = new Currency({
+        id: '8UHSg6jCDTUvKT3LmeDjoaPxKmnJhdLEgBHU3vUrojSm',
+        displayName: 'pospool_io',
+        shortName: 'PPIO',
+        precision: 2,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -967,6 +975,7 @@ var Currency = (function () {
         currencyCache[BKT.id] = BKT;
         currencyCache[WGR.id] = WGR;
         currencyCache[PBT.id] = PBT;
+        currencyCache[PPIO.id] = PPIO;
     }
 
     invalidateCache();
@@ -1014,7 +1023,8 @@ var Currency = (function () {
         TNT: TNT,
         BKT: BKT,
         WGR: WGR,
-        PBT: PBT
+        PBT: PBT,
+        PPIO: PPIO
     };
 })();
 
