@@ -286,6 +286,30 @@ var Currency = (function () {
         verified: true
     });
 
+    var PPIO = new Currency({
+        id: '8UHSg6jCDTUvKT3LmeDjoaPxKmnJhdLEgBHU3vUrojSm',
+        displayName: 'pospool_io',
+        shortName: 'PPIO',
+        precision: 2,
+        verified: true
+    });
+
+    var STA = new Currency({
+        id: '3SdrmU1GGZRiZz12MrMcfUz4JksTzvcU25cLFXpZy1qz',
+        displayName: 'Starta',
+        shortName: 'STA',
+        precision: 2,
+        verified: true
+    });
+
+    var CORE = new Currency({
+        id: '3MyMJ9pXLTDnMQhNgoDUBtcfmaGVgnaZNARZwcZzMFk7',
+        displayName: 'CORE',
+        shortName: 'CORE',
+        precision: 8,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -319,6 +343,9 @@ var Currency = (function () {
         currencyCache[BKT.id] = BKT;
         currencyCache[WGR.id] = WGR;
         currencyCache[PBT.id] = PBT;
+        currencyCache[PPIO.id] = PPIO;
+        currencyCache[STA.id] = STA;
+        currencyCache[CORE.id] = CORE;
     }
 
     invalidateCache();
@@ -366,7 +393,10 @@ var Currency = (function () {
         TNT: TNT,
         BKT: BKT,
         WGR: WGR,
-        PBT: PBT
+        PBT: PBT,
+        PPIO: PPIO,
+        STA: STA,
+        CORE: CORE
     };
 })();
 
