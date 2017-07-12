@@ -2159,9 +2159,24 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
             };
 
             var transactionApi = rest.all('transactions');
+
+            var request;
+            var timer;
             this.transactions = {
                 unconfirmed: function () {
-                    return transactionApi.all('unconfirmed').getList();
+                    if (!request) {
+                        request = transactionApi.all('unconfirmed').getList();
+                    } else {
+                        if (!timer) {
+                            timer = setTimeout(function () {
+                                request = transactionApi.all('unconfirmed').getList();
+                                request.finally(function () {
+                                    timer = null;
+                                });
+                            }, 10000);
+                        }
+                    }
+                    return request;
                 },
                 list: function (address, max) {
                     max = max || 50;
