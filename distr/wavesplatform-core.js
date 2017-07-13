@@ -958,6 +958,78 @@ var Currency = (function () {
         verified: true
     });
 
+    var KSS = new Currency({
+        id: 'Dq6ku3HyiMfKvorz2PLRAPwa9ykF78V1uiBhXtMbL2f2',
+        displayName: 'Krosscoin',
+        shortName: 'KSS',
+        precision: 3,
+        verified: true
+    });
+
+    var WFN = new Currency({
+        id: '7yXJqP2zpXTiXuS2o25seUHYxdDnfSPZJ3SEm5DrQ7cx',
+        displayName: 'WavesFullNode',
+        shortName: 'WFN',
+        precision: 8,
+        verified: true
+    });
+
+    var GRPH = new Currency({
+        id: '13QuhSAkAueic5ncc8YRwyNxGQ6tRwVSS44a7uFgWsnk',
+        displayName: 'Graph',
+        shortName: 'GRPH',
+        precision: 8,
+        verified: true
+    });
+
+    var ESC = new Currency({
+        id: 'FoKiAEqHSit88f4iu1neKkzsanYHQqLRyR4DXucRGKbW',
+        displayName: 'EstateCoin',
+        shortName: 'ESC',
+        precision: 2,
+        verified: true
+    });
+
+    var COE = new Currency({
+        id: '7iuKMcC6TKnwipSMZFRTQNh5kwpEU2F8h8wB569qhekf',
+        displayName: 'COEVAL',
+        shortName: 'COE',
+        precision: 8,
+        verified: true
+    });
+
+    var MNY = new Currency({
+        id: '2aN5sxTbjtoZziX9iCAyanrtDhCfNcPyRqdpnEHNppdN',
+        displayName: 'Monkey',
+        shortName: 'MNY',
+        precision: 8,
+        verified: true
+    });
+
+    var AGRO = new Currency({
+        id: 'J8mgyjKQb4M7DjEKvewBSvKZULMZMDpUtua9VtByLbVD',
+        displayName: 'Agro token',
+        shortName: 'AGRO',
+        precision: 8,
+        verified: true
+    });
+
+    var KING = new Currency({
+        id: 'CHUTTYkDd9qFmQthCL7eHTDHwYudfthqwYCYsdvpCZbf',
+        displayName: 'King93',
+        shortName: 'KING',
+        precision: 8,
+        verified: true
+    });
+
+    var ARNA = new Currency({
+        id: 'BsDmB74Y1PvtVrE741i5CJThChQHHF96hDL5nXwv7JdS',
+        displayName: 'Arena',
+        shortName: 'ARNA',
+        precision: 8,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -994,6 +1066,15 @@ var Currency = (function () {
         currencyCache[PPIO.id] = PPIO;
         currencyCache[STA.id] = STA;
         currencyCache[CORE.id] = CORE;
+        currencyCache[KSS.id] = KSS;
+        currencyCache[WFN.id] = WFN;
+        currencyCache[GRPH.id] = GRPH;
+        currencyCache[ESC.id] = ESC;
+        currencyCache[COE.id] = COE;
+        currencyCache[MNY.id] = MNY;
+        currencyCache[AGRO.id] = AGRO;
+        currencyCache[KING.id] = KING;
+        currencyCache[ARNA.id] = ARNA;
     }
 
     invalidateCache();
@@ -1044,7 +1125,16 @@ var Currency = (function () {
         PBT: PBT,
         PPIO: PPIO,
         STA: STA,
-        CORE: CORE
+        CORE: CORE,
+        KSS: KSS,
+        WFN: WFN,
+        GRPH: GRPH,
+        ESC: ESC,
+        COE: COE,
+        MNY: MNY,
+        AGRO: AGRO,
+        KING: KING,
+        ARNA: ARNA
     };
 })();
 
