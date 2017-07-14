@@ -382,6 +382,14 @@ var Currency = (function () {
         verified: true
     });
 
+    var WNET = new Currency({
+        id: '984mPD35vrA5Pfcuadqg8BUFNFjcUDpU3iadUWVt9t28',
+        displayName: 'Wavesnode.NET',
+        shortName: 'WNET',
+        precision: 0,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -427,6 +435,7 @@ var Currency = (function () {
         currencyCache[AGRO.id] = AGRO;
         currencyCache[KING.id] = KING;
         currencyCache[ARNA.id] = ARNA;
+        currencyCache[WNET.id] = WNET;
     }
 
     invalidateCache();
@@ -486,7 +495,8 @@ var Currency = (function () {
         MNY: MNY,
         AGRO: AGRO,
         KING: KING,
-        ARNA: ARNA
+        ARNA: ARNA,
+        WNET: WNET
     };
 })();
 
