@@ -1038,6 +1038,46 @@ var Currency = (function () {
         verified: true
     });
 
+    var PBK = new Currency({
+        id: '3eBcKvyMavxACq54yvXk1rCAP4E475NCwGKV6AmQQNaw',
+        displayName: 'PeerBanks',
+        shortName: 'PBK',
+        precision: 8,
+        verified: true
+    });
+
+    var TOM = new Currency({
+        id: '3e7aYkysNohFDonLVaUFGgZ46mV3Y3r7Rqzi95GYGxeK',
+        displayName: 'Tomahawkcoin',
+        shortName: 'TOM',
+        precision: 0,
+        verified: true
+    });
+
+    var ViC = new Currency({
+        id: 'Gh8Ed6n1y9wscFHT6s4EH6uhKajvNQ88oPkkFkYkgXyX',
+        displayName: 'WaVialcoin',
+        shortName: 'ViC',
+        precision: 8,
+        verified: true
+    });
+
+    var EQ = new Currency({
+        id: 'DoL6wC5a72Fuxg7FtfUMWbJB9kjRuvQ3BQKrgjym3gh6',
+        displayName: 'EQUI Token',
+        shortName: 'EQ',
+        precision: 8,
+        verified: true
+    });
+
+    var SHDW = new Currency({
+        id: 'ETLzrCpBqTrpyuMGdiVLBPZnUoKwte88oVdJjoFi5R2h',
+        displayName: 'ShadowToken',
+        shortName: 'SHDW',
+        precision: 8,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -1084,6 +1124,11 @@ var Currency = (function () {
         currencyCache[KING.id] = KING;
         currencyCache[ARNA.id] = ARNA;
         currencyCache[WNET.id] = WNET;
+        currencyCache[PBK.id] = PBK;
+        currencyCache[TOM.id] = TOM;
+        currencyCache[ViC.id] = ViC;
+        currencyCache[EQ.id] = EQ;
+        currencyCache[SHDW.id] = SHDW;
     }
 
     invalidateCache();
@@ -1144,7 +1189,12 @@ var Currency = (function () {
         AGRO: AGRO,
         KING: KING,
         ARNA: ARNA,
-        WNET: WNET
+        WNET: WNET,
+        PBK: PBK,
+        TOM: TOM,
+        ViC: ViC,
+        EQ: EQ,
+        SHDW: SHDW
     };
 })();
 
