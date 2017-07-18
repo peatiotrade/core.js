@@ -2935,6 +2935,9 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 
                     case Currency.WAVES.id:
                         return 'WAVES';
+
+                    case Currency.ETH.id:
+                        return 'WETH';
                 }
 
                 unsupportedCurrency(currency);
@@ -2952,6 +2955,9 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 
                     case Currency.WAVES.id:
                         return 'WAVES';
+
+                    case Currency.ETH.id:
+                        return 'ETH';
                 }
 
                 unsupportedCurrency(currency);

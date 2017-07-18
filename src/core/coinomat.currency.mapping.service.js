@@ -20,6 +20,9 @@
 
                     case Currency.WAVES.id:
                         return 'WAVES';
+
+                    case Currency.ETH.id:
+                        return 'WETH';
                 }
 
                 unsupportedCurrency(currency);
@@ -37,6 +40,9 @@
 
                     case Currency.WAVES.id:
                         return 'WAVES';
+
+                    case Currency.ETH.id:
+                        return 'ETH';
                 }
 
                 unsupportedCurrency(currency);
