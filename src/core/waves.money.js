@@ -62,6 +62,14 @@ var Currency = (function () {
         verified: true
     });
 
+    var ETH = new Currency({
+        id: 'soXCzZwWHNcyXJYGtrvYESP5khgHWZMP7PhvPsP1iCE',
+        displayName: 'Ethereum',
+        shortName: 'ETH',
+        precision: 8,
+        verified: true
+    });
+
     var USD = new Currency({
         id: 'Ft8X1v1LTa1ABafufpaCWyVj8KkaxUWE6xBhW6sNFJck',
         displayName: 'US Dollar',
@@ -443,6 +451,7 @@ var Currency = (function () {
 
         currencyCache[WAVES.id] = WAVES;
         currencyCache[BTC.id] = BTC;
+        currencyCache[ETH.id] = ETH;
         currencyCache[USD.id] = USD;
         currencyCache[EUR.id] = EUR;
         currencyCache[CNY.id] = CNY;
@@ -510,6 +519,7 @@ var Currency = (function () {
         invalidateCache: invalidateCache,
         WAVES: WAVES,
         BTC: BTC,
+        ETH: ETH,
         USD: USD,
         EUR: EUR,
         CNY: CNY,
