@@ -1078,6 +1078,14 @@ var Currency = (function () {
         verified: true
     });
 
+    var GIN = new Currency({
+        id: '9x9ATvB61fE5TU1zRdZvyvA5Q8ZYEs2yRmzTBAs69R9N',
+        displayName: 'GingerDrink.EU',
+        shortName: 'GIN',
+        precision: 2,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -1129,6 +1137,7 @@ var Currency = (function () {
         currencyCache[ViC.id] = ViC;
         currencyCache[EQ.id] = EQ;
         currencyCache[SHDW.id] = SHDW;
+        currencyCache[GIN.id] = GIN;
     }
 
     invalidateCache();
@@ -1194,7 +1203,8 @@ var Currency = (function () {
         TOM: TOM,
         ViC: ViC,
         EQ: EQ,
-        SHDW: SHDW
+        SHDW: SHDW,
+        GIN: GIN
     };
 })();
 
