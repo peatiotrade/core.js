@@ -711,7 +711,7 @@ var Currency = (function () {
     });
 
     var ETH = new Currency({
-        id: 'soXCzZwWHNcyXJYGtrvYESP5khgHWZMP7PhvPsP1iCE',
+        id: '474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu',
         displayName: 'Ethereum',
         shortName: 'ETH',
         precision: 8,
