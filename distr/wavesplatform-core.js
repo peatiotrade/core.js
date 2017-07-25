@@ -1300,7 +1300,6 @@ var Currency = (function () {
         currencyCache[AHT.id] = AHT;
         currencyCache[HALAL.id] = HALAL;
         currencyCache[DIMO.id] = DIMO;
-
     }
 
     invalidateCache();
