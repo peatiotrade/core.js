@@ -1094,6 +1094,142 @@ var Currency = (function () {
         verified: true
     });
 
+    var NEWS = {
+        id: '2EAUTcAsFMsndSgiGacKRvygFR1e6gdSd8bEpiemsTPE',
+        displayName: 'NEWSTOKEN',
+        shortName: 'NEWS',
+        precision: 8,
+        verified: true
+    };
+
+    var COXST = {
+        id: '7tZxVdAWc8QvsMrXBoicMgU2bSJsaEpFJnPYn1H31B8B',
+        displayName: 'CoExistCoin',
+        shortName: 'COXST',
+        precision: 8,
+        verified: true
+    };
+
+    var SMR = {
+        id: 'EbY2Uf9ukD4ndg5J7MA7CjhB7xbAsiViTmVSemb186V8',
+        displayName: 'Summer',
+        shortName: 'SMR',
+        precision: 8,
+        verified: true
+    };
+
+    var RDT = {
+        id: 'Fw2Sg8x4VZyxU5ManJTo69JCKg9Rox7xDNKxdQdxXDWk',
+        displayName: 'Ryder Token',
+        shortName: 'RDT',
+        precision: 2,
+        verified: true
+    };
+
+    var IRA = {
+        id: '3eBcKvyMavxACq54yvXk1rCAP4E475NCwGKV6AmQQNaw',
+        displayName: 'PeerBanks',
+        shortName: 'IRA',
+        precision: 8,
+        verified: true
+    };
+
+    var _2B4T = {
+        id: '2LU8GwJFvVebrCvgDhMTLDzm3dHxuN1x7ks8dQRiSj9N',
+        displayName: '2B4T',
+        shortName: '2B4T',
+        precision: 2,
+        verified: true
+    };
+
+    var MBX = {
+        id: '2CX6EFHYmXYyop4hD7dUywST5K51Hvi2m5brFo35C6EZ',
+        displayName: 'MyBitX',
+        shortName: 'MBX',
+        precision: 2,
+        verified: true
+    };
+
+    var KNOWS = {
+        id: 'CqSHx4WhszTZhabfWD8UuX8efg5hbZTPRNtnwW1ojJxe',
+        displayName: 'KNOWS',
+        shortName: 'KNOWS',
+        precision: 8,
+        verified: true
+    };
+
+    var MBI = {
+        id: 'CJpRwfpBcFyA6p3g1fb7xuiArSQ7xLkNH8SD9AB4HeD9',
+        displayName: 'MonsterByte',
+        shortName: 'MBI',
+        precision: 2,
+        verified: true
+    };
+
+    var COF = {
+        id: 'AcrRM9STdBu5PNiFveTCbRFTS8tADhKcsbC2KBp8A4tx',
+        displayName: 'CoffeeCoin',
+        shortName: 'COF',
+        precision: 3,
+        verified: true
+    };
+
+    var CHILL = {
+        id: 'DsxRbfYXzwf4PFwUD6kyEJhj2Wd5E9NsHr5WynVKTzie',
+        displayName: 'Chill',
+        shortName: 'CHILL',
+        precision: 8,
+        verified: true
+    };
+
+    var KUN = {
+        id: 'F6EK5bcdEShWPA9pGdgqGYmPPUZ9FaHnyVwPZfXCTxV7',
+        displayName: 'KUNA',
+        shortName: 'KUN',
+        precision: 0,
+        verified: true
+    };
+
+    var CEIT = {
+        id: '83Y1Ub3Kp9uitTTgKGPnaZE6EC793XuC3muoJC8zsFir',
+        displayName: 'CorpEdu',
+        shortName: 'CEIT',
+        precision: 4,
+        verified: true
+    };
+
+    var SGIT = {
+        id: 'BYkKnXLUS3qRyNvbSTvNWJ3pTsW7uZGHhV4HQ3pdf6DW',
+        displayName: 'SmartGames',
+        shortName: 'SGIT',
+        precision: 4,
+        verified: true
+    };
+
+    var AHT = {
+        id: 'HfFHZaPzGMSdHvaaZ7S8mrZrPWEyGzfA6VDuSRzb8uY6',
+        displayName: 'Bowhead',
+        shortName: 'AHT',
+        precision: 8,
+        verified: true
+    };
+
+    var HALAL = {
+        id: 'BjAZxDeFpYaQ1gwmg65vYArhve31k8j9mscQDecNZ2bX',
+        displayName: 'HALAL',
+        shortName: 'HALAL',
+        precision: 7,
+        verified: true
+    };
+
+    var DIMO = {
+        id: 'BEth3AJY65jWWF7KCDSFgMS6g5AvDvoAWrn8UYEsoA17',
+        displayName: 'DIMO',
+        shortName: 'DIMO',
+        precision: 8,
+        verified: true
+    };
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -1147,6 +1283,24 @@ var Currency = (function () {
         currencyCache[EQ.id] = EQ;
         currencyCache[SHDW.id] = SHDW;
         currencyCache[GIN.id] = GIN;
+        currencyCache[NEWS.id] = NEWS;
+        currencyCache[COXST.id] = COXST;
+        currencyCache[SMR.id] = SMR;
+        currencyCache[RDT.id] = RDT;
+        currencyCache[IRA.id] = IRA;
+        currencyCache[_2B4T.id] = _2B4T;
+        currencyCache[MBX.id] = MBX;
+        currencyCache[KNOWS.id] = KNOWS;
+        currencyCache[MBI.id] = MBI;
+        currencyCache[COF.id] = COF;
+        currencyCache[CHILL.id] = CHILL;
+        currencyCache[KUN.id] = KUN;
+        currencyCache[CEIT.id] = CEIT;
+        currencyCache[SGIT.id] = SGIT;
+        currencyCache[AHT.id] = AHT;
+        currencyCache[HALAL.id] = HALAL;
+        currencyCache[DIMO.id] = DIMO;
+
     }
 
     invalidateCache();
@@ -1214,7 +1368,24 @@ var Currency = (function () {
         ViC: ViC,
         EQ: EQ,
         SHDW: SHDW,
-        GIN: GIN
+        GIN: GIN,
+        NEWS: NEWS,
+        COXST: COXST,
+        SMR: SMR,
+        RDT: RDT,
+        IRA: IRA,
+        _2B4T: _2B4T,
+        MBX: MBX,
+        KNOWS: KNOWS,
+        MBI: MBI,
+        COF: COF,
+        CHILL: CHILL,
+        KUN: KUN,
+        CEIT: CEIT,
+        SGIT: SGIT,
+        AHT: AHT,
+        HALAL: HALAL,
+        DIMO: DIMO
     };
 })();
 
