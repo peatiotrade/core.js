@@ -710,6 +710,14 @@ var Currency = (function () {
         verified: true
     });
 
+    var BCC = new Currency({
+        id: 'zMFqXuoyrn5w17PFurTqxB7GsS71fp9dfk6XFwxbPCy',
+        displayName: 'Bitcoin Cash',
+        shortName: 'BCC',
+        precision: 8,
+        verified: true
+    });
+
     var ETH = new Currency({
         id: '474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu',
         displayName: 'Ethereum',
@@ -1235,6 +1243,7 @@ var Currency = (function () {
 
         currencyCache[WAVES.id] = WAVES;
         currencyCache[BTC.id] = BTC;
+        currencyCache[BCC.id] = BCC;
         currencyCache[ETH.id] = ETH;
         currencyCache[USD.id] = USD;
         currencyCache[EUR.id] = EUR;
@@ -1320,6 +1329,7 @@ var Currency = (function () {
         invalidateCache: invalidateCache,
         WAVES: WAVES,
         BTC: BTC,
+        BCC: BCC,
         ETH: ETH,
         USD: USD,
         EUR: EUR,
