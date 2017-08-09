@@ -454,141 +454,141 @@ var Currency = (function () {
         verified: true
     });
 
-    var NEWS = {
+    var NEWS = new Currency({
         id: '2EAUTcAsFMsndSgiGacKRvygFR1e6gdSd8bEpiemsTPE',
         displayName: 'NEWSTOKEN',
         shortName: 'NEWS',
         precision: 8,
         verified: true
-    };
+    });
 
-    var COXST = {
+    var COXST = new Currency({
         id: '7tZxVdAWc8QvsMrXBoicMgU2bSJsaEpFJnPYn1H31B8B',
         displayName: 'CoExistCoin',
         shortName: 'COXST',
         precision: 8,
         verified: true
-    };
+    });
 
-    var SMR = {
+    var SMR = new Currency({
         id: 'EbY2Uf9ukD4ndg5J7MA7CjhB7xbAsiViTmVSemb186V8',
         displayName: 'Summer',
         shortName: 'SMR',
         precision: 8,
         verified: true
-    };
+    });
 
-    var RDT = {
+    var RDT = new Currency({
         id: 'Fw2Sg8x4VZyxU5ManJTo69JCKg9Rox7xDNKxdQdxXDWk',
         displayName: 'Ryder Token',
         shortName: 'RDT',
         precision: 2,
         verified: true
-    };
+    });
 
-    var IRA = {
+    var IRA = new Currency({
         id: '3eBcKvyMavxACq54yvXk1rCAP4E475NCwGKV6AmQQNaw',
         displayName: 'PeerBanks',
         shortName: 'IRA',
         precision: 8,
         verified: true
-    };
+    });
 
-    var _2B4T = {
+    var _2B4T = new Currency({
         id: '2LU8GwJFvVebrCvgDhMTLDzm3dHxuN1x7ks8dQRiSj9N',
         displayName: '2B4T',
         shortName: '2B4T',
         precision: 2,
         verified: true
-    };
+    });
 
-    var MBX = {
+    var MBX = new Currency({
         id: '2CX6EFHYmXYyop4hD7dUywST5K51Hvi2m5brFo35C6EZ',
         displayName: 'MyBitX',
         shortName: 'MBX',
         precision: 2,
         verified: true
-    };
+    });
 
-    var KNOWS = {
+    var KNOWS = new Currency({
         id: 'CqSHx4WhszTZhabfWD8UuX8efg5hbZTPRNtnwW1ojJxe',
         displayName: 'KNOWS',
         shortName: 'KNOWS',
         precision: 8,
         verified: true
-    };
+    });
 
-    var MBI = {
+    var MBI = new Currency({
         id: 'CJpRwfpBcFyA6p3g1fb7xuiArSQ7xLkNH8SD9AB4HeD9',
         displayName: 'MonsterByte',
         shortName: 'MBI',
         precision: 2,
         verified: true
-    };
+    });
 
-    var COF = {
+    var COF = new Currency({
         id: 'AcrRM9STdBu5PNiFveTCbRFTS8tADhKcsbC2KBp8A4tx',
         displayName: 'CoffeeCoin',
         shortName: 'COF',
         precision: 3,
         verified: true
-    };
+    });
 
-    var CHILL = {
+    var CHILL = new Currency({
         id: 'DsxRbfYXzwf4PFwUD6kyEJhj2Wd5E9NsHr5WynVKTzie',
         displayName: 'Chill',
         shortName: 'CHILL',
         precision: 8,
         verified: true
-    };
+    });
 
-    var KUN = {
+    var KUN = new Currency({
         id: 'F6EK5bcdEShWPA9pGdgqGYmPPUZ9FaHnyVwPZfXCTxV7',
         displayName: 'KUNA',
         shortName: 'KUN',
         precision: 0,
         verified: true
-    };
+    });
 
-    var CEIT = {
+    var CEIT = new Currency({
         id: '83Y1Ub3Kp9uitTTgKGPnaZE6EC793XuC3muoJC8zsFir',
         displayName: 'CorpEdu',
         shortName: 'CEIT',
         precision: 4,
         verified: true
-    };
+    });
 
-    var SGIT = {
+    var SGIT = new Currency({
         id: 'BYkKnXLUS3qRyNvbSTvNWJ3pTsW7uZGHhV4HQ3pdf6DW',
         displayName: 'SmartGames',
         shortName: 'SGIT',
         precision: 4,
         verified: true
-    };
+    });
 
-    var AHT = {
+    var AHT = new Currency({
         id: 'HfFHZaPzGMSdHvaaZ7S8mrZrPWEyGzfA6VDuSRzb8uY6',
         displayName: 'Bowhead',
         shortName: 'AHT',
         precision: 8,
         verified: true
-    };
+    });
 
-    var HALAL = {
+    var HALAL = new Currency({
         id: 'BjAZxDeFpYaQ1gwmg65vYArhve31k8j9mscQDecNZ2bX',
         displayName: 'HALAL',
         shortName: 'HALAL',
         precision: 7,
         verified: true
-    };
+    });
 
-    var DIMO = {
+    var DIMO = new Currency({
         id: 'BEth3AJY65jWWF7KCDSFgMS6g5AvDvoAWrn8UYEsoA17',
         displayName: 'DIMO',
         shortName: 'DIMO',
         precision: 8,
         verified: true
-    };
+    });
 
     function invalidateCache() {
         currencyCache = {};
