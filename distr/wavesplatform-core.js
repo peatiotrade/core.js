@@ -1006,22 +1006,6 @@ var Currency = (function () {
         verified: true
     });
 
-    var COE = new Currency({
-        id: '7iuKMcC6TKnwipSMZFRTQNh5kwpEU2F8h8wB569qhekf',
-        displayName: 'COEVAL',
-        shortName: 'COE',
-        precision: 8,
-        verified: true
-    });
-
-    var MNY = new Currency({
-        id: '2aN5sxTbjtoZziX9iCAyanrtDhCfNcPyRqdpnEHNppdN',
-        displayName: 'Monkey',
-        shortName: 'MNY',
-        precision: 8,
-        verified: true
-    });
-
     var AGRO = new Currency({
         id: 'J8mgyjKQb4M7DjEKvewBSvKZULMZMDpUtua9VtByLbVD',
         displayName: 'Agro token',
@@ -1280,8 +1264,6 @@ var Currency = (function () {
         currencyCache[WFN.id] = WFN;
         currencyCache[GRPH.id] = GRPH;
         currencyCache[ESC.id] = ESC;
-        currencyCache[COE.id] = COE;
-        currencyCache[MNY.id] = MNY;
         currencyCache[AGRO.id] = AGRO;
         currencyCache[KING.id] = KING;
         currencyCache[ARNA.id] = ARNA;
@@ -1366,8 +1348,6 @@ var Currency = (function () {
         WFN: WFN,
         GRPH: GRPH,
         ESC: ESC,
-        COE: COE,
-        MNY: MNY,
         AGRO: AGRO,
         KING: KING,
         ARNA: ARNA,
