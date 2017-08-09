@@ -574,6 +574,206 @@ var Currency = (function () {
         verified: true
     });
 
+    var WIN = new Currency({
+        id: '7Ry7rUTSS1iCJBFa7trCbwzAwnvvAUrX3gcz2iTL8aAF',
+        displayName: 'WinToken',
+        shortName: 'WIN',
+        precision: 2,
+        verified: true
+    });
+
+    var YTB = new Currency({
+        id: 'HhzJGgbbogGQubKkHUyEaHKs7fBRebjoJkgiDQ8jrYee',
+        displayName: 'YouTubeCoin',
+        shortName: 'YTB',
+        precision: 0,
+        verified: true
+    });
+
+    var GFL = new Currency({
+        id: 'D6hYNYUSxsLtvkUJ4Mxp6s7mT4WACbwJSsVGCQKxkSfH',
+        displayName: 'GoldenFleece',
+        shortName: 'GFL',
+        precision: 8,
+        verified: true
+    });
+
+    var DAT = new Currency({
+        id: 'DBLes8Bxb1P4qL1XaRRPL4d4xTVZSWHKP4oKGyFZjwBe',
+        displayName: 'DATALIFE',
+        shortName: 'DAT',
+        precision: 6,
+        verified: true
+    });
+
+    var VK = new Currency({
+        id: '5WLqNPkA3oDp1hTFCeUukTL1qvFnk9Ew7DXTtCzvoCxi',
+        displayName: 'VKCoin',
+        shortName: 'VK',
+        precision: 0,
+        verified: true
+    });
+
+    var UWT = new Currency({
+        id: 'AdEVVde2XTDa1qDPWfChUGH2XP67duQ4NnpQWXs7wETF',
+        displayName: 'Useless Token',
+        shortName: 'UWT',
+        precision: 0,
+        verified: true
+    });
+
+    var AP_0 = new Currency({
+        id: 'BYMmfwocym3d3cuFc9XytbAWGCdAM9875n5fTFokGTMm',
+        displayName: 'AP-glasscoin#0',
+        shortName: 'AP#0',
+        precision: 0,
+        verified: true
+    });
+
+    var AP_1 = new Currency({
+        id: 'FgPzwZqGngVG45d6WtP5273diR8cHRjs95aT6g1tuFUv',
+        displayName: 'AP-glasscoin#1',
+        shortName: 'AP#1',
+        precision: 0,
+        verified: true
+    });
+
+    var AP_2 = new Currency({
+        id: '6qLNnEV34cE8CZi5hk3nTNiUeHZcKz35R7AafPSukSAt',
+        displayName: 'AP-glasscoin#2',
+        shortName: 'AP#2',
+        precision: 0,
+        verified: true
+    });
+
+    var OCL = new Currency({
+        id: 'ABFYQjwDHSct6rNk59k3snoZfAqNHVZdHz4VGJe2oCV5',
+        displayName: '$OCL Oceanlab',
+        shortName: 'OCL',
+        precision: 8,
+        verified: true
+    });
+
+    var OCC = new Currency({
+        id: 'CL9PN5rpMm3ed2x6g9SWDQJfHciZFwXee2hhehmitzRj',
+        displayName: 'OurCoin Classic',
+        shortName: 'OCC',
+        precision: 2,
+        verified: true
+    });
+
+    var SMART = new Currency({
+        id: '4xDfFdPorzNmB5w8p28Fs5z6fPMf4QKJGcxY3DWT9ugG',
+        displayName: 'SMART',
+        shortName: 'SMART',
+        precision: 8,
+        verified: true
+    });
+
+    var DCN = new Currency({
+        id: 'DnAGJqeraWszYBfRjjbxtZDb1vggjUDZjWo49i15hGo1',
+        displayName: 'Duocoin',
+        shortName: 'DCN',
+        precision: 2,
+        verified: true
+    });
+
+    var RSC = new Currency({
+        id: 'EMdiF8uaySswfCdMxc114rSfzUsAKCtK9d8eSx6ruKP4',
+        displayName: 'RusCoin',
+        shortName: 'RSC',
+        precision: 5,
+        verified: true
+    });
+
+    var LIKE = new Currency({
+        id: '71tUQ7miLb2vNViGYCarYvdNj2BnDyxuFMCQivViqZq6',
+        displayName: 'like',
+        shortName: 'LIKE',
+        precision: 8,
+        verified: true
+    });
+
+    var FUPOOF = new Currency({
+        id: 'EAmQHCqBVeNunvYRC5bFQh6mtvF34bL9qAwug5PGvjjE',
+        displayName: 'Fupoof Coin',
+        shortName: 'FUPOOF',
+        precision: 3,
+        verified: true
+    });
+
+    var ANY = new Currency({
+        id: '2L9piWsMG4dZ84WgybXa9SPYFhyBEiP5fcv1BmJ9Gy7X',
+        displayName: 'anyco',
+        shortName: 'ANY',
+        precision: 8,
+        verified: true
+    });
+
+    var BRW = new Currency({
+        id: '3EAHaZPwV5gCoWkoLhjj7rSz9ix7Q4SE6mFczoxA3f9D',
+        displayName: 'BrWaves',
+        shortName: 'BRW',
+        precision: 3,
+        verified: true
+    });
+
+    var CNX = new Currency({
+        id: 'CSX1Ynv6AXmJmfnG1hBczrL9tN5HWrjVx5Ur3WJeuErv',
+        displayName: 'Cryptonetix',
+        shortName: 'CNX',
+        precision: 8,
+        verified: true
+    });
+
+    var DARF = new Currency({
+        id: '96NFBPoikAeacesZggFa6wBXAyczgZFyupbX5rJwFfdQ',
+        displayName: 'DARF',
+        shortName: 'DARF',
+        precision: 8,
+        verified: true
+    });
+
+    var WNT = new Currency({
+        id: 'EqdXBgKgKqdpD3kGT4tS9VgLifZXS3ASihwM3hnprNdU',
+        displayName: 'WavesNotify',
+        shortName: 'WNT',
+        precision: 0,
+        verified: true
+    });
+
+    var CWV = new Currency({
+        id: 'HxxSmVuX4HbHDiDSGg96nx7wgCBhB9UPHh6pxgnKXjv4',
+        displayName: 'Cryptowave',
+        shortName: 'CWV',
+        precision: 3,
+        verified: true
+    });
+
+    var WCASH = new Currency({
+        id: '2sikuhpBdZV2x5gHoA7adCStxuTSJ8m6r4hSRDLKz2zN',
+        displayName: 'WCASH',
+        shortName: 'WCASH',
+        precision: 8,
+        verified: true
+    });
+
+    var LIFE = new Currency({
+        id: '5qtfgMsSAQsYMC947aYZcej1qMVQvMfRgLc3mexMXWE1',
+        displayName: 'LIFE',
+        shortName: 'LIFE',
+        precision: 8,
+        verified: true
+    });
+
+    var RDCR = new Currency({
+        id: 'EXKrrWnMYnZrPYbrygnwzKKx5jjaEqALEgQhtoCcBdKG',
+        displayName: 'RDCR',
+        shortName: 'RDCR',
+        precision: 8,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -643,6 +843,31 @@ var Currency = (function () {
         currencyCache[AHT.id] = AHT;
         currencyCache[HALAL.id] = HALAL;
         currencyCache[DIMO.id] = DIMO;
+        currencyCache[WIN.id] = WIN;
+        currencyCache[YTB.id] = YTB;
+        currencyCache[GFL.id] = GFL;
+        currencyCache[DAT.id] = DAT;
+        currencyCache[VK.id] = VK;
+        currencyCache[UWT.id] = UWT;
+        currencyCache[AP_0.id] = AP_0;
+        currencyCache[AP_1.id] = AP_1;
+        currencyCache[AP_2.id] = AP_2;
+        currencyCache[OCL.id] = OCL;
+        currencyCache[OCC.id] = OCC;
+        currencyCache[SMART.id] = SMART;
+        currencyCache[DCN.id] = DCN;
+        currencyCache[RSC.id] = RSC;
+        currencyCache[LIKE.id] = LIKE;
+        currencyCache[FUPOOF.id] = FUPOOF;
+        currencyCache[ANY.id] = ANY;
+        currencyCache[BRW.id] = BRW;
+        currencyCache[CNX.id] = CNX;
+        currencyCache[DARF.id] = DARF;
+        currencyCache[WNT.id] = WNT;
+        currencyCache[CWV.id] = CWV;
+        currencyCache[WCASH.id] = WCASH;
+        currencyCache[LIFE.id] = LIFE;
+        currencyCache[RDCR.id] = RDCR;
     }
 
     invalidateCache();
@@ -726,7 +951,32 @@ var Currency = (function () {
         SGIT: SGIT,
         AHT: AHT,
         HALAL: HALAL,
-        DIMO: DIMO
+        DIMO: DIMO,
+        WIN: WIN,
+        YTB: YTB,
+        GFL: GFL,
+        DAT: DAT,
+        VK: VK,
+        UWT: UWT,
+        AP_0: AP_0,
+        AP_1: AP_1,
+        AP_2: AP_2,
+        OCL: OCL,
+        OCC: OCC,
+        SMART: SMART,
+        DCN: DCN,
+        RSC: RSC,
+        LIKE: LIKE,
+        FUPOOF: FUPOOF,
+        ANY: ANY,
+        BRW: BRW,
+        CNX: CNX,
+        DARF: DARF,
+        WNT: WNT,
+        CWV: CWV,
+        WCASH: WCASH,
+        LIFE: LIFE,
+        RDCR: RDCR
     };
 })();
 
