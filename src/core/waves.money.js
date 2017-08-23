@@ -774,6 +774,182 @@ var Currency = (function () {
         verified: true
     });
 
+    var THNX = new Currency({
+        id: '2XQGE8LY9hUruumZ9ewK82akHMnS8a2nSXKdKXfBnuLH',
+        displayName: 'ThankYou',
+        shortName: 'THNX',
+        precision: 4,
+        verified: true
+    });
+
+    var TRDC = new Currency({
+        id: '9rKuHAnVdh8cod2gb6dwbqRjjtPsnhRWRJLq8nANs4PQ',
+        displayName: 'TRDC',
+        shortName: 'TRDC',
+        precision: 4,
+        verified: true
+    });
+
+    var IKV = new Currency({
+        id: '8SNKiX53Yi2yjG1ZbRM4dEQJaJDpns7aN1FWBg5AZDBn',
+        displayName: 'Ikeva',
+        shortName: 'IKV',
+        precision: 5,
+        verified: true
+    });
+
+    var WDESK = new Currency({
+        id: 'CqdGdzvXVp2Gxn7wCZgCboMQu2cWYf6HKAsZFyg3Sq7Q',
+        displayName: 'WavesDesk',
+        shortName: 'WDESK',
+        precision: 8,
+        verified: true
+    });
+
+    var SUR = new Currency({
+        id: '5EAm2T6rKnaDHBT8ptWnuEqvKszp8SW9XPFYD1yAAW2x',
+        displayName: 'Suretly',
+        shortName: 'SUR',
+        precision: 8,
+        verified: true
+    });
+
+    var SIBERIA = new Currency({
+        id: '9QrUSk9mkkdRPKDzNnEVDBoMDb6iBny4XpxsYtpwJdH9',
+        displayName: 'SIBERIA',
+        shortName: 'SIBERIA',
+        precision: 2,
+        verified: true
+    });
+
+    var MODO = new Currency({
+        id: '9kEcosT68xX1Azx2ZkUkgWmwQ5SxzN9rssFieiaxT1PN',
+        displayName: 'MODO',
+        shortName: 'MODO',
+        precision: 8,
+        verified: true
+    });
+
+    var GIVE = new Currency({
+        id: 'AvcbtGUgZwXrfn7rJwBLzoHCrJhtUusnco5amqF7foWU',
+        displayName: 'Give Coin',
+        shortName: 'GIVE',
+        precision: 2,
+        verified: true
+    });
+
+    var SOL = new Currency({
+        id: '6sosMnsaCM5iowMjdPHXDJNrByrw8L8SQCDeD2xoNeK4',
+        displayName: 'SolarLab',
+        shortName: 'SOL',
+        precision: 8,
+        verified: true
+    });
+
+    var EOT = new Currency({
+        id: 'GdnNbe6E3txF63gv3rxhpfxytTJtG7ZYyHAvWWrrEbK5',
+        displayName: 'EOT Token',
+        shortName: 'EOT',
+        precision: 8,
+        verified: true
+    });
+
+    var FIX = new Currency({
+        id: 'GS5RfWDS8ytVnxqr7M2pnqeFuu7BpSwGnADTcw23FvbZ',
+        displayName: 'Finamatrix',
+        shortName: 'FIX',
+        precision: 8,
+        verified: true
+    });
+
+    var KKO = new Currency({
+        id: '6gZUKe6EhDnA8vMFdwLMjLm3QLhRe1v66LvST7ZWJcZW',
+        displayName: 'Cacao Shares',
+        shortName: 'KKO',
+        precision: 8,
+        verified: true
+    });
+
+    var JNT = new Currency({
+        id: '8FHrsE6ixLyEnbcJqxXaGRcEU2aziuEBvQ6Tebgqrv5c',
+        displayName: 'jNetCoin',
+        shortName: 'JNT',
+        precision: 5,
+        verified: true
+    });
+
+    var CGT = new Currency({
+        id: 'CVxqNTyfD39WrNsXSfpAUTzsA76astJpzQVEiZn8a1Ai',
+        displayName: 'Cryptogene Token',
+        shortName: 'CGT',
+        precision: 0,
+        verified: true
+    });
+
+    var AFFT = new Currency({
+        id: '9UFoSQSZZU5j8au1cLYgJGNNtuXAc2s1C4Xd8sPimqL8',
+        displayName: 'AFFT',
+        shortName: 'AFFT',
+        precision: 8,
+        verified: true
+    });
+
+    var MFL = new Currency({
+        id: '7EHVUjcgEV9Du8qp95tS1eBV8DFtenmX64H3QawdCkC4',
+        displayName: 'McFly',
+        shortName: 'MFL',
+        precision: 2,
+        verified: true
+    });
+
+    var TURTL = new Currency({
+        id: '7VDRFwm2HbaJCk3U4HQDhLGdSCxZwPe3cHefVXy7ejYe',
+        displayName: 'WorldTurtleCoin',
+        shortName: 'TURTL',
+        precision: 8,
+        verified: true
+    });
+
+    var PropX = new Currency({
+        id: '7QVcLyMCQ53KSCLhZN7m3FLbfjuoHxxk5xBiToE1gmAE',
+        displayName: 'PropX',
+        shortName: 'PropX',
+        precision: 8,
+        verified: true
+    });
+
+    var eCoinToken = new Currency({
+        id: 'ErZseGoQ81jWTnKbGim7djVgyAqrsYLQr5SwrEjnF7wM',
+        displayName: 'eCoin Token',
+        shortName: 'eCoin Token',
+        precision: 0,
+        verified: true
+    });
+
+    var STT = new Currency({
+        id: 'CNhUwUpGoMmPxDsqrUsVDa6WDzwZVdh4N8gVA85tBB28',
+        displayName: 'SmartTracker',
+        shortName: 'STT',
+        precision: 0,
+        verified: true
+    });
+
+    var SCLRI = new Currency({
+        id: '4GZ5tgKxPeu5kCYpcAE871grUPXWW3My5uccRVHRJ2k2',
+        displayName: 'Clean/Smart City',
+        shortName: 'SCLRI',
+        precision: 2,
+        verified: true
+    });
+
+    var Knish = new Currency({
+        id: 'CvutHGapUdjVHXZ1KwGUD1Z3R2rwDwwbLJrTXSGUYfuK',
+        displayName: 'Knish',
+        shortName: 'Knish',
+        precision: 8,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -868,6 +1044,28 @@ var Currency = (function () {
         currencyCache[WCASH.id] = WCASH;
         currencyCache[LIFE.id] = LIFE;
         currencyCache[RDCR.id] = RDCR;
+        currencyCache[THNX.id] = THNX;
+        currencyCache[TRDC.id] = TRDC;
+        currencyCache[IKV.id] = IKV;
+        currencyCache[WDESK.id] = WDESK;
+        currencyCache[SUR.id] = SUR;
+        currencyCache[SIBERIA.id] = SIBERIA;
+        currencyCache[MODO.id] = MODO;
+        currencyCache[GIVE.id] = GIVE;
+        currencyCache[SOL.id] = SOL;
+        currencyCache[EOT.id] = EOT;
+        currencyCache[FIX.id] = FIX;
+        currencyCache[KKO.id] = KKO;
+        currencyCache[JNT.id] = JNT;
+        currencyCache[CGT.id] = CGT;
+        currencyCache[AFFT.id] = AFFT;
+        currencyCache[MFL.id] = MFL;
+        currencyCache[TURTL.id] = TURTL;
+        currencyCache[PropX.id] = PropX;
+        currencyCache[eCoinToken.id] = eCoinToken;
+        currencyCache[STT.id] = STT;
+        currencyCache[SCLRI.id] = SCLRI;
+        currencyCache[Knish.id] = Knish;
     }
 
     invalidateCache();
@@ -976,7 +1174,29 @@ var Currency = (function () {
         CWV: CWV,
         WCASH: WCASH,
         LIFE: LIFE,
-        RDCR: RDCR
+        RDCR: RDCR,
+        THNX: THNX,
+        TRDC: TRDC,
+        IKV: IKV,
+        WDESK: WDESK,
+        SUR: SUR,
+        SIBERIA: SIBERIA,
+        MODO: MODO,
+        GIVE: GIVE,
+        SOL: SOL,
+        EOT: EOT,
+        FIX: FIX,
+        KKO: KKO,
+        JNT: JNT,
+        CGT: CGT,
+        AFFT: AFFT,
+        MFL: MFL,
+        TURTL: TURTL,
+        PropX: PropX,
+        eCoinToken: eCoinToken,
+        STT: STT,
+        SCLRI: SCLRI,
+        Knish: Knish
     };
 })();
 
