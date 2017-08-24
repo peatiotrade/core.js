@@ -950,6 +950,14 @@ var Currency = (function () {
         verified: true
     });
 
+    var whoppercoin = new Currency({
+        id: 'ANTz8NnpfbEcDFXo4gwd7UL5ugc9bdTcPGbEPktRPZw2',
+        displayName: 'whoppercoin',
+        shortName: 'whoppercoin',
+        precision: 1,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -1066,6 +1074,7 @@ var Currency = (function () {
         currencyCache[STT.id] = STT;
         currencyCache[SCLRI.id] = SCLRI;
         currencyCache[Knish.id] = Knish;
+        currencyCache[whoppercoin.id] = whoppercoin;
     }
 
     invalidateCache();
@@ -1196,7 +1205,8 @@ var Currency = (function () {
         eCoinToken: eCoinToken,
         STT: STT,
         SCLRI: SCLRI,
-        Knish: Knish
+        Knish: Knish,
+        whoppercoin: whoppercoin
     };
 })();
 
