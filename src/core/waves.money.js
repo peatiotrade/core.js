@@ -782,14 +782,6 @@ var Currency = (function () {
         verified: true
     });
 
-    var TRDC = new Currency({
-        id: '9rKuHAnVdh8cod2gb6dwbqRjjtPsnhRWRJLq8nANs4PQ',
-        displayName: 'TRDC',
-        shortName: 'TRDC',
-        precision: 4,
-        verified: true
-    });
-
     var IKV = new Currency({
         id: '8SNKiX53Yi2yjG1ZbRM4dEQJaJDpns7aN1FWBg5AZDBn',
         displayName: 'Ikeva',
@@ -1053,7 +1045,6 @@ var Currency = (function () {
         currencyCache[LIFE.id] = LIFE;
         currencyCache[RDCR.id] = RDCR;
         currencyCache[THNX.id] = THNX;
-        currencyCache[TRDC.id] = TRDC;
         currencyCache[IKV.id] = IKV;
         currencyCache[WDESK.id] = WDESK;
         currencyCache[SUR.id] = SUR;
@@ -1185,7 +1176,6 @@ var Currency = (function () {
         LIFE: LIFE,
         RDCR: RDCR,
         THNX: THNX,
-        TRDC: TRDC,
         IKV: IKV,
         WDESK: WDESK,
         SUR: SUR,
