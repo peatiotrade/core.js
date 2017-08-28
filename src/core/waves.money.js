@@ -383,10 +383,10 @@ var Currency = (function () {
     });
 
     var WNET = new Currency({
-        id: '984mPD35vrA5Pfcuadqg8BUFNFjcUDpU3iadUWVt9t28',
+        id: 'AxAmJaro7BJ4KasYiZhw7HkjwgYtt2nekPuF2CN9LMym',
         displayName: 'Wavesnode.NET',
         shortName: 'WNET',
-        precision: 0,
+        precision: 8,
         verified: true
     });
 
