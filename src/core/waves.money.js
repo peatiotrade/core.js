@@ -270,10 +270,10 @@ var Currency = (function () {
         verified: true
     });
 
-    var TNT = new Currency({
+    var mTNT = new Currency({
         id: '6284oD9Aky3gZwwwqCFEZzvyx5qeeswAbYEtCHcMyKUR',
         displayName: 'TrackNetToken',
-        shortName: 'TNT',
+        shortName: 'mTNT',
         precision: 4,
         verified: true
     });
@@ -910,10 +910,10 @@ var Currency = (function () {
         verified: true
     });
 
-    var eCoinToken = new Currency({
+    var ECT = new Currency({
         id: 'ErZseGoQ81jWTnKbGim7djVgyAqrsYLQr5SwrEjnF7wM',
         displayName: 'eCoin Token',
-        shortName: 'eCoin Token',
+        shortName: 'ECT',
         precision: 0,
         verified: true
     });
@@ -981,7 +981,7 @@ var Currency = (function () {
         currencyCache[BEAR.id] = BEAR;
         currencyCache[DAR.id] = DAR;
         currencyCache[GLIPP.id] = GLIPP;
-        currencyCache[TNT.id] = TNT;
+        currencyCache[mTNT.id] = mTNT;
         currencyCache[BKT.id] = BKT;
         currencyCache[WGR.id] = WGR;
         currencyCache[PBT.id] = PBT;
@@ -1061,7 +1061,7 @@ var Currency = (function () {
         currencyCache[MFL.id] = MFL;
         currencyCache[TURTL.id] = TURTL;
         currencyCache[PropX.id] = PropX;
-        currencyCache[eCoinToken.id] = eCoinToken;
+        currencyCache[ECT.id] = ECT;
         currencyCache[STT.id] = STT;
         currencyCache[SCLRI.id] = SCLRI;
         currencyCache[Knish.id] = Knish;
@@ -1112,7 +1112,7 @@ var Currency = (function () {
         BEAR: BEAR,
         DAR: DAR,
         GLIPP: GLIPP,
-        TNT: TNT,
+        mTNT: mTNT,
         BKT: BKT,
         WGR: WGR,
         PBT: PBT,
@@ -1192,7 +1192,7 @@ var Currency = (function () {
         MFL: MFL,
         TURTL: TURTL,
         PropX: PropX,
-        eCoinToken: eCoinToken,
+        ECT: ECT,
         STT: STT,
         SCLRI: SCLRI,
         Knish: Knish,
