@@ -942,10 +942,10 @@ var Currency = (function () {
         verified: true
     });
 
-    var whoppercoin = new Currency({
+    var WPC = new Currency({
         id: 'ANTz8NnpfbEcDFXo4gwd7UL5ugc9bdTcPGbEPktRPZw2',
         displayName: 'whoppercoin',
-        shortName: 'whoppercoin',
+        shortName: 'WPC',
         precision: 1,
         verified: true
     });
@@ -1065,7 +1065,7 @@ var Currency = (function () {
         currencyCache[STT.id] = STT;
         currencyCache[SCLRI.id] = SCLRI;
         currencyCache[Knish.id] = Knish;
-        currencyCache[whoppercoin.id] = whoppercoin;
+        currencyCache[WPC.id] = WPC;
     }
 
     invalidateCache();
@@ -1196,7 +1196,7 @@ var Currency = (function () {
         STT: STT,
         SCLRI: SCLRI,
         Knish: Knish,
-        whoppercoin: whoppercoin
+        WPC: WPC
     };
 })();
 
