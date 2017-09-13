@@ -950,6 +950,14 @@ var Currency = (function () {
         verified: true
     });
 
+    var cryptoSterling = new Currency({
+        id: '61LRXnv6iB2QDwBVi34r6eEyx8h7VZdyBApB4aP9eKqA',
+        displayName: 'cryptoSterling',
+        shortName: 'cryptoSterling',
+        precision: 0,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -1066,6 +1074,7 @@ var Currency = (function () {
         currencyCache[SCLRI.id] = SCLRI;
         currencyCache[Knish.id] = Knish;
         currencyCache[WPC.id] = WPC;
+        currencyCache[cryptoSterling.id] = cryptoSterling;
     }
 
     invalidateCache();
@@ -1196,7 +1205,8 @@ var Currency = (function () {
         STT: STT,
         SCLRI: SCLRI,
         Knish: Knish,
-        WPC: WPC
+        WPC: WPC,
+        cryptoSterling: cryptoSterling
     };
 })();
 
