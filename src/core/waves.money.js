@@ -78,6 +78,22 @@ var Currency = (function () {
         verified: true
     });
 
+    var LTC = new Currency({
+        id: 'HZk1mbfuJpmxU1Fs4AX5MWLVYtctsNcg6e2C6VKqK8zk',
+        displayName: 'Litecoin',
+        shortName: 'LTC',
+        precision: 8,
+        verified: true
+    });
+
+    var ZEC = new Currency({
+        id: '8dEs76oTWZim9RiKudM5ayFRN5zHJ6ogai7v77p6ZKJE', // TODO : replace
+        displayName: 'ZCash',
+        shortName: 'ZEC',
+        precision: 8,
+        verified: true
+    });
+
     var USD = new Currency({
         id: 'Ft8X1v1LTa1ABafufpaCWyVj8KkaxUWE6xBhW6sNFJck',
         displayName: 'US Dollar',
@@ -965,6 +981,8 @@ var Currency = (function () {
         currencyCache[BTC.id] = BTC;
         currencyCache[BCC.id] = BCC;
         currencyCache[ETH.id] = ETH;
+        currencyCache[LTC.id] = LTC;
+        currencyCache[ZEC.id] = ZEC;
         currencyCache[USD.id] = USD;
         currencyCache[EUR.id] = EUR;
         currencyCache[CNY.id] = CNY;
@@ -1097,6 +1115,8 @@ var Currency = (function () {
         BTC: BTC,
         BCC: BCC,
         ETH: ETH,
+        LTC: LTC,
+        ZEC: ZEC,
         USD: USD,
         EUR: EUR,
         CNY: CNY,
