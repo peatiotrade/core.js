@@ -3598,6 +3598,9 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 
                     case Currency.ETH.id:
                         return 'WETH';
+
+                    case Currency.LTC.id:
+                        return 'WLTC';
                 }
 
                 unsupportedCurrency(currency);
@@ -3618,6 +3621,9 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 
                     case Currency.ETH.id:
                         return 'ETH';
+
+                    case Currency.LTC.id:
+                        return 'LTC';
                 }
 
                 unsupportedCurrency(currency);
