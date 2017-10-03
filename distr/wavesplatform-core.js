@@ -735,7 +735,7 @@ var Currency = (function () {
     });
 
     var ZEC = new Currency({
-        id: '8dEs76oTWZim9RiKudM5ayFRN5zHJ6ogai7v77p6ZKJE', // TODO : replace
+        id: 'BrjUWjndUanm5VsJkbUip8VRYy6LWJePtxya3FNv4TQa',
         displayName: 'ZCash',
         shortName: 'ZEC',
         precision: 8,
@@ -3601,6 +3601,9 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 
                     case Currency.LTC.id:
                         return 'WLTC';
+
+                    case Currency.ZEC.id:
+                        return 'WZEC';
                 }
 
                 unsupportedCurrency(currency);
@@ -3624,6 +3627,9 @@ Decimal.config({toExpNeg: -(Currency.WAVES.precision + 1)});
 
                     case Currency.LTC.id:
                         return 'LTC';
+
+                    case Currency.ZEC.id:
+                        return 'ZEC';
                 }
 
                 unsupportedCurrency(currency);

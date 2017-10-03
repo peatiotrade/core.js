@@ -26,6 +26,9 @@
 
                     case Currency.LTC.id:
                         return 'WLTC';
+
+                    case Currency.ZEC.id:
+                        return 'WZEC';
                 }
 
                 unsupportedCurrency(currency);
@@ -49,6 +52,9 @@
 
                     case Currency.LTC.id:
                         return 'LTC';
+
+                    case Currency.ZEC.id:
+                        return 'ZEC';
                 }
 
                 unsupportedCurrency(currency);
