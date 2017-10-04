@@ -974,6 +974,598 @@ var Currency = (function () {
         verified: true
     });
 
+    var NGN = new Currency({
+        id: '6CjhSBXPF2gga6s6F9UkGKAtnYawCqySH1wUJA2cU5pW',
+        displayName: '₦ | NGN',
+        shortName: 'NGN',
+        precision: 2,
+        verified: true
+    });
+
+    var ALTOCAR = new Currency({
+        id: '5ZVP6vp8Rt7GneEozNATcs7LPjQfwTun9WwnN1ispAH4',
+        displayName: 'ALTOCAR',
+        shortName: 'ALTOCAR',
+        precision: 8,
+        verified: true
+    });
+
+    var ANAT = new Currency({
+        id: '7YUrQFP6Fgn8EwbQb3rBtJjBattsvX5B4tsCsJrn14Py',
+        displayName: 'ANAT',
+        shortName: 'ANAT',
+        precision: 8,
+        verified: true
+    });
+
+    var ATKN = new Currency({
+        id: '7U5YKTvz7bt85FyWRB9bvSbqtKcdK3YVJDGfuJ1XjxBh',
+        displayName: 'A-TOKEN',
+        shortName: 'ATKN',
+        precision: 8,
+        verified: true
+    });
+
+    var ATOM = new Currency({
+        id: '83M2vz5tTwovXyW6ytrT7771DsEpttaGyCn66toQmT5N',
+        displayName: 'AtomCoinAnn',
+        shortName: 'ATOM',
+        precision: 2,
+        verified: true
+    });
+
+    var BAR = new Currency({
+        id: 'HU5B3q3neZRpq5R9uzoRjopJUpELtnFmz1KW2TAUbp9m',
+        displayName: 'BARCOIN',
+        shortName: 'BAR',
+        precision: 0,
+        verified: true
+    });
+
+    var BCF = new Currency({
+        id: '6ShaywJbyebptogQ5gMUvtbEyCdXqV4gGPfAPEdq2Dre',
+        displayName: 'BCF SHARES',
+        shortName: 'BCF',
+        precision: 6,
+        verified: true
+    });
+
+    var BET = new Currency({
+        id: 'FkgGR1mYeEdPLrvCRTfQcZeyCadWEVGuryDEhuPuZoUf',
+        displayName: 'BET\'s',
+        shortName: 'BET',
+        precision: 1,
+        verified: true
+    });
+
+    var BIRTAL = new Currency({
+        id: 'J1tggntaeLccEr8t9s8cc9VpqGj3QkHMSrfyEkdGzoXF',
+        displayName: 'BirTal',
+        shortName: 'BIRTAL',
+        precision: 8,
+        verified: true
+    });
+
+    var BITCHEKE = new Currency({
+        id: '9CPQU2EdbYxHsiytpZV4L8cypZHL17B4a81xedpspNT8',
+        displayName: 'BitCheke',
+        shortName: 'BITCHEKE',
+        precision: 3,
+        verified: true
+    });
+
+    var BITD = new Currency({
+        id: 'B5f8oYUingX3XyKjRAcimPapELPfFMhRz6oVzUk5GDW5',
+        displayName: 'BITDOLLARS',
+        shortName: 'BITD',
+        precision: 8,
+        verified: true
+    });
+
+    var BKC = new Currency({
+        id: '2a2AorHdSaWiiTiYR11vEKjLBzsqtQ5i1KzPNfW97xBb',
+        displayName: 'Blokcloud',
+        shortName: 'BKC',
+        precision: 8,
+        verified: true
+    });
+
+    var CROW = new Currency({
+        id: '5XWiXK6RbwXsTnY2dSHQWnKVjvLsMAEeE1rFqQz3Ton2',
+        displayName: 'CrowdWave',
+        shortName: 'CROW',
+        precision: 3,
+        verified: true
+    });
+
+    var BAZAAR = new Currency({
+        id: 'GPJTkBhHRx2hsafLoTJxWwAzkSuNc6Gzer5dChvSuykb',
+        displayName: 'CryptoBazaar',
+        shortName: 'BAZAAR',
+        precision: 8,
+        verified: true
+    });
+
+    var EDEN = new Currency({
+        id: 'HQMz6yc8hxzA3MUvvGSNByxWLMcmt6uoz5ZE3ebkS75n',
+        displayName: 'EdenChain',
+        shortName: 'EDEN',
+        precision: 8,
+        verified: true
+    });
+
+    var EQUA = new Currency({
+        id: 'ECcmoyW2wQcQMvXp3QbwnMFBpiRthHj54MpYq7scQBeZ',
+        displayName: 'EquaCoin',
+        shortName: 'EQUA',
+        precision: 4,
+        verified: true
+    });
+
+    var EQUILD = new Currency({
+        id: 'FrErWYxQojiTVMamqLLvkmeKKX9UTXz8EL9NF3AeYWPi',
+        displayName: 'equild',
+        shortName: 'EQUILD',
+        precision: 8,
+        verified: true
+    });
+
+    var ETERP = new Currency({
+        id: 'BiSYeqfANiJjUjR3GwCaeCPZQaT4Ly1vQb12PcambKbz',
+        displayName: 'EterPay',
+        shortName: 'ETERP',
+        precision: 8,
+        verified: true
+    });
+
+    var FENIX = new Currency({
+        id: '3pEoYCzUb7hWvqoMQGPYffTsxxPDkSzwSskypmYFBLFP',
+        displayName: 'FENIX&WAVES',
+        shortName: 'FENIX',
+        precision: 8,
+        verified: true
+    });
+
+    var FTB = new Currency({
+        id: 'E8JDQECM6I9J28BPH81ZZWYAWTAZWJMTZPWZ4JCCMOT3',
+        displayName: 'Fincoin',
+        shortName: 'FTB',
+        precision: 6,
+        verified: true
+    });
+
+    var FLEX = new Currency({
+        id: 't1ocHkKuQLKYhtH7nm1rYuj1iZ8d75bqAjgRTwiGhQF',
+        displayName: 'Flex',
+        shortName: 'FLEX',
+        precision: 0,
+        verified: true
+    });
+
+    var FNX = new Currency({
+        id: 'RiVZJ25d5vMYcVo4XRK5n2whjh4WwYGshmmwXgF9MK4',
+        displayName: 'FNX&WVS',
+        shortName: 'FNX',
+        precision: 8,
+        verified: true
+    });
+
+    var GBC = new Currency({
+        id: 'byHDS3JprxWhPbuYBy4y4SvYbbvZiAQV9MNiDSsRPz6',
+        displayName: 'Goldbar coin',
+        shortName: 'GBC',
+        precision: 3,
+        verified: true
+    });
+
+    var Grant = new Currency({
+        id: 'C9p15S1PJN4tMeodygkBEEr2GQUX5dtbtuadTcuaj7t5',
+        displayName: 'Grant',
+        shortName: 'Grant',
+        precision: 8,
+        verified: true
+    });
+
+    var GrantsBounty = new Currency({
+        id: '47iX3APMeD4ZGmhQr73qg5boyoJZXGWpfX5sbcAD6jsn',
+        displayName: 'GrantsBounty',
+        shortName: 'GrantsBounty',
+        precision: 8,
+        verified: true
+    });
+
+    var HEART = new Currency({
+        id: '5xFEsfHdtHLZ2yexduffCBqryWxV4Py8FHtA9tLWqtrJ',
+        displayName: 'HEART',
+        shortName: 'HEART',
+        precision: 1,
+        verified: true
+    });
+
+    var HOME = new Currency({
+        id: '9fkbSVSceusGtsL9KxQHCaqpt2ddds6ukMEKrabgdbac',
+        displayName: 'HomeToken',
+        shortName: 'HOME',
+        precision: 8,
+        verified: true
+    });
+
+    var HTC = new Currency({
+        id: '7GCmsbyYBJ9DAJayC3hKuZV4REZXdGdXRjWgsY9oB3wZ',
+        displayName: 'HotelCoin',
+        shortName: 'HTC',
+        precision: 8,
+        verified: true
+    });
+
+    var IMMO = new Currency({
+        id: '8yzwMFmNFAv8VALWfmEPHk26tMv9MBS7eHoTm7i1FXyT',
+        displayName: 'Immodestea',
+        shortName: 'IMMO',
+        precision: 8,
+        verified: true
+    });
+
+    var JNET = new Currency({
+        id: '8FHrsE6ixLyEnbcJqxXaGRcEU2aziuEBvQ6Tebgqrv5c',
+        displayName: 'jNetCoin',
+        shortName: 'JNET',
+        precision: 5,
+        verified: true
+    });
+
+    var KRIP = new Currency({
+        id: 'Hm9DM6i5DsnHoPhxWWo5j2bFYYVCUaoC9n66EtzmwgAM',
+        displayName: 'KripCoin',
+        shortName: 'KRIP',
+        precision: 5,
+        verified: true
+    });
+
+    var LLA = new Currency({
+        id: 'CvD7GedwdeHCxtiiQgbEAV6JHxXv9DQ8bkmrFAauiNyy',
+        displayName: 'Lalena (LLA)',
+        shortName: 'LLA',
+        precision: 8,
+        verified: true
+    });
+
+    var limburg = new Currency({
+        id: 'FYCGQ1iKBqbYnQgeLQFEazw4oF2PyRYhdsUPWBEWk7F6',
+        displayName: 'LimburgCoin',
+        shortName: 'limburg',
+        precision: 8,
+        verified: true
+    });
+
+    var LIVEBIT = new Currency({
+        id: '7W2CHBfQFXfkZVrPWrj34W6pveKHVky9dvoFq1MXNY24',
+        displayName: 'LiveBit',
+        shortName: 'LIVEBIT',
+        precision: 8,
+        verified: true
+    });
+
+    var MED = new Currency({
+        id: 'CnkUwcYpVpzk3mMM2XfofymwXBnmrSecFbBdMx6WYDCa',
+        displayName: 'Medicine Man',
+        shortName: 'MED',
+        precision: 8,
+        verified: true
+    });
+
+    var MNG = new Currency({
+        id: '6672vWQDHDV6WRU4GsRjBYo6444bh2fEWmXW1KnSSrw4',
+        displayName: 'Mining',
+        shortName: 'MNG',
+        precision: 8,
+        verified: true
+    });
+
+    var MMBT = new Currency({
+        id: '82in5zvV8XdnFzCwYWCNaNbRWSvEa4CfCYfJSAaStafH',
+        displayName: 'MMBT',
+        shortName: 'MMBT',
+        precision: 4,
+        verified: true
+    });
+
+    var MPST = new Currency({
+        id: '44n9LfHecPgovJAZtgdqLg9bT4kzRSF2LgGGSnsyojRn',
+        displayName: 'MPST',
+        shortName: 'MPST',
+        precision: 8,
+        verified: true
+    });
+
+    var MFS = new Currency({
+        id: 'A29o9EnYC9rjPnCw4ujrgTze7E3hLstiLeiSeoUbanfv',
+        displayName: 'My Fair Share',
+        shortName: 'MFS',
+        precision: 8,
+        verified: true
+    });
+
+    var MCS = new Currency({
+        id: '4RndW3NAfxHV1xdCn67t4P6prU9B8SyxNTpYFAocmttM',
+        displayName: 'MyCryptoSpot',
+        shortName: 'MCS',
+        precision: 8,
+        verified: true
+    });
+
+    var NICNAC = new Currency({
+        id: 'ENpaU88woC6Q1pbheURcA5TMX7ykhC5zFPqzdVfhP1BC',
+        displayName: 'NicNacToken',
+        shortName: 'NICNAC',
+        precision: 3,
+        verified: true
+    });
+
+    var NUTS = new Currency({
+        id: '67dY6uMTpg9Ks7Abn2muwTyY24qjrhjviKxMfgURQhos',
+        displayName: 'Nutshells',
+        shortName: 'NUTS',
+        precision: 6,
+        verified: true
+    });
+
+    var OCTANOX = new Currency({
+        id: 'DxE8xbjHT7rXyRd2DMz5TnNNNC91Kz1SZ9k4dpH6X4JP',
+        displayName: 'Octanox',
+        shortName: 'OCTANOX',
+        precision: 8,
+        verified: true
+    });
+
+    var P2P = new Currency({
+        id: '6Z2EYvNU447o96Zevei4Zb5rNntENs2br2B5kQ5HXkiq',
+        displayName: 'P2P Coin',
+        shortName: 'P2P',
+        precision: 8,
+        verified: true
+    });
+
+    var preNEX = new Currency({
+        id: 'FBKxJx6Ho6z1bABvGJo1J1sbCrr4Cs3iUTGsxy3suG4F',
+        displayName: 'preNEX',
+        shortName: 'preNEX',
+        precision: 0,
+        verified: true
+    });
+
+    var preVITO = new Currency({
+        id: '6LcUbnDY585ndN8XbHmnbwF8P8BZsoPqzvEyWbjdsrqQ',
+        displayName: 'preVITO',
+        shortName: 'preVITO',
+        precision: 3,
+        verified: true
+    });
+
+    var PRIMO = new Currency({
+        id: '4EmxnV7DhizwpKh5J13Waxovth95uSjknokNFxNAzAaS',
+        displayName: 'Primo Coin',
+        shortName: 'PRIMO',
+        precision: 8,
+        verified: true
+    });
+
+    var PYTI = new Currency({
+        id: 'F6ppo1zRQnMW6VcYRj2LiEqjL6ahvdYU4zNQXWxstLbg',
+        displayName: 'Priveleged YTI',
+        shortName: 'PYTI',
+        precision: 2,
+        verified: true
+    });
+
+    var PUMP = new Currency({
+        id: '5fMUzjhtVkwxyUyDPzSZuCz2HtpesaaTNMTRsFzZvkP',
+        displayName: 'Pumpcoin',
+        shortName: 'PUMP',
+        precision: 8,
+        verified: true
+    });
+
+    var QUASA = new Currency({
+        id: '33GpTrJ72YiDA21nEtssN8jKYf5jwbv8GFH22y37AVjD',
+        displayName: 'QuasaCoin',
+        shortName: 'QUASA',
+        precision: 8,
+        verified: true
+    });
+
+    var REDFISH = new Currency({
+        id: '5sU8dF7DyN7dKN4NiFTtVC5shqthSgTEuvKUu2iusyS2',
+        displayName: 'Redfishcoin',
+        shortName: 'REDFISH',
+        precision: 8,
+        verified: true
+    });
+
+    var RMOB = new Currency({
+        id: 'BmcArNN9VnKAp3HbvpKaoE3utwEXqvP1UjunS9DVKdGS',
+        displayName: 'RewardMob',
+        shortName: 'RMOB',
+        precision: 8,
+        verified: true
+    });
+
+    var RXSC = new Currency({
+        id: 'SGBHnkG1Z8VbEtaCF5gpNihg1SRFky6CzrwmyL8GJnj',
+        displayName: 'RxSmartCoffee',
+        shortName: 'RXSC',
+        precision: 8,
+        verified: true
+    });
+
+    var SEBEUM = new Currency({
+        id: '73XxLgHdzDfus6nRuwpo3dceCRMNiU5VwkiUK1AAfaQk',
+        displayName: 'Sebeum',
+        shortName: 'SEBEUM',
+        precision: 5,
+        verified: true
+    });
+
+    var SGCN = new Currency({
+        id: 'AYMwsNAa4pdg1raJnGvibdLkAhqXQTrXo2SQfecAzfg1',
+        displayName: 'SGelderCoin',
+        shortName: 'SGCN',
+        precision: 8,
+        verified: true
+    });
+
+    var SHEEP = new Currency({
+        id: 'mjkFnVZBdS1VB5MdWjgEFYHyTaoVGuepypLpTEGQdEp',
+        displayName: 'Sheepbit',
+        shortName: 'SHEEP',
+        precision: 8,
+        verified: true
+    });
+
+    var SGT = new Currency({
+        id: 'BPSBJtgWQvx6QqNz9WHEZVhJAmTvGPArQ1Y5nFVkTPAR',
+        displayName: 'Snuggoo (SGT)',
+        shortName: 'SGT',
+        precision: 2,
+        verified: true
+    });
+
+    var SQUASH = new Currency({
+        id: '4Cxj1FfwKWMwfZZ34QxyZtRfUq4jHSmX9pwXafzBzmdC',
+        displayName: 'SquashCoin',
+        shortName: 'SQUASH',
+        precision: 2,
+        verified: true
+    });
+
+    var SRE = new Currency({
+        id: 'BotFPyCivCDaoQHSD3myBw7GAxsZdiRS76G1WdFVuSXC',
+        displayName: 'SRE_Token',
+        shortName: 'SRE',
+        precision: 8,
+        verified: true
+    });
+
+    var STYLO = new Currency({
+        id: '5VRTinDkxBi4oYBSWjkijyZtacH3QVa8Q8qPodhvczv6',
+        displayName: 'stylocoin',
+        shortName: 'STYLO',
+        precision: 4,
+        verified: true
+    });
+
+    var SXAS = new Currency({
+        id: 'EjR1ThR2MBgukq4Z5zhdXzcct2Vzvq1QgnkMjcFRhXio',
+        displayName: 'SXAS',
+        shortName: 'SXAS',
+        precision: 6,
+        verified: true
+    });
+
+    var TENEBRIS = new Currency({
+        id: 'EJs2V3hd6FXGDYH7HKFDhVcgtCmDa31zRygV1KwF5PHS',
+        displayName: 'Tenebris',
+        shortName: 'TENEBRIS',
+        precision: 8,
+        verified: true
+    });
+
+    var TEXCOIN = new Currency({
+        id: '68XWWEmAUoLHXGFy6n8nb6M5c2WrSrekiWSPx8VT7e1e',
+        displayName: 'TEXCOIN',
+        shortName: 'TEXCOIN',
+        precision: 3,
+        verified: true
+    });
+
+    var Tidals = new Currency({
+        id: 'AAUgxEx61UK5Y9MiEYMsdnCqVhGxBcTJEGTMHJeybuBC',
+        displayName: 'Tidal Waves',
+        shortName: 'Tidals',
+        precision: 8,
+        verified: true
+    });
+
+    var TFT = new Currency({
+        id: 'B1u2TBpTYHWCuMuKLnbQfLvdLJ3zjgPiy3iMS2TSYugZ',
+        displayName: 'TIMESFARMTOKEN',
+        shortName: 'TFT',
+        precision: 6,
+        verified: true
+    });
+
+    var LOYAL = new Currency({
+        id: '3YBdrSJjkAfQiFVefJ6vSRLrRtsWfSgjFd2W53oCWpZM',
+        displayName: 'tokenloyalty.io',
+        shortName: 'LOYAL',
+        precision: 8,
+        verified: true
+    });
+
+    var TOPS = new Currency({
+        id: '865pJ6TrYL39oMHoKtxBCNjdYsyMtaymz3doFfbEv5hh',
+        displayName: 'TOPS',
+        shortName: 'TOPS',
+        precision: 5,
+        verified: true
+    });
+
+    var TRGL = new Currency({
+        id: '5i65cqtC1s34YmyUUxFM4ps5DLQHtLvZwCfaPb6QhXdh',
+        displayName: 'TRGL',
+        shortName: 'TRGL',
+        precision: 0,
+        verified: true
+    });
+
+    var TRUZTAR = new Currency({
+        id: '7EHF5yybMR9kkB5Ntz3pqYTQY3zK6a5rHy4gjDYVbWpS',
+        displayName: 'Truztar',
+        shortName: 'TRUZTAR',
+        precision: 8,
+        verified: true
+    });
+
+    var TWENTYONE = new Currency({
+        id: 'Dbd7nKCm9RRq6Vjh9VLumXeEKPZfM4dgox19q7jjHx5L',
+        displayName: 'Twenty-One',
+        shortName: 'TWENTYONE',
+        precision: 8,
+        verified: true
+    });
+
+    var UOOMAG = new Currency({
+        id: 'DgwLgKXfC3G7SKbSoz82ZQVGQNLHqqfEovtdv7sjHGKu',
+        displayName: 'UOOMAG',
+        shortName: 'UOOMAG',
+        precision: 8,
+        verified: true
+    });
+
+    var VTN = new Currency({
+        id: '32gwVYerx37pxuNG6eaiFRdya5ETpH8imNsf31VT5WqH',
+        displayName: 'VOLTROON',
+        shortName: 'VTN',
+        precision: 8,
+        verified: true
+    });
+
+    var WTC = new Currency({
+        id: '7VDRFwm2HbaJCk3U4HQDhLGdSCxZwPe3cHefVXy7ejYe',
+        displayName: 'WorldTurtleCoin',
+        shortName: 'WTC',
+        precision: 8,
+        verified: true
+    });
+
+    var XVCA = new Currency({
+        id: '78op8zPXC1Uf5541a7Pm1SmqrutAC9tsNxbrMTLscoHy',
+        displayName: 'XVCA',
+        shortName: 'XVCA',
+        precision: 3,
+        verified: true
+    });
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -1093,6 +1685,80 @@ var Currency = (function () {
         currencyCache[Knish.id] = Knish;
         currencyCache[WPC.id] = WPC;
         currencyCache[cryptoSterling.id] = cryptoSterling;
+        currencyCache[NGN.id] = NGN;
+        currencyCache[ALTOCAR.id] = ALTOCAR;
+        currencyCache[ANAT.id] = ANAT;
+        currencyCache[ATKN.id] = ATKN;
+        currencyCache[ATOM.id] = ATOM;
+        currencyCache[BAR.id] = BAR;
+        currencyCache[BCF.id] = BCF;
+        currencyCache[BET.id] = BET;
+        currencyCache[BIRTAL.id] = BIRTAL;
+        currencyCache[BITCHEKE.id] = BITCHEKE;
+        currencyCache[BITD.id] = BITD;
+        currencyCache[BKC.id] = BKC;
+        currencyCache[CROW.id] = CROW;
+        currencyCache[BAZAAR.id] = BAZAAR;
+        currencyCache[EDEN.id] = EDEN;
+        currencyCache[EQUA.id] = EQUA;
+        currencyCache[EQUILD.id] = EQUILD;
+        currencyCache[ETERP.id] = ETERP;
+        currencyCache[FENIX.id] = FENIX;
+        currencyCache[FTB.id] = FTB;
+        currencyCache[FLEX.id] = FLEX;
+        currencyCache[FNX.id] = FNX;
+        currencyCache[GBC.id] = GBC;
+        currencyCache[Grant.id] = Grant;
+        currencyCache[GrantsBounty.id] = GrantsBounty;
+        currencyCache[HEART.id] = HEART;
+        currencyCache[HOME.id] = HOME;
+        currencyCache[HTC.id] = HTC;
+        currencyCache[IMMO.id] = IMMO;
+        currencyCache[JNET.id] = JNET;
+        currencyCache[KRIP.id] = KRIP;
+        currencyCache[LLA.id] = LLA;
+        currencyCache[limburg.id] = limburg;
+        currencyCache[LIVEBIT.id] = LIVEBIT;
+        currencyCache[MED.id] = MED;
+        currencyCache[MNG.id] = MNG;
+        currencyCache[MMBT.id] = MMBT;
+        currencyCache[MPST.id] = MPST;
+        currencyCache[MFS.id] = MFS;
+        currencyCache[MCS.id] = MCS;
+        currencyCache[NICNAC.id] = NICNAC;
+        currencyCache[NUTS.id] = NUTS;
+        currencyCache[OCTANOX.id] = OCTANOX;
+        currencyCache[P2P.id] = P2P;
+        currencyCache[preNEX.id] = preNEX;
+        currencyCache[preVITO.id] = preVITO;
+        currencyCache[PRIMO.id] = PRIMO;
+        currencyCache[PYTI.id] = PYTI;
+        currencyCache[PUMP.id] = PUMP;
+        currencyCache[QUASA.id] = QUASA;
+        currencyCache[REDFISH.id] = REDFISH;
+        currencyCache[RMOB.id] = RMOB;
+        currencyCache[RXSC.id] = RXSC;
+        currencyCache[SEBEUM.id] = SEBEUM;
+        currencyCache[SGCN.id] = SGCN;
+        currencyCache[SHEEP.id] = SHEEP;
+        currencyCache[SGT.id] = SGT;
+        currencyCache[SQUASH.id] = SQUASH;
+        currencyCache[SRE.id] = SRE;
+        currencyCache[STYLO.id] = STYLO;
+        currencyCache[SXAS.id] = SXAS;
+        currencyCache[TENEBRIS.id] = TENEBRIS;
+        currencyCache[TEXCOIN.id] = TEXCOIN;
+        currencyCache[Tidals.id] = Tidals;
+        currencyCache[TFT.id] = TFT;
+        currencyCache[LOYAL.id] = LOYAL;
+        currencyCache[TOPS.id] = TOPS;
+        currencyCache[TRGL.id] = TRGL;
+        currencyCache[TRUZTAR.id] = TRUZTAR;
+        currencyCache[TWENTYONE.id] = TWENTYONE;
+        currencyCache[UOOMAG.id] = UOOMAG;
+        currencyCache[VTN.id] = VTN;
+        currencyCache[WTC.id] = WTC;
+        currencyCache[XVCA.id] = XVCA;
     }
 
     invalidateCache();
@@ -1226,7 +1892,81 @@ var Currency = (function () {
         SCLRI: SCLRI,
         Knish: Knish,
         WPC: WPC,
-        cryptoSterling: cryptoSterling
+        cryptoSterling: cryptoSterling,
+        NGN: NGN,
+        ALTOCAR: ALTOCAR,
+        ANAT: ANAT,
+        ATKN: ATKN,
+        ATOM: ATOM,
+        BAR: BAR,
+        BCF: BCF,
+        BET: BET,
+        BIRTAL: BIRTAL,
+        BITCHEKE: BITCHEKE,
+        BITD: BITD,
+        BKC: BKC,
+        CROW: CROW,
+        BAZAAR: BAZAAR,
+        EDEN: EDEN,
+        EQUA: EQUA,
+        EQUILD: EQUILD,
+        ETERP: ETERP,
+        FENIX: FENIX,
+        FTB: FTB,
+        FLEX: FLEX,
+        FNX: FNX,
+        GBC: GBC,
+        Grant: Grant,
+        GrantsBounty: GrantsBounty,
+        HEART: HEART,
+        HOME: HOME,
+        HTC: HTC,
+        IMMO: IMMO,
+        JNET: JNET,
+        KRIP: KRIP,
+        LLA: LLA,
+        limburg: limburg,
+        LIVEBIT: LIVEBIT,
+        MED: MED,
+        MNG: MNG,
+        MMBT: MMBT,
+        MPST: MPST,
+        MFS: MFS,
+        MCS: MCS,
+        NICNAC: NICNAC,
+        NUTS: NUTS,
+        OCTANOX: OCTANOX,
+        P2P: P2P,
+        preNEX: preNEX,
+        preVITO: preVITO,
+        PRIMO: PRIMO,
+        PYTI: PYTI,
+        PUMP: PUMP,
+        QUASA: QUASA,
+        REDFISH: REDFISH,
+        RMOB: RMOB,
+        RXSC: RXSC,
+        SEBEUM: SEBEUM,
+        SGCN: SGCN,
+        SHEEP: SHEEP,
+        SGT: SGT,
+        SQUASH: SQUASH,
+        SRE: SRE,
+        STYLO: STYLO,
+        SXAS: SXAS,
+        TENEBRIS: TENEBRIS,
+        TEXCOIN: TEXCOIN,
+        Tidals: Tidals,
+        TFT: TFT,
+        LOYAL: LOYAL,
+        TOPS: TOPS,
+        TRGL: TRGL,
+        TRUZTAR: TRUZTAR,
+        TWENTYONE: TWENTYONE,
+        UOOMAG: UOOMAG,
+        VTN: VTN,
+        WTC: WTC,
+        XVCA: XVCA
     };
 })();
 
