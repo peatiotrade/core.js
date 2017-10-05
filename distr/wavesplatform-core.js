@@ -1775,7 +1775,7 @@ var Currency = (function () {
     });
 
     var FTB = new Currency({
-        id: 'E8JDQECM6I9J28BPH81ZZWYAWTAZWJMTZPWZ4JCCMOT3',
+        id: 'E8jdQECM6i9j28bpH81zZWyAwtaZwJMtzPWz4jCCmot3',
         displayName: 'Fincoin',
         shortName: 'FTB',
         precision: 6,
