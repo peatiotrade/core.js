@@ -1726,11 +1726,11 @@ var Currency = (function () {
         verified: true
     });
 
-    var BAZAAR = new Currency({
-        id: 'GPJTkBhHRx2hsafLoTJxWwAzkSuNc6Gzer5dChvSuykb',
-        displayName: 'CryptoBazaar',
-        shortName: 'BAZAAR',
-        precision: 8,
+    var CBT = new Currency({
+        id: 'HfTchexAmETtGoPCU1V72t6WNgPPoEsLjBTpeeBzC46L',
+        displayName: 'CryptoBazar',
+        shortName: 'CBT',
+        precision: 4,
         verified: true
     });
 
@@ -2346,7 +2346,7 @@ var Currency = (function () {
         currencyCache[BITD.id] = BITD;
         currencyCache[BKC.id] = BKC;
         currencyCache[CROW.id] = CROW;
-        currencyCache[BAZAAR.id] = BAZAAR;
+        currencyCache[CBT.id] = CBT;
         currencyCache[EDEN.id] = EDEN;
         currencyCache[EQUA.id] = EQUA;
         currencyCache[EQUILD.id] = EQUILD;
@@ -2554,7 +2554,7 @@ var Currency = (function () {
         BITD: BITD,
         BKC: BKC,
         CROW: CROW,
-        BAZAAR: BAZAAR,
+        CBT: CBT,
         EDEN: EDEN,
         EQUA: EQUA,
         EQUILD: EQUILD,
