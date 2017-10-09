@@ -2214,6 +2214,10 @@ var Currency = (function () {
         verified: true
     });
 
+    function isCached(assetId) {
+        return currencyCache.hasOwnProperty(assetId);
+    }
+
     function invalidateCache() {
         currencyCache = {};
 
@@ -2425,6 +2429,7 @@ var Currency = (function () {
             return currencyCache[data.id];
         },
         invalidateCache: invalidateCache,
+        isCached: isCached,
         WAVES: WAVES,
         BTC: BTC,
         BCC: BCC,
