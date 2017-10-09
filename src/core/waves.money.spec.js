@@ -120,4 +120,11 @@ describe('waves.money', function() {
         expect(function () {value.multiply('12');}).toThrowError();
         expect(function () {value.multiply(NaN);}).toThrowError();
     });
+
+    it('checks whether an asset is cached or not', function () {
+        expect(Currency.isCached(Currency.WAVES.id)).toBe(true);
+        expect(Currency.isCached(Currency.USD.id)).toBe(true);
+        expect(Currency.isCached(undefined)).toBe(false);
+        expect(Currency.isCached('1234')).toBe(false);
+    });
 });
